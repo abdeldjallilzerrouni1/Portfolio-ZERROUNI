@@ -2360,21 +2360,6 @@ END_TYPE</pre>
       return v;
     }
 
-    function alignLongest(geo, axis) {
-      const s = gSize(geo);
-      const dims = [s.x, s.y, s.z];
-      const li = dims.indexOf(Math.max(...dims));
-      if (li === axis) return;
-      if (li === 0 && axis === 1) geo.rotateZ(-Math.PI/2);
-      else if (li === 0 && axis === 2) geo.rotateY(Math.PI/2);
-      else if (li === 1 && axis === 0) geo.rotateZ(Math.PI/2);
-      else if (li === 1 && axis === 2) geo.rotateX(-Math.PI/2);
-      else if (li === 2 && axis === 0) geo.rotateY(-Math.PI/2);
-      else if (li === 2 && axis === 1) geo.rotateX(Math.PI/2);
-      geo.center();
-      geo.computeBoundingBox();
-    }
-
     /* ═══════════════════════════════════════════════
        LOAD STL FILES
     ═══════════════════════════════════════════════ */
@@ -2419,37 +2404,41 @@ END_TYPE</pre>
        BUILD ENGINE ASSEMBLY
     ═══════════════════════════════════════════════ */
     function buildEngine() {
-      /* Orient parts */
-      alignLongest(G.crank, 2);   // crankshaft along Z
-      alignLongest(G.rod, 1);     // connecting rod along Y
-      alignLongest(G.piston, 1);  // piston along Y
-      alignLongest(G.cap, 1);     // cap along Y
-      alignLongest(G.pin, 0);     // piston pin along X
+      /*
+       * SolidWorks STL orientations (no rotation needed):
+       * Piston:     85 x 95 x 85   → Y = bore axis ✓
+       * Ring:       85 x 4.3 x 85  → flat disc, thin Y ✓
+       * Crankshaft: 144 x 160 x 589 → Z = crank axis ✓
+       * Rod:        94 x 224 x 38  → Y = length ✓
+       * Cap:        94 x 60 x 38   → wide in X ✓
+       * Pin:        34 x 34 x 82   → Z = pin axis ✓
+       */
 
-      /* Scale to fit ~5 units (based on crankshaft) */
+      /* Scale to fit ~6 units (based on crankshaft Z = 589mm) */
       const cSz = gSize(G.crank);
-      const longest = Math.max(cSz.x, cSz.y, cSz.z);
-      const S = 5.0 / longest;
+      const S = 6.0 / cSz.z;
       for (const g of Object.values(G)) {
         g.scale(S, S, S);
         g.computeBoundingBox();
       }
 
-      /* Compute engine parameters */
+      /* Compute engine parameters from real geometry */
       const rSz = gSize(G.rod);
       const pSz = gSize(G.piston);
       const cSz2 = gSize(G.crank);
+      const capSz = gSize(G.cap);
 
-      ROD_L   = rSz.y * 0.85;
-      CRANK_R = ROD_L * CFG.crankRatio;
+      ROD_L   = rSz.y * 0.90;                   // rod length ~90% of Y extent
+      CRANK_R = (cSz2.y / 2) * 0.55;            // crank radius ~55% of half Y extent
+      const crankLen = cSz2.z;                   // crankshaft length along Z
+      const cylSpacing = crankLen / 5;           // 4 cylinders evenly spread
+      const pH = pSz.y;                          // piston height
 
-      const crankLen = cSz2.z;
-      const cylSpacing = crankLen / 5;
-      const pH = pSz.y;
-
-      /* Crankshaft */
+      /* Crankshaft — wrapped in a pivot group for Z-axis rotation */
+      const crankPivot = new THREE.Group();
       crankPart = mkPart(G.crank);
-      root.add(crankPart);
+      crankPivot.add(crankPart);
+      root.add(crankPivot);
 
       /* 4 Cylinders */
       for (let i = 0; i < 4; i++) {
@@ -2462,16 +2451,15 @@ END_TYPE</pre>
 
         for (let r = 0; r < 3; r++) {
           const ring = mkPart(G.ring.clone());
-          ring.position.y = (r - 1) * pH * 0.12;
+          ring.position.y = (r - 1) * pH * 0.10;
           pAssy.add(ring);
         }
 
         const pin = mkPart(G.pin.clone());
-        pin.position.y = -pH * 0.32;
+        pin.position.y = -pH * 0.30;
         pAssy.add(pin);
 
-        const initPY = CRANK_R + ROD_L;
-        pAssy.position.set(0, initPY, z);
+        pAssy.position.set(0, CRANK_R + ROD_L, z);
         root.add(pAssy);
 
         /* Connecting rod */
@@ -2484,31 +2472,31 @@ END_TYPE</pre>
         cap.position.set(0, 0, z);
         root.add(cap);
 
-        /* Explode directions */
+        /* Explode directions (spread radially outward) */
         const a = (i / 4) * Math.PI * 2 + Math.PI * 0.25;
         cyls.push({
           pAssy, rod, cap, phase, z,
-          eP: new THREE.Vector3(Math.cos(a) * 0.5, 1.8, Math.sin(a) * 0.4),
-          eR: new THREE.Vector3(Math.cos(a + 0.7) * 0.7, 0.4, Math.sin(a + 0.7) * 0.5),
-          eC: new THREE.Vector3(Math.cos(a + 1.4) * 0.5, -1.4, Math.sin(a + 1.4) * 0.4),
+          eP: new THREE.Vector3(Math.cos(a) * 0.6, 2.0, Math.sin(a) * 0.4),
+          eR: new THREE.Vector3(Math.cos(a + 0.7) * 0.8, 0.5, Math.sin(a + 0.7) * 0.5),
+          eC: new THREE.Vector3(Math.cos(a + 1.4) * 0.6, -1.5, Math.sin(a + 1.4) * 0.4),
         });
       }
 
-      /* Position camera */
+      /* Position camera — slightly elevated, looking at center */
       const bb = new THREE.Box3().setFromObject(root);
       const ctr = bb.getCenter(new THREE.Vector3());
       const sz = bb.getSize(new THREE.Vector3());
       const maxS = Math.max(sz.x, sz.y, sz.z);
 
       camera.position.set(
-        ctr.x + maxS * 0.8,
-        ctr.y + maxS * 0.5,
-        ctr.z + maxS * 1.6
+        ctr.x + maxS * 0.6,
+        ctr.y + maxS * 0.4,
+        ctr.z + maxS * 1.4
       );
       camera.lookAt(ctr);
 
-      /* Initial tilt */
-      root.rotation.set(-0.15, 0.35, 0);
+      /* Initial tilt for visual interest */
+      root.rotation.set(-0.2, 0.4, 0);
 
       /* Start loop */
       loop();
@@ -2534,11 +2522,11 @@ END_TYPE</pre>
       const e = smoothstep(tExp);
       const motion = 1 - e;
 
-      /* Crankshaft */
+      /* Crankshaft — rotates around Z axis (its long axis) */
       if (crankPart) {
-        crankPart.rotation.z = theta * motion;
-        crankPart.position.y = e * -CFG.explDist * 0.7;
-        crankPart.position.x = e * -CFG.explDist * 0.3;
+        crankPart.parent.rotation.z = theta * motion;
+        crankPart.parent.position.y = e * -CFG.explDist * 0.7;
+        crankPart.parent.position.x = e * -CFG.explDist * 0.3;
       }
 
       /* Cylinders */
