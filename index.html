@@ -884,15 +884,16 @@
           </div>
         </div>
 
-        <!-- Projet placeholder 2 -->
-        <div class="projet-card" data-type="meca">
-          <div class="projet-image"><i class="fas fa-cogs"></i></div>
+        <!-- ====== PROJET MECA : MULTIPLICATEUR DE PRESSION ====== -->
+        <div class="projet-card clickable" data-type="meca" onclick="openModal('modalMulti')">
+          <div class="projet-image"><img src="multi_plan_ensemble.png" alt="Multiplicateur de pression" style="width:100%;height:100%;object-fit:contain;background:#f5f5f5;padding:0.5rem;"></div>
           <div class="projet-body">
-            <div class="projet-title">Projet à venir</div>
-            <p class="projet-desc">Détails du projet à ajouter prochainement.</p>
+            <div class="projet-title">Multiplicateur de pression hydraulique</div>
+            <p class="projet-desc">Conception et optimisation de pièces de fonderie aluminium pour vérin hydraulique : tête de vérin et embase, validées par simulation FEA.</p>
             <div class="projet-tags">
               <span class="projet-tag">SolidWorks</span>
-              <span class="projet-tag">Génie Mécanique</span>
+              <span class="projet-tag">Fonderie</span>
+              <span class="projet-tag">Simulation FEA</span>
             </div>
           </div>
         </div>
@@ -1489,6 +1490,190 @@ END_TYPE</pre>
             <div class="modal-img-caption">Vue 3D de la pièce finale optimisée</div>
           </div>
         </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ==================== MODAL MULTIPLICATEUR ==================== -->
+  <div class="projet-modal" id="modalMulti">
+    <div class="modal-overlay" onclick="closeModal()"></div>
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeModal()"><i class="fas fa-times"></i></button>
+
+      <div class="modal-header">
+        <h2>Multiplicateur de pression hydraulique — Conception et optimisation de pièces de fonderie</h2>
+        <div class="modal-tags">
+          <span class="projet-tag">SolidWorks</span>
+          <span class="projet-tag">Fonderie aluminium</span>
+          <span class="projet-tag">Simulation FEA</span>
+          <span class="projet-tag">Optimisation</span>
+        </div>
+      </div>
+
+      <!-- ÉNONCÉ -->
+      <div class="modal-section">
+        <h3><i class="fas fa-file-pdf"></i> Énoncé du projet</h3>
+        <div style="border-radius:12px;overflow:hidden;border:1px solid rgba(255,255,255,0.06);margin-bottom:0.5rem;">
+          <iframe src="multi_sujet.pdf" style="width:100%;height:600px;border:none;background:#1a1a24;"></iframe>
+        </div>
+        <p style="margin-top:0.75rem;font-size:0.85rem;color:#707070;">
+          <a href="multi_sujet.pdf" target="_blank" style="color:#60a5fa;"><i class="fas fa-download" style="margin-right:0.4rem;"></i>Télécharger le sujet (PDF)</a>
+        </p>
+      </div>
+
+      <!-- OBJECTIF -->
+      <div class="modal-section">
+        <h3><i class="fas fa-bullseye"></i> Objectif du projet</h3>
+        <p>L'objectif du projet était de concevoir des pièces de vérin hydraulique destinées à être fabriquées par fonderie aluminium, puis de valider leur tenue mécanique par simulation éléments finis. Une phase d'optimisation a ensuite été réalisée afin de réduire la masse des pièces tout en conservant leurs performances mécaniques et fonctionnelles.</p>
+      </div>
+
+      <!-- ANALYSE DU SYSTÈME -->
+      <div class="modal-section">
+        <h3><i class="fas fa-search"></i> Analyse du système</h3>
+        <p>Le travail a commencé par l'analyse du fonctionnement d'un multiplicateur de pression hydraulique utilisant un piston différentiel permettant d'augmenter la pression du fluide. Cette étape a permis d'identifier le rôle des différentes pièces ainsi que les surfaces fonctionnelles essentielles.</p>
+        <div class="modal-img-grid single" style="margin-top:1.25rem;">
+          <div class="modal-img-container">
+            <img src="multi_plan_ensemble.png" alt="Plan d'ensemble du multiplicateur" style="width:100%;">
+            <div class="modal-img-caption">Plan d'ensemble du multiplicateur de pression</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CONCEPTION TÊTE DE VÉRIN -->
+      <div class="modal-section">
+        <h3><i class="fas fa-pencil-ruler"></i> Conception de la tête de vérin</h3>
+        <p>La tête de vérin a ensuite été conçue en intégrant les règles de conception des pièces de fonderie : choix du plan de joint, angles de dépouille, contrôle des épaisseurs et conservation des surfaces fonctionnelles. La pièce a été modélisée en 3D sous SolidWorks.</p>
+        <div class="modal-img-grid" style="margin-top:1.25rem;">
+          <div class="modal-img-container">
+            <img src="multi_tete_3d.png" alt="Modèle 3D tête de vérin">
+            <div class="modal-img-caption">Modèle 3D de la tête de vérin</div>
+          </div>
+          <div class="modal-img-container">
+            <img src="multi_plan_joint.png" alt="Plan de joint">
+            <div class="modal-img-caption">Plan de joint de la tête de vérin</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SIMULATION TÊTE DE VÉRIN -->
+      <div class="modal-section">
+        <h3><i class="fas fa-chart-area"></i> Validation mécanique — Tête de vérin</h3>
+        <p>Une validation mécanique a été réalisée par simulation en prenant en compte la pression du fluide, les efforts de serrage des goujons et les conditions de montage réelles. Les résultats ont confirmé la tenue mécanique et la rigidité de la pièce.</p>
+        <div class="modal-img-grid single" style="margin-top:1.25rem;">
+          <div class="modal-img-container">
+            <img src="multi_tete_simulation.png" alt="Simulation Von Mises tête de vérin" style="width:100%;">
+            <div class="modal-img-caption">Simulation contraintes Von Mises — tête de vérin</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- OPTIMISATION TÊTE DE VÉRIN -->
+      <div class="modal-section">
+        <h3><i class="fas fa-weight-hanging"></i> Optimisation — Tête de vérin</h3>
+        <p>La tête de vérin a ensuite été optimisée en retirant de la matière dans les zones faiblement sollicitées, tout en conservant les zones fonctionnelles.</p>
+        <div class="modal-img-grid" style="margin-top:1.25rem;">
+          <div class="modal-img-container">
+            <img src="multi_tete_avant.png" alt="Tête de vérin avant optimisation">
+            <div class="modal-img-caption">Avant optimisation — 1 226,94 g</div>
+          </div>
+          <div class="modal-img-container">
+            <img src="multi_tete_apres.png" alt="Tête de vérin après optimisation">
+            <div class="modal-img-caption">Après optimisation — 851,29 g</div>
+          </div>
+        </div>
+        <div class="modal-result-box">
+          <div class="result-row">
+            <span>Masse avant optimisation</span>
+            <span>1 226,94 g</span>
+          </div>
+          <div class="result-row">
+            <span>Masse après optimisation</span>
+            <span>851,29 g</span>
+          </div>
+          <div class="result-row highlight">
+            <span>Gain de masse</span>
+            <span>~376 g (−31%)</span>
+          </div>
+        </div>
+        <div class="modal-img-grid single" style="margin-top:1.25rem;">
+          <div class="modal-img-container">
+            <img src="multi_tete_plan.png" alt="Mise en plan tête de vérin" style="width:100%;">
+            <div class="modal-img-caption">Mise en plan — tête de vérin optimisée</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CONCEPTION EMBASE -->
+      <div class="modal-section">
+        <h3><i class="fas fa-pencil-ruler"></i> Conception de l'embase</h3>
+        <p>L'embase du vérin a ensuite été conçue en respectant les contraintes de fabrication par fonderie et les surfaces fonctionnelles liées au montage et au passage du fluide. La conception a été pensée pour faciliter la fabrication et l'assemblage.</p>
+        <div class="modal-img-grid single" style="margin-top:1.25rem;">
+          <div class="modal-img-container">
+            <img src="multi_embase_3d.png" alt="Vue 3D embase assemblée">
+            <div class="modal-img-caption">Vue 3D de l'embase assemblée</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SIMULATION EMBASE -->
+      <div class="modal-section">
+        <h3><i class="fas fa-chart-area"></i> Validation mécanique — Embase</h3>
+        <p>Une simulation mécanique a permis de vérifier la tenue mécanique et la rigidité de l'embase sous pression hydraulique et efforts de serrage.</p>
+        <div class="modal-img-grid single" style="margin-top:1.25rem;">
+          <div class="modal-img-container">
+            <img src="multi_embase_simulation.png" alt="Simulation contraintes embase" style="width:100%;">
+            <div class="modal-img-caption">Simulation contraintes Von Mises — embase</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- OPTIMISATION EMBASE -->
+      <div class="modal-section">
+        <h3><i class="fas fa-weight-hanging"></i> Optimisation — Embase</h3>
+        <p>Une optimisation géométrique a ensuite été réalisée en retirant de la matière dans les zones peu sollicitées tout en conservant les zones soumises à de fortes contraintes.</p>
+        <div class="modal-img-grid" style="margin-top:1.25rem;">
+          <div class="modal-img-container">
+            <img src="multi_embase_avant.png" alt="Embase avant optimisation">
+            <div class="modal-img-caption">Avant optimisation — 2 381,91 g</div>
+          </div>
+          <div class="modal-img-container">
+            <img src="multi_embase_apres.png" alt="Embase après optimisation">
+            <div class="modal-img-caption">Après optimisation — 1 799,08 g</div>
+          </div>
+        </div>
+        <div class="modal-result-box">
+          <div class="result-row">
+            <span>Masse avant optimisation</span>
+            <span>2 381,91 g</span>
+          </div>
+          <div class="result-row">
+            <span>Masse après optimisation</span>
+            <span>1 799,08 g</span>
+          </div>
+          <div class="result-row highlight">
+            <span>Gain de masse</span>
+            <span>~583 g (−24%)</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- MISE EN PLAN EMBASE -->
+      <div class="modal-section">
+        <h3><i class="fas fa-drafting-compass"></i> Mise en plan finale — Embase</h3>
+        <p>Le projet s'est terminé par la réalisation de la mise en plan industrielle de l'embase optimisée permettant sa fabrication.</p>
+        <div class="modal-img-grid single" style="margin-top:1.25rem;">
+          <div class="modal-img-container">
+            <img src="multi_embase_plan.png" alt="Mise en plan embase" style="width:100%;">
+            <div class="modal-img-caption">Mise en plan finale — embase optimisée</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RÉSULTAT FINAL -->
+      <div class="modal-section">
+        <h3><i class="fas fa-check-circle"></i> Résultat final</h3>
+        <p>Le projet a permis de concevoir des pièces de fonderie optimisées, adaptées à la fabrication industrielle, tout en garantissant leur tenue mécanique et leur rigidité par simulation numérique.</p>
       </div>
 
     </div>
