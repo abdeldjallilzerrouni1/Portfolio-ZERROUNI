@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portfolio | Abdeldjallil Seif E. Zerrouni</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    /* ============================================
+       RESET & BASE
+    ============================================ */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #0a0a0f;
+      color: #e0e0e0;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+    a { color: #60a5fa; text-decoration: none; transition: color 0.3s; }
+    a:hover { color: #93c5fd; }
+    img { max-width: 100%; display: block; }
+
+    /* ============================================
+       NAVIGATION
+    ============================================ */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      z-index: 1000;
+      background: rgba(10, 10, 15, 0.85);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      padding: 0 2rem;
+    }
+    .nav-container {
+      max-width: 1200px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 64px;
+    }
+    .nav-logo {
+      font-weight: 700; font-size: 1.1rem; color: #fff;
+      letter-spacing: -0.5px;
+    }
+    .nav-logo span { color: #3b82f6; }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      color: #a0a0a0; font-size: 0.9rem; font-weight: 500;
+      transition: color 0.3s;
+    }
+    .nav-links a:hover { color: #fff; }
+    .nav-toggle { display: none; background: none; border: none; color: #fff; font-size: 1.4rem; cursor: pointer; }
+
+    /* ============================================
+       SECTIONS COMMON
+    ============================================ */
+    section { padding: 5rem 2rem; }
+    .section-container { max-width: 1100px; margin: 0 auto; }
+    .section-title {
+      font-size: 2rem; font-weight: 800; margin-bottom: 0.5rem;
+      color: #fff;
+    }
+    .section-title span { color: #3b82f6; }
+    .section-subtitle {
+      color: #707070; font-size: 1rem; margin-bottom: 3rem;
+    }
+    .section-line {
+      width: 60px; height: 3px; background: #3b82f6;
+      margin-bottom: 1rem; border-radius: 2px;
+    }
+
+    /* ============================================
+       HERO
+    ============================================ */
+    .hero {
+      min-height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      padding: 6rem 2rem 4rem;
+      background: linear-gradient(135deg, #0a0a0f 0%, #111127 50%, #0a0a0f 100%);
+      position: relative;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(circle at 70% 40%, rgba(59,130,246,0.08) 0%, transparent 60%);
+    }
+    .hero-content {
+      max-width: 1100px; width: 100%; margin: 0 auto;
+      display: flex; align-items: center; gap: 4rem;
+      position: relative; z-index: 1;
+    }
+    .hero-text { flex: 1; }
+    .hero-badge {
+      display: inline-block;
+      background: rgba(59,130,246,0.12); color: #60a5fa;
+      padding: 0.4rem 1rem; border-radius: 20px;
+      font-size: 0.8rem; font-weight: 600;
+      margin-bottom: 1.5rem;
+      border: 1px solid rgba(59,130,246,0.2);
+    }
+    .hero-name {
+      font-size: 3rem; font-weight: 800; color: #fff;
+      line-height: 1.15; margin-bottom: 1rem;
+      letter-spacing: -1px;
+    }
+    .hero-name span { color: #3b82f6; }
+    .hero-title {
+      font-size: 1.2rem; color: #a0a0a0; margin-bottom: 1.5rem;
+      font-weight: 400;
+    }
+    .hero-desc {
+      color: #808080; font-size: 1rem; line-height: 1.8;
+      margin-bottom: 2rem; max-width: 520px;
+    }
+    .hero-buttons { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .btn {
+      padding: 0.75rem 1.8rem; border-radius: 8px; font-weight: 600;
+      font-size: 0.9rem; cursor: pointer; transition: all 0.3s;
+      border: none; display: inline-flex; align-items: center; gap: 0.5rem;
+    }
+    .btn-primary {
+      background: #3b82f6; color: #fff;
+    }
+    .btn-primary:hover { background: #2563eb; color: #fff; }
+    .btn-outline {
+      background: transparent; color: #e0e0e0;
+      border: 1px solid rgba(255,255,255,0.15);
+    }
+    .btn-outline:hover { border-color: #3b82f6; color: #3b82f6; }
+    .hero-image {
+      flex-shrink: 0;
+    }
+    .hero-photo {
+      width: 280px; height: 280px;
+      border-radius: 20px;
+      object-fit: cover;
+      border: 3px solid rgba(59,130,246,0.3);
+      box-shadow: 0 20px 60px rgba(59,130,246,0.15);
+    }
+
+    /* ============================================
+       PROFIL
+    ============================================ */
+    .profil { background: #0d0d14; }
+    .profil-content {
+      background: linear-gradient(135deg, rgba(59,130,246,0.05), rgba(139,92,246,0.03));
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 16px; padding: 2.5rem;
+      font-size: 1.05rem; line-height: 1.9;
+      color: #c0c0c0;
+    }
+
+    /* ============================================
+       FORMATION
+    ============================================ */
+    .formation { background: #0a0a0f; }
+    .formation-grid { display: flex; flex-direction: column; gap: 2rem; }
+    .formation-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 16px; padding: 2rem;
+      transition: border-color 0.3s;
+    }
+    .formation-card:hover { border-color: rgba(59,130,246,0.3); }
+    .formation-header {
+      display: flex; justify-content: space-between; align-items: flex-start;
+      margin-bottom: 1rem; flex-wrap: wrap; gap: 1rem;
+    }
+    .formation-school {
+      font-size: 1.25rem; font-weight: 700; color: #fff;
+    }
+    .formation-degree {
+      color: #3b82f6; font-weight: 600; font-size: 0.95rem;
+      margin-top: 0.25rem;
+    }
+    .formation-date {
+      background: rgba(59,130,246,0.1); color: #60a5fa;
+      padding: 0.3rem 0.9rem; border-radius: 20px;
+      font-size: 0.8rem; font-weight: 600;
+      white-space: nowrap;
+    }
+    .formation-location {
+      color: #707070; font-size: 0.9rem; margin-top: 0.5rem;
+    }
+    .formation-location i { margin-right: 0.3rem; }
+    .coursework-title {
+      font-size: 0.9rem; font-weight: 600; color: #a0a0a0;
+      margin-top: 1.5rem; margin-bottom: 0.75rem;
+    }
+    .coursework-tags {
+      display: flex; flex-wrap: wrap; gap: 0.5rem;
+    }
+    .coursework-tag {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      color: #909090; padding: 0.3rem 0.8rem;
+      border-radius: 6px; font-size: 0.8rem;
+    }
+    .coursework-empty {
+      color: #505050; font-style: italic; font-size: 0.85rem;
+      margin-top: 1rem;
+    }
+
+    /* ============================================
+       COMPÉTENCES
+    ============================================ */
+    .competences { background: #0d0d14; }
+    .skills-categories {
+      display: flex; gap: 0.75rem; margin-bottom: 2rem; flex-wrap: wrap;
+    }
+    .skill-cat-btn {
+      padding: 0.5rem 1.2rem; border-radius: 8px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      color: #a0a0a0; cursor: pointer; font-size: 0.85rem; font-weight: 500;
+      transition: all 0.3s;
+    }
+    .skill-cat-btn.active, .skill-cat-btn:hover {
+      background: rgba(59,130,246,0.15);
+      border-color: rgba(59,130,246,0.3);
+      color: #60a5fa;
+    }
+    .skills-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 1.25rem;
+    }
+    .skill-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 12px; padding: 1.5rem;
+      text-align: center; transition: all 0.3s;
+    }
+    .skill-card:hover {
+      border-color: rgba(59,130,246,0.3);
+      transform: translateY(-2px);
+    }
+    .skill-icon {
+      font-size: 2rem; margin-bottom: 0.75rem; color: #3b82f6;
+    }
+    .skill-name { font-weight: 700; color: #fff; font-size: 1rem; margin-bottom: 0.3rem; }
+    .skill-level {
+      font-size: 0.75rem; font-weight: 600; text-transform: uppercase;
+      letter-spacing: 1px; color: #60a5fa;
+    }
+    .skill-bar-container {
+      width: 100%; height: 4px; background: rgba(255,255,255,0.08);
+      border-radius: 2px; margin-top: 0.75rem; overflow: hidden;
+    }
+    .skill-bar {
+      height: 100%; background: linear-gradient(90deg, #3b82f6, #60a5fa);
+      border-radius: 2px;
+    }
+
+    /* ============================================
+       LANGUES
+    ============================================ */
+    .langues { background: #0a0a0f; }
+    .langues-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 1.25rem;
+    }
+    .langue-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 12px; padding: 1.5rem;
+      display: flex; align-items: center; gap: 1.25rem;
+      transition: border-color 0.3s;
+    }
+    .langue-card:hover { border-color: rgba(59,130,246,0.3); }
+    .langue-flag { font-size: 2.2rem; }
+    .langue-info { flex: 1; }
+    .langue-name { font-weight: 700; color: #fff; font-size: 1rem; }
+    .langue-level { color: #60a5fa; font-size: 0.85rem; font-weight: 600; }
+    .langue-bar-container {
+      width: 100%; height: 4px; background: rgba(255,255,255,0.08);
+      border-radius: 2px; margin-top: 0.5rem; overflow: hidden;
+    }
+    .langue-bar {
+      height: 100%; background: linear-gradient(90deg, #3b82f6, #60a5fa);
+      border-radius: 2px;
+    }
+
+    /* ============================================
+       TIMELINE
+    ============================================ */
+    .timeline-section { background: #0d0d14; }
+    .timeline {
+      position: relative;
+      max-width: 900px; margin: 0 auto;
+    }
+    .timeline::before {
+      content: ''; position: absolute;
+      left: 50%; top: 0; bottom: 0;
+      width: 2px; background: rgba(59,130,246,0.2);
+      transform: translateX(-50%);
+    }
+    .timeline-item {
+      position: relative; width: 50%;
+      padding: 0 2.5rem 3rem;
+    }
+    .timeline-item:nth-child(odd) { left: 0; text-align: right; padding-right: 3rem; }
+    .timeline-item:nth-child(even) { left: 50%; text-align: left; padding-left: 3rem; }
+    .timeline-dot {
+      position: absolute; top: 0.5rem;
+      width: 14px; height: 14px;
+      background: #3b82f6; border-radius: 50%;
+      border: 3px solid #0d0d14;
+      z-index: 1;
+    }
+    .timeline-item:nth-child(odd) .timeline-dot { right: -7px; }
+    .timeline-item:nth-child(even) .timeline-dot { left: -7px; }
+    .timeline-card {
+      border-radius: 16px; overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.06);
+      background: rgba(255,255,255,0.03);
+      transition: border-color 0.3s;
+    }
+    .timeline-card:hover { border-color: rgba(59,130,246,0.3); }
+    .timeline-card-image {
+      width: 100%; height: 180px;
+      object-fit: cover;
+      opacity: 0.7;
+    }
+    .timeline-card-body { padding: 1.5rem; }
+    .timeline-year {
+      font-size: 0.8rem; font-weight: 700; color: #3b82f6;
+      text-transform: uppercase; letter-spacing: 2px;
+      margin-bottom: 0.5rem;
+    }
+    .timeline-card-title {
+      font-size: 1.1rem; font-weight: 700; color: #fff;
+      margin-bottom: 0.5rem;
+    }
+    .timeline-card-text {
+      color: #a0a0a0; font-size: 0.9rem; line-height: 1.7;
+      text-align: left;
+    }
+
+    /* ============================================
+       PROJETS
+    ============================================ */
+    .projets { background: #0a0a0f; }
+    .projets-filters {
+      display: flex; gap: 0.75rem; margin-bottom: 2rem; flex-wrap: wrap;
+    }
+    .projets-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+    .projet-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 16px; overflow: hidden;
+      transition: all 0.3s;
+    }
+    .projet-card:hover {
+      border-color: rgba(59,130,246,0.3);
+      transform: translateY(-3px);
+    }
+    .projet-image {
+      width: 100%; height: 200px;
+      background: linear-gradient(135deg, rgba(59,130,246,0.1), rgba(139,92,246,0.05));
+      display: flex; align-items: center; justify-content: center;
+      color: #404060; font-size: 0.9rem; font-style: italic;
+    }
+    .projet-image i { font-size: 3rem; color: #303050; }
+    .projet-body { padding: 1.5rem; }
+    .projet-title { font-weight: 700; color: #fff; font-size: 1.05rem; margin-bottom: 0.5rem; }
+    .projet-desc { color: #808080; font-size: 0.9rem; line-height: 1.6; margin-bottom: 1rem; }
+    .projet-tags { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+    .projet-tag {
+      background: rgba(59,130,246,0.1); color: #60a5fa;
+      padding: 0.2rem 0.6rem; border-radius: 4px;
+      font-size: 0.75rem; font-weight: 600;
+    }
+
+    /* ============================================
+       CONTACT
+    ============================================ */
+    .contact { background: #0d0d14; }
+    .contact-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+    .contact-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 12px; padding: 2rem;
+      text-align: center; transition: all 0.3s;
+    }
+    .contact-card:hover {
+      border-color: rgba(59,130,246,0.3);
+      transform: translateY(-2px);
+    }
+    .contact-icon {
+      font-size: 1.8rem; color: #3b82f6; margin-bottom: 1rem;
+    }
+    .contact-label {
+      font-weight: 700; color: #fff; font-size: 1rem; margin-bottom: 0.5rem;
+    }
+    .contact-value {
+      color: #a0a0a0; font-size: 0.9rem; word-break: break-all;
+    }
+
+    /* ============================================
+       FOOTER
+    ============================================ */
+    footer {
+      text-align: center; padding: 2rem;
+      color: #505050; font-size: 0.8rem;
+      border-top: 1px solid rgba(255,255,255,0.04);
+      background: #0a0a0f;
+    }
+
+    /* ============================================
+       RESPONSIVE
+    ============================================ */
+    @media (max-width: 768px) {
+      .hero-content { flex-direction: column-reverse; text-align: center; gap: 2rem; }
+      .hero-name { font-size: 2.2rem; }
+      .hero-desc { margin: 0 auto 2rem; }
+      .hero-buttons { justify-content: center; }
+      .hero-photo { width: 200px; height: 200px; }
+      .nav-links { display: none; }
+      .nav-links.active {
+        display: flex; flex-direction: column;
+        position: absolute; top: 64px; left: 0; right: 0;
+        background: rgba(10,10,15,0.95);
+        padding: 1.5rem 2rem; gap: 1rem;
+        border-bottom: 1px solid rgba(255,255,255,0.06);
+      }
+      .nav-toggle { display: block; }
+      .timeline::before { left: 20px; }
+      .timeline-item { width: 100%; left: 0 !important; text-align: left !important; padding-left: 3rem !important; padding-right: 0 !important; }
+      .timeline-dot { left: 13px !important; right: auto !important; }
+      .section-title { font-size: 1.6rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ==================== NAVIGATION ==================== -->
+  <nav>
+    <div class="nav-container">
+      <div class="nav-logo">Abdeldjallil <span>Z.</span></div>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#profil">Profil</a></li>
+        <li><a href="#formation">Formation</a></li>
+        <li><a href="#competences">Compétences</a></li>
+        <li><a href="#parcours">Parcours</a></li>
+        <li><a href="#projets">Projets</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <button class="nav-toggle" id="navToggle" aria-label="Menu">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ==================== HERO ==================== -->
+  <section class="hero" id="hero">
+    <div class="hero-content">
+      <div class="hero-text">
+        <div class="hero-badge"><i class="fas fa-cogs"></i>&nbsp; Ouvert aux opportunités de stage</div>
+        <h1 class="hero-name">Abdeldjallil<br><span>Seif E. Zerrouni</span></h1>
+        <p class="hero-title">Étudiant en Génie Mécanique · L3 Université de Poitiers</p>
+        <p class="hero-desc">
+          Passionné par la conception mécanique et l'automatisme, je mets mes compétences en SolidWorks et B&R Automation Studio au service de projets concrets. À la recherche d'un stage à partir d'avril 2026.
+        </p>
+        <div class="hero-buttons">
+          <a href="#projets" class="btn btn-primary"><i class="fas fa-briefcase"></i> Mes Projets</a>
+          <a href="#contact" class="btn btn-outline"><i class="fas fa-envelope"></i> Me Contacter</a>
+        </div>
+      </div>
+      <div class="hero-image">
+        <img src="pica.png" alt="Photo de profil" class="hero-photo">
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== PROFIL ==================== -->
+  <section class="profil" id="profil">
+    <div class="section-container">
+      <div class="section-line"></div>
+      <h2 class="section-title">À <span>Propos</span></h2>
+      <p class="section-subtitle">Mon parcours et mes ambitions</p>
+      <div class="profil-content">
+        Étudiant motivé en troisième année de Licence Génie Mécanique à l'Université de Poitiers, je bénéficie d'un parcours international ayant débuté en Pologne, à Kielce University of Technology, où j'ai suivi deux années de formation en anglais. Cette expérience m'a doté d'un niveau C1 en anglais (IELTS), me permettant d'évoluer aisément dans un contexte bilingue. Ma maîtrise approfondie de SolidWorks s'est construite au fil de nombreux projets de bureau d'études, allant de la conception de pièces mécanosoudées aux simulations de résistance des matériaux. J'ai également développé une solide compétence en automatisme avec B&R Automation Studio, incluant la programmation GRAFCET et le langage ST. Désireux de confronter mes acquis au monde professionnel, je suis activement à la recherche d'un stage en ingénierie mécanique à partir d'avril 2026.
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== FORMATION ==================== -->
+  <section class="formation" id="formation">
+    <div class="section-container">
+      <div class="section-line"></div>
+      <h2 class="section-title"><span>Formation</span></h2>
+      <p class="section-subtitle">Mon cursus académique</p>
+      <div class="formation-grid">
+
+        <!-- Poitiers -->
+        <div class="formation-card">
+          <div class="formation-header">
+            <div>
+              <div class="formation-school">Université de Poitiers</div>
+              <div class="formation-degree">Licence Génie Mécanique — L3</div>
+              <div class="formation-location"><i class="fas fa-map-marker-alt"></i> Poitiers, France</div>
+            </div>
+            <span class="formation-date">2025 — Présent</span>
+          </div>
+          <div class="coursework-title"><i class="fas fa-book"></i> Matières principales</div>
+          <div class="coursework-tags" id="coursework-poitiers">
+            <!-- À remplir plus tard -->
+          </div>
+          <p class="coursework-empty" id="coursework-poitiers-empty">Contenu à venir...</p>
+        </div>
+
+        <!-- Kielce -->
+        <div class="formation-card">
+          <div class="formation-header">
+            <div>
+              <div class="formation-school">Kielce University of Technology</div>
+              <div class="formation-degree">Licence Génie Mécanique — L1 / L2</div>
+              <div class="formation-location"><i class="fas fa-map-marker-alt"></i> Kielce, Pologne</div>
+            </div>
+            <span class="formation-date">2023 — 2025</span>
+          </div>
+          <div class="coursework-title"><i class="fas fa-book"></i> Matières principales</div>
+          <div class="coursework-tags" id="coursework-kielce">
+            <!-- À remplir plus tard -->
+          </div>
+          <p class="coursework-empty" id="coursework-kielce-empty">Contenu à venir...</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== COMPÉTENCES ==================== -->
+  <section class="competences" id="competences">
+    <div class="section-container">
+      <div class="section-line"></div>
+      <h2 class="section-title">Compétences &amp; <span>Expertise</span></h2>
+      <p class="section-subtitle">Mes outils et savoir-faire</p>
+
+      <div class="skills-categories">
+        <button class="skill-cat-btn active" data-cat="all">Toutes</button>
+        <button class="skill-cat-btn" data-cat="meca">Génie Mécanique</button>
+        <button class="skill-cat-btn" data-cat="auto">Automatisme</button>
+        <button class="skill-cat-btn" data-cat="additional">Complémentaires</button>
+      </div>
+
+      <div class="skills-grid" id="skillsGrid">
+
+        <div class="skill-card" data-category="meca">
+          <div class="skill-icon"><i class="fas fa-drafting-compass"></i></div>
+          <div class="skill-name">SolidWorks</div>
+          <div class="skill-level">Avancé</div>
+          <div class="skill-bar-container"><div class="skill-bar" style="width: 90%"></div></div>
+        </div>
+
+        <div class="skill-card" data-category="meca">
+          <div class="skill-icon"><i class="fab fa-python"></i></div>
+          <div class="skill-name">Python (NumPy)</div>
+          <div class="skill-level">Intermédiaire</div>
+          <div class="skill-bar-container"><div class="skill-bar" style="width: 50%"></div></div>
+        </div>
+
+        <div class="skill-card" data-category="auto">
+          <div class="skill-icon"><i class="fas fa-microchip"></i></div>
+          <div class="skill-name">B&R Automation Studio</div>
+          <div class="skill-level">Intermédiaire</div>
+          <div class="skill-bar-container"><div class="skill-bar" style="width: 65%"></div></div>
+        </div>
+
+        <div class="skill-card" data-category="additional">
+          <div class="skill-icon"><i class="fas fa-file-alt"></i></div>
+          <div class="skill-name">LaTeX</div>
+          <div class="skill-level">Avancé</div>
+          <div class="skill-bar-container"><div class="skill-bar" style="width: 90%"></div></div>
+        </div>
+
+        <div class="skill-card" data-category="additional">
+          <div class="skill-icon"><i class="fas fa-file-excel"></i></div>
+          <div class="skill-name">Microsoft Office</div>
+          <div class="skill-level">Avancé</div>
+          <div class="skill-bar-container"><div class="skill-bar" style="width: 90%"></div></div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== LANGUES ==================== -->
+  <section class="langues" id="langues">
+    <div class="section-container">
+      <div class="section-line"></div>
+      <h2 class="section-title"><span>Langues</span></h2>
+      <p class="section-subtitle">Mes compétences linguistiques</p>
+      <div class="langues-grid">
+
+        <div class="langue-card">
+          <div class="langue-flag">🇬🇧</div>
+          <div class="langue-info">
+            <div class="langue-name">Anglais</div>
+            <div class="langue-level">C1 — IELTS</div>
+            <div class="langue-bar-container"><div class="langue-bar" style="width: 85%"></div></div>
+          </div>
+        </div>
+
+        <div class="langue-card">
+          <div class="langue-flag">🇫🇷</div>
+          <div class="langue-info">
+            <div class="langue-name">Français</div>
+            <div class="langue-level">C1 — TCF</div>
+            <div class="langue-bar-container"><div class="langue-bar" style="width: 85%"></div></div>
+          </div>
+        </div>
+
+        <div class="langue-card">
+          <div class="langue-flag">🇩🇿</div>
+          <div class="langue-info">
+            <div class="langue-name">Arabe</div>
+            <div class="langue-level">Langue maternelle</div>
+            <div class="langue-bar-container"><div class="langue-bar" style="width: 100%"></div></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== TIMELINE / PARCOURS ==================== -->
+  <section class="timeline-section" id="parcours">
+    <div class="section-container">
+      <div class="section-line"></div>
+      <h2 class="section-title">Mon <span>Parcours</span></h2>
+      <p class="section-subtitle">Les étapes clés de ma formation</p>
+
+      <div class="timeline">
+
+        <!-- Kielce -->
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-card">
+            <img src="ville2.png" alt="Kielce, Pologne" class="timeline-card-image">
+            <div class="timeline-card-body">
+              <div class="timeline-year">2023 — 2025</div>
+              <h3 class="timeline-card-title">Kielce University of Technology</h3>
+              <p class="timeline-card-text">
+                Deux années d'études en anglais au sein de Kielce University of Technology en Pologne, où j'ai acquis des bases solides en génie mécanique. J'ai eu l'opportunité de travailler sur des machines CNC et de développer une compréhension approfondie des procédés de fabrication. Cette expérience internationale m'a permis de renforcer mon niveau d'anglais et de m'adapter à un environnement multiculturel.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Poitiers -->
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-card">
+            <img src="ville1.png" alt="Poitiers, France" class="timeline-card-image">
+            <div class="timeline-card-body">
+              <div class="timeline-year">2025 — Présent</div>
+              <h3 class="timeline-card-title">Université de Poitiers</h3>
+              <p class="timeline-card-text">
+                En intégrant l'Université de Poitiers en L3, j'ai eu la chance de travailler sur de nombreux projets de conception mécanique en travaux pratiques, ce qui a considérablement renforcé ma maîtrise de SolidWorks. J'ai également découvert l'automatisme avec B&R Automation Studio et acquis de bonnes bases en programmation ST. Ces projets concrets m'ont permis de développer une approche rigoureuse de l'ingénierie mécanique.
+              </p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== PROJETS ==================== -->
+  <section class="projets" id="projets">
+    <div class="section-container">
+      <div class="section-line"></div>
+      <h2 class="section-title">Galerie de <span>Projets</span></h2>
+      <p class="section-subtitle">Mes réalisations en bureau d'études</p>
+
+      <div class="projets-filters">
+        <button class="skill-cat-btn active" data-filter="all">Tous les projets</button>
+        <button class="skill-cat-btn" data-filter="meca">Génie Mécanique</button>
+      </div>
+
+      <div class="projets-grid" id="projetsGrid">
+
+        <!-- Projet placeholder 1 -->
+        <div class="projet-card" data-type="meca">
+          <div class="projet-image"><i class="fas fa-cogs"></i></div>
+          <div class="projet-body">
+            <div class="projet-title">Projet à venir</div>
+            <p class="projet-desc">Détails du projet à ajouter prochainement.</p>
+            <div class="projet-tags">
+              <span class="projet-tag">SolidWorks</span>
+              <span class="projet-tag">Génie Mécanique</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Projet placeholder 2 -->
+        <div class="projet-card" data-type="meca">
+          <div class="projet-image"><i class="fas fa-cogs"></i></div>
+          <div class="projet-body">
+            <div class="projet-title">Projet à venir</div>
+            <p class="projet-desc">Détails du projet à ajouter prochainement.</p>
+            <div class="projet-tags">
+              <span class="projet-tag">SolidWorks</span>
+              <span class="projet-tag">Génie Mécanique</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Projet placeholder 3 -->
+        <div class="projet-card" data-type="meca">
+          <div class="projet-image"><i class="fas fa-cogs"></i></div>
+          <div class="projet-body">
+            <div class="projet-title">Projet à venir</div>
+            <p class="projet-desc">Détails du projet à ajouter prochainement.</p>
+            <div class="projet-tags">
+              <span class="projet-tag">SolidWorks</span>
+              <span class="projet-tag">Génie Mécanique</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Projet placeholder 4 -->
+        <div class="projet-card" data-type="meca">
+          <div class="projet-image"><i class="fas fa-cogs"></i></div>
+          <div class="projet-body">
+            <div class="projet-title">Projet à venir</div>
+            <p class="projet-desc">Détails du projet à ajouter prochainement.</p>
+            <div class="projet-tags">
+              <span class="projet-tag">SolidWorks</span>
+              <span class="projet-tag">Génie Mécanique</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== CONTACT ==================== -->
+  <section class="contact" id="contact">
+    <div class="section-container">
+      <div class="section-line"></div>
+      <h2 class="section-title">Me <span>Contacter</span></h2>
+      <p class="section-subtitle">N'hésitez pas à me joindre</p>
+
+      <div class="contact-grid">
+
+        <a href="mailto:abdeldjallilzerrouni1@gmail.com" class="contact-card">
+          <div class="contact-icon"><i class="fas fa-envelope"></i></div>
+          <div class="contact-label">Email</div>
+          <div class="contact-value">abdeldjallilzerrouni1@gmail.com</div>
+        </a>
+
+        <a href="tel:+33758752848" class="contact-card">
+          <div class="contact-icon"><i class="fas fa-phone"></i></div>
+          <div class="contact-label">Téléphone</div>
+          <div class="contact-value">+33 7 58 75 28 48</div>
+        </a>
+
+        <a href="https://www.linkedin.com/in/abdeldjallil-seif-eddine-zerrouni-168975384" target="_blank" class="contact-card">
+          <div class="contact-icon"><i class="fab fa-linkedin"></i></div>
+          <div class="contact-label">LinkedIn</div>
+          <div class="contact-value">Abdeldjallil Seif E. Zerrouni</div>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer>
+    <p>&copy; 2026 — Abdeldjallil Seif E. Zerrouni · Portfolio Génie Mécanique</p>
+  </footer>
+
+  <!-- ==================== JAVASCRIPT ==================== -->
+  <script>
+    // Mobile nav toggle
+    const navToggle = document.getElementById('navToggle');
+    const navLinks = document.getElementById('navLinks');
+    navToggle.addEventListener('click', () => navLinks.classList.toggle('active'));
+    navLinks.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => navLinks.classList.remove('active'));
+    });
+
+    // Skills filter
+    document.querySelectorAll('.skills-categories .skill-cat-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.skills-categories .skill-cat-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const cat = btn.dataset.cat;
+        document.querySelectorAll('#skillsGrid .skill-card').forEach(card => {
+          card.style.display = (cat === 'all' || card.dataset.category === cat) ? '' : 'none';
+        });
+      });
+    });
+
+    // Projets filter
+    document.querySelectorAll('.projets-filters .skill-cat-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.projets-filters .skill-cat-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const filter = btn.dataset.filter;
+        document.querySelectorAll('#projetsGrid .projet-card').forEach(card => {
+          card.style.display = (filter === 'all' || card.dataset.type === filter) ? '' : 'none';
+        });
+      });
+    });
+
+    // Active nav link on scroll
+    const sections = document.querySelectorAll('section[id]');
+    window.addEventListener('scroll', () => {
+      const scrollY = window.scrollY + 100;
+      sections.forEach(section => {
+        const top = section.offsetTop;
+        const height = section.offsetHeight;
+        const id = section.getAttribute('id');
+        const link = document.querySelector(`.nav-links a[href="#${id}"]`);
+        if (link) {
+          if (scrollY >= top && scrollY < top + height) {
+            link.style.color = '#fff';
+          } else {
+            link.style.color = '';
+          }
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>
