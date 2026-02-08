@@ -108,6 +108,26 @@
       display: block;
     }
 
+    /* ── Astronaut 3D (Parcours) ── */
+    #astronaut-3d {
+      position: absolute;
+      right: calc(100% + 0.5rem);
+      top: 50%;
+      transform: translateY(-50%);
+      width: 260px;
+      height: 360px;
+      pointer-events: none;
+      z-index: 2;
+      opacity: 0;
+      transition: opacity 1.5s ease;
+      filter: drop-shadow(0 0 25px rgba(59,130,246,0.25));
+    }
+    #astronaut-3d.loaded { opacity: 0.92; }
+    #astronaut-3d canvas {
+      width: 100%; height: 100%;
+      display: block;
+    }
+
     .hero-content {
       max-width: 1100px; width: 100%; margin: 0 auto;
       display: flex; align-items: center; gap: 4rem;
@@ -651,6 +671,7 @@
       .projet-modal { padding: 0.5rem; }
       .code-panel pre { font-size: 0.7rem; padding: 1rem; }
       #engine-canvas.loaded { opacity: 0.10; }
+      #astronaut-3d { display: none !important; }
     }
   </style>
 </head>
@@ -873,7 +894,8 @@
         </div>
 
         <!-- Poitiers -->
-        <div class="timeline-item">
+        <div class="timeline-item" style="position:relative;">
+          <div id="astronaut-3d"></div>
           <div class="timeline-dot"></div>
           <div class="timeline-card">
             <img src="ville2.png" alt="Poitiers, France" class="timeline-card-image">
@@ -2370,6 +2392,122 @@ END_TYPE</pre>
 
       /* Slow auto-rotation */
       model.rotation.y += AUTO_ROTATE;
+
+      renderer.render(scene, camera);
+    }
+
+    /* ── Resize ── */
+    window.addEventListener('resize', () => {
+      if (!container || container.clientWidth === 0) return;
+      camera.aspect = container.clientWidth / container.clientHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(container.clientWidth, container.clientHeight);
+    });
+
+    /* ── Pause when not visible ── */
+    const obs = new IntersectionObserver(entries => {
+      isVisible = entries[0].isIntersecting;
+    }, { threshold: 0.05 });
+    obs.observe(container);
+
+  })();
+  </script>
+
+  <!-- ==================== 3D ASTRONAUT (Parcours) ==================== -->
+  <script type="module">
+  import * as THREE from 'three';
+  import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+
+  (function () {
+    const container = document.getElementById('astronaut-3d');
+    if (!container || window.innerWidth < 769) return;
+
+    /* ── Renderer ── */
+    const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setSize(container.clientWidth, container.clientHeight);
+    renderer.setClearColor(0x000000, 0);
+    renderer.outputColorSpace = THREE.SRGBColorSpace;
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 1.4;
+    container.appendChild(renderer.domElement);
+
+    /* ── Scene & Camera ── */
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(
+      55, container.clientWidth / container.clientHeight, 0.01, 100
+    );
+
+    /* ── Lights ── */
+    scene.add(new THREE.AmbientLight(0xffffff, 1.0));
+    const dir1 = new THREE.DirectionalLight(0xffffff, 1.5);
+    dir1.position.set(3, 5, 5);
+    scene.add(dir1);
+    const dir2 = new THREE.DirectionalLight(0x3b82f6, 0.6);
+    dir2.position.set(-3, 1, -2);
+    scene.add(dir2);
+    /* Rim light for 3D pop-out effect */
+    const rim = new THREE.DirectionalLight(0x60a5fa, 0.5);
+    rim.position.set(0, 0, -5);
+    scene.add(rim);
+
+    /* ── Load GLB ── */
+    let mixer = null;
+    const ANIM_SPEED = 0.8;
+    const clock = new THREE.Clock();
+
+    const loader = new GLTFLoader();
+    loader.load('astronaut.glb', (gltf) => {
+      const model = gltf.scene;
+
+      /* Center & scale – fill the container, close to camera */
+      const box = new THREE.Box3().setFromObject(model);
+      const center = box.getCenter(new THREE.Vector3());
+      const size = box.getSize(new THREE.Vector3());
+      const maxDim = Math.max(size.x, size.y, size.z);
+      const scale = 3.0 / maxDim;
+
+      model.scale.setScalar(scale);
+      model.position.sub(center.multiplyScalar(scale));
+
+      scene.add(model);
+
+      /* Camera close for 3D pop-out feel */
+      camera.position.set(0, 0.2, 3.2);
+      camera.lookAt(0, 0, 0);
+
+      /* Play animations */
+      if (gltf.animations && gltf.animations.length > 0) {
+        mixer = new THREE.AnimationMixer(model);
+        gltf.animations.forEach(clip => {
+          const action = mixer.clipAction(clip);
+          action.timeScale = ANIM_SPEED;
+          action.play();
+        });
+      }
+
+      /* Fade in */
+      container.classList.add('loaded');
+
+      /* Start render loop */
+      animate(model);
+
+    }, undefined, (err) => {
+      console.warn('Astronaut GLB load error:', err);
+    });
+
+    /* ── Animation Loop ── */
+    let isVisible = true;
+
+    function animate(model) {
+      requestAnimationFrame(() => animate(model));
+      if (!isVisible) return;
+
+      const delta = clock.getDelta();
+      if (mixer) mixer.update(delta);
+
+      /* Gentle floating rotation for 3D depth */
+      model.rotation.y = Math.sin(Date.now() * 0.0003) * 0.15;
 
       renderer.render(scene, camera);
     }
