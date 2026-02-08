@@ -7,6 +7,14 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+    }
+  }
+  </script>
   <style>
     /* ============================================
        RESET & BASE
@@ -85,11 +93,33 @@
       content: '';
       position: absolute; inset: 0;
       background: radial-gradient(circle at 70% 40%, rgba(59,130,246,0.08) 0%, transparent 60%);
+      z-index: 1;
+    }
+    #engine-bg {
+      position: absolute; inset: 0;
+      z-index: 0;
+      overflow: hidden;
+      pointer-events: none;
+    }
+    #engine-bg canvas {
+      width: 100%; height: 100%;
+      display: block;
+    }
+    .engine-hint {
+      position: absolute;
+      bottom: 2rem; right: 2rem;
+      color: rgba(59,130,246,0.35);
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+      z-index: 3;
+      pointer-events: none;
+      transition: opacity 2s ease;
     }
     .hero-content {
       max-width: 1100px; width: 100%; margin: 0 auto;
       display: flex; align-items: center; gap: 4rem;
-      position: relative; z-index: 1;
+      position: relative; z-index: 2;
     }
     .hero-text { flex: 1; }
     .hero-badge {
@@ -628,6 +658,8 @@
       .modal-header h2 { font-size: 1.3rem; }
       .projet-modal { padding: 0.5rem; }
       .code-panel pre { font-size: 0.7rem; padding: 1rem; }
+      #engine-bg { display: none; }
+      .engine-hint { display: none; }
     }
   </style>
 </head>
@@ -653,6 +685,8 @@
 
   <!-- ==================== HERO ==================== -->
   <section class="hero" id="hero">
+    <div id="engine-bg"></div>
+    <div class="engine-hint" id="engineHint"><i class="fas fa-hand-pointer"></i> Cliquez pour interagir</div>
     <div class="hero-content">
       <div class="hero-text">
         <div class="hero-badge"><i class="fas fa-cogs"></i>&nbsp; Ouvert aux opportunités de stage</div>
@@ -2250,6 +2284,345 @@ END_TYPE</pre>
         }
       });
     });
+  </script>
+
+  <!-- ==================== 3D ENGINE ANIMATION ==================== -->
+  <script type="module">
+  import * as THREE from 'three';
+  import { STLLoader } from 'three/addons/loaders/STLLoader.js';
+
+  (function(){
+    /* ═══════════════════════════════════════════════
+       CONFIGURATION
+    ═══════════════════════════════════════════════ */
+    const CFG = {
+      color:      0x3b82f6,
+      meshAlpha:  0.05,
+      edgeAlpha:  0.14,
+      edgeDeg:    20,
+      rpm:        10,
+      crankRatio: 0.30,
+      explDist:   3.5,
+      explLerp:   0.03,
+      orbitSpeed: 0.0006,
+      phases:     [0, Math.PI, Math.PI, 0],
+    };
+
+    /* ═══════════════════════════════════════════════
+       SCENE SETUP
+    ═══════════════════════════════════════════════ */
+    const box = document.getElementById('engine-bg');
+    if (!box || box.clientWidth === 0) return;
+
+    const W = () => box.clientWidth;
+    const H = () => box.clientHeight;
+
+    const scene    = new THREE.Scene();
+    const camera   = new THREE.PerspectiveCamera(35, W()/H(), 0.1, 500);
+    const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setSize(W(), H());
+    renderer.setClearColor(0x000000, 0);
+    box.appendChild(renderer.domElement);
+
+    /* Lights */
+    scene.add(new THREE.AmbientLight(0xffffff, 0.5));
+    const sun = new THREE.DirectionalLight(0xffffff, 0.7);
+    sun.position.set(8, 12, 10);
+    scene.add(sun);
+
+    /* ═══════════════════════════════════════════════
+       MATERIALS
+    ═══════════════════════════════════════════════ */
+    const mkSolid = () => new THREE.MeshPhongMaterial({
+      color: CFG.color, transparent: true, opacity: CFG.meshAlpha,
+      shininess: 60, side: THREE.DoubleSide, depthWrite: false,
+    });
+    const mkEdge = () => new THREE.LineBasicMaterial({
+      color: CFG.color, transparent: true, opacity: CFG.edgeAlpha,
+    });
+
+    /* ═══════════════════════════════════════════════
+       HELPERS
+    ═══════════════════════════════════════════════ */
+    function mkPart(geo) {
+      const g = new THREE.Group();
+      g.add(new THREE.Mesh(geo, mkSolid()));
+      g.add(new THREE.LineSegments(
+        new THREE.EdgesGeometry(geo, CFG.edgeDeg), mkEdge()
+      ));
+      return g;
+    }
+
+    function gSize(geo) {
+      const v = new THREE.Vector3();
+      geo.boundingBox.getSize(v);
+      return v;
+    }
+
+    function alignLongest(geo, axis) {
+      const s = gSize(geo);
+      const dims = [s.x, s.y, s.z];
+      const li = dims.indexOf(Math.max(...dims));
+      if (li === axis) return;
+      if (li === 0 && axis === 1) geo.rotateZ(-Math.PI/2);
+      else if (li === 0 && axis === 2) geo.rotateY(Math.PI/2);
+      else if (li === 1 && axis === 0) geo.rotateZ(Math.PI/2);
+      else if (li === 1 && axis === 2) geo.rotateX(-Math.PI/2);
+      else if (li === 2 && axis === 0) geo.rotateY(-Math.PI/2);
+      else if (li === 2 && axis === 1) geo.rotateX(Math.PI/2);
+      geo.center();
+      geo.computeBoundingBox();
+    }
+
+    /* ═══════════════════════════════════════════════
+       LOAD STL FILES
+    ═══════════════════════════════════════════════ */
+    const loader = new STLLoader();
+    const FILES = {
+      piston: 'engine_piston.stl',
+      ring:   'engine_ring.stl',
+      crank:  'engine_crankshaft.stl',
+      rod:    'engine_rod.stl',
+      cap:    'engine_cap.stl',
+      pin:    'engine_pin.stl',
+    };
+    const G = {};
+    let nLoad = 0;
+    const nTotal = Object.keys(FILES).length;
+
+    for (const [k, f] of Object.entries(FILES)) {
+      loader.load(f, geo => {
+        geo.computeBoundingBox();
+        geo.center();
+        G[k] = geo;
+        if (++nLoad === nTotal) buildEngine();
+      }, undefined, err => console.warn('STL load error:', f, err));
+    }
+
+    /* ═══════════════════════════════════════════════
+       ENGINE STATE
+    ═══════════════════════════════════════════════ */
+    const root = new THREE.Group();
+    scene.add(root);
+
+    let theta     = 0;
+    let isExploded = false;
+    let tExp      = 0;
+
+    const cyls = [];
+    let crankPart = null;
+    let CRANK_R = 0;
+    let ROD_L   = 0;
+
+    /* ═══════════════════════════════════════════════
+       BUILD ENGINE ASSEMBLY
+    ═══════════════════════════════════════════════ */
+    function buildEngine() {
+      /* Orient parts */
+      alignLongest(G.crank, 2);   // crankshaft along Z
+      alignLongest(G.rod, 1);     // connecting rod along Y
+      alignLongest(G.piston, 1);  // piston along Y
+      alignLongest(G.cap, 1);     // cap along Y
+      alignLongest(G.pin, 0);     // piston pin along X
+
+      /* Scale to fit ~5 units (based on crankshaft) */
+      const cSz = gSize(G.crank);
+      const longest = Math.max(cSz.x, cSz.y, cSz.z);
+      const S = 5.0 / longest;
+      for (const g of Object.values(G)) {
+        g.scale(S, S, S);
+        g.computeBoundingBox();
+      }
+
+      /* Compute engine parameters */
+      const rSz = gSize(G.rod);
+      const pSz = gSize(G.piston);
+      const cSz2 = gSize(G.crank);
+
+      ROD_L   = rSz.y * 0.85;
+      CRANK_R = ROD_L * CFG.crankRatio;
+
+      const crankLen = cSz2.z;
+      const cylSpacing = crankLen / 5;
+      const pH = pSz.y;
+
+      /* Crankshaft */
+      crankPart = mkPart(G.crank);
+      root.add(crankPart);
+
+      /* 4 Cylinders */
+      for (let i = 0; i < 4; i++) {
+        const z = (i - 1.5) * cylSpacing;
+        const phase = CFG.phases[i];
+
+        /* Piston assembly (piston + 3 rings + pin) */
+        const pAssy = new THREE.Group();
+        pAssy.add(mkPart(G.piston.clone()));
+
+        for (let r = 0; r < 3; r++) {
+          const ring = mkPart(G.ring.clone());
+          ring.position.y = (r - 1) * pH * 0.12;
+          pAssy.add(ring);
+        }
+
+        const pin = mkPart(G.pin.clone());
+        pin.position.y = -pH * 0.32;
+        pAssy.add(pin);
+
+        const initPY = CRANK_R + ROD_L;
+        pAssy.position.set(0, initPY, z);
+        root.add(pAssy);
+
+        /* Connecting rod */
+        const rod = mkPart(G.rod.clone());
+        rod.position.set(0, ROD_L * 0.5, z);
+        root.add(rod);
+
+        /* Connecting rod cap */
+        const cap = mkPart(G.cap.clone());
+        cap.position.set(0, 0, z);
+        root.add(cap);
+
+        /* Explode directions */
+        const a = (i / 4) * Math.PI * 2 + Math.PI * 0.25;
+        cyls.push({
+          pAssy, rod, cap, phase, z,
+          eP: new THREE.Vector3(Math.cos(a) * 0.5, 1.8, Math.sin(a) * 0.4),
+          eR: new THREE.Vector3(Math.cos(a + 0.7) * 0.7, 0.4, Math.sin(a + 0.7) * 0.5),
+          eC: new THREE.Vector3(Math.cos(a + 1.4) * 0.5, -1.4, Math.sin(a + 1.4) * 0.4),
+        });
+      }
+
+      /* Position camera */
+      const bb = new THREE.Box3().setFromObject(root);
+      const ctr = bb.getCenter(new THREE.Vector3());
+      const sz = bb.getSize(new THREE.Vector3());
+      const maxS = Math.max(sz.x, sz.y, sz.z);
+
+      camera.position.set(
+        ctr.x + maxS * 0.8,
+        ctr.y + maxS * 0.5,
+        ctr.z + maxS * 1.6
+      );
+      camera.lookAt(ctr);
+
+      /* Initial tilt */
+      root.rotation.set(-0.15, 0.35, 0);
+
+      /* Start loop */
+      loop();
+    }
+
+    /* ═══════════════════════════════════════════════
+       ANIMATION LOOP
+    ═══════════════════════════════════════════════ */
+    function smoothstep(t) {
+      return t * t * (3 - 2 * t);
+    }
+
+    function loop() {
+      requestAnimationFrame(loop);
+      if (!engineVisible) return;
+
+      const omega = (CFG.rpm / 60) * Math.PI * 2 / 60;
+      theta += omega;
+
+      /* Explode lerp */
+      if (isExploded && tExp < 1) tExp = Math.min(1, tExp + CFG.explLerp);
+      if (!isExploded && tExp > 0) tExp = Math.max(0, tExp - CFG.explLerp);
+      const e = smoothstep(tExp);
+      const motion = 1 - e;
+
+      /* Crankshaft */
+      if (crankPart) {
+        crankPart.rotation.z = theta * motion;
+        crankPart.position.y = e * -CFG.explDist * 0.7;
+        crankPart.position.x = e * -CFG.explDist * 0.3;
+      }
+
+      /* Cylinders */
+      for (const c of cyls) {
+        const angle = theta * motion + c.phase;
+        const sA = Math.sin(angle);
+        const cA = Math.cos(angle);
+        const R = CRANK_R;
+        const L = ROD_L;
+
+        /* Crank-slider kinematics */
+        const pY = R * cA + Math.sqrt(Math.max(0, L * L - R * R * sA * sA));
+        const rodAngle = Math.asin(Math.min(1, Math.max(-1, (R * sA) / L)));
+        const crankPinY = R * cA;
+        const rodCY = (pY + crankPinY) * 0.5;
+
+        const D = CFG.explDist;
+
+        /* Piston assembly */
+        c.pAssy.position.set(
+          c.eP.x * D * e,
+          pY + c.eP.y * D * e,
+          c.z + c.eP.z * D * e
+        );
+
+        /* Connecting rod */
+        c.rod.position.set(
+          R * sA * motion * 0.5 + c.eR.x * D * e,
+          rodCY + c.eR.y * D * e,
+          c.z + c.eR.z * D * e
+        );
+        c.rod.rotation.z = -rodAngle * motion;
+
+        /* Cap (follows crank pin) */
+        c.cap.position.set(
+          R * sA * motion + c.eC.x * D * e,
+          crankPinY + c.eC.y * D * e,
+          c.z + c.eC.z * D * e
+        );
+        c.cap.rotation.z = -rodAngle * 0.3 * motion;
+      }
+
+      /* Slow auto-orbit */
+      root.rotation.y += CFG.orbitSpeed;
+
+      renderer.render(scene, camera);
+    }
+
+    /* ═══════════════════════════════════════════════
+       INTERACTION
+    ═══════════════════════════════════════════════ */
+    document.querySelector('.hero').addEventListener('click', ev => {
+      if (ev.target.closest('a, button, .hero-badge')) return;
+      isExploded = !isExploded;
+    });
+
+    /* ═══════════════════════════════════════════════
+       RESIZE
+    ═══════════════════════════════════════════════ */
+    window.addEventListener('resize', () => {
+      if (!box || box.clientWidth === 0) return;
+      camera.aspect = W() / H();
+      camera.updateProjectionMatrix();
+      renderer.setSize(W(), H());
+    });
+
+    /* ═══════════════════════════════════════════════
+       FADE HINT AFTER 6s
+    ═══════════════════════════════════════════════ */
+    setTimeout(() => {
+      const hint = document.getElementById('engineHint');
+      if (hint) hint.style.opacity = '0';
+    }, 6000);
+
+    /* ═══════════════════════════════════════════════
+       PAUSE WHEN NOT VISIBLE (performance)
+    ═══════════════════════════════════════════════ */
+    let engineVisible = true;
+    const observer = new IntersectionObserver(entries => {
+      engineVisible = entries[0].isIntersecting;
+    }, { threshold: 0.1 });
+    observer.observe(box);
+
+  })();
   </script>
 
 </body>
