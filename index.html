@@ -1464,6 +1464,19 @@ END_TYPE</pre>
         </div>
       </div>
 
+      <!-- VALIDATION PIÈCE OPTIMISÉE -->
+      <div class="modal-section">
+        <h3><i class="fas fa-chart-area"></i> Validation de la pièce optimisée</h3>
+        <p>Une seconde simulation éléments finis a été réalisée sur la pièce optimisée afin de vérifier que l'allègement n'a pas compromis sa tenue mécanique. Les résultats montrent que la contrainte maximale de Von Mises atteint environ <strong>296 MPa</strong>, très proche de la limite d'élasticité du matériau (<strong>283 MPa</strong>). La pièce résiste donc aux charges appliquées, mais se situe à la limite de sa capacité — ce qui confirme que l'optimisation a été poussée au maximum du potentiel du matériau.</p>
+        <p style="margin-top:0.75rem;">Les zones critiques restent localisées autour des trous de fixation, où les concentrations de contraintes sont les plus élevées en raison de la géométrie.</p>
+        <div class="modal-img-grid single" style="margin-top:1.25rem;">
+          <div class="modal-img-container">
+            <img src="ridoir_simulation_opti.png" alt="Simulation Von Mises pièce optimisée">
+            <div class="modal-img-caption">Simulation Von Mises — pièce optimisée (contrainte max ≈ 296 MPa, limite élastique ≈ 283 MPa)</div>
+          </div>
+        </div>
+      </div>
+
       <!-- RÉSULTAT FINAL -->
       <div class="modal-section">
         <h3><i class="fas fa-check-circle"></i> Résultat final</h3>
