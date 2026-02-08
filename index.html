@@ -115,15 +115,16 @@
       position: absolute;
       left: 2%;
       bottom: -20px;
-      width: 280px;
-      height: 400px;
+      width: 300px;
+      height: 420px;
       pointer-events: none;
-      z-index: 5;
+      z-index: 10;
       opacity: 0;
-      transition: opacity 1.5s ease;
-      filter: drop-shadow(0 0 30px rgba(59,130,246,0.3));
+      transition: opacity 1s ease;
+      filter: drop-shadow(0 4px 30px rgba(59,130,246,0.45))
+             drop-shadow(0 0 60px rgba(59,130,246,0.2));
     }
-    #astronaut-3d.loaded { opacity: 0.95; }
+    #astronaut-3d.loaded { opacity: 1; }
     #astronaut-3d canvas {
       width: 100%; height: 100%;
       display: block;
@@ -2438,24 +2439,29 @@ END_TYPE</pre>
     renderer.setClearColor(0x000000, 0);
     renderer.outputColorSpace = THREE.SRGBColorSpace;
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    renderer.toneMappingExposure = 1.4;
+    renderer.toneMappingExposure = 1.8;
     container.appendChild(renderer.domElement);
 
     /* ── Scene & Camera ── */
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(55, W / H, 0.01, 100);
 
-    /* ── Lights ── */
-    scene.add(new THREE.AmbientLight(0xffffff, 1.0));
-    const dir1 = new THREE.DirectionalLight(0xffffff, 1.5);
+    /* ── Strong Lights for pop-out effect ── */
+    scene.add(new THREE.AmbientLight(0xffffff, 1.8));
+    const dir1 = new THREE.DirectionalLight(0xffffff, 2.5);
     dir1.position.set(3, 5, 5);
     scene.add(dir1);
-    const dir2 = new THREE.DirectionalLight(0x3b82f6, 0.6);
-    dir2.position.set(-3, 1, -2);
+    const dir2 = new THREE.DirectionalLight(0x3b82f6, 1.0);
+    dir2.position.set(-3, 2, -2);
     scene.add(dir2);
-    const rim = new THREE.DirectionalLight(0x60a5fa, 0.5);
-    rim.position.set(0, 0, -5);
+    /* Rim light from behind for edge glow */
+    const rim = new THREE.DirectionalLight(0x60a5fa, 1.2);
+    rim.position.set(0, 2, -5);
     scene.add(rim);
+    /* Front fill light */
+    const front = new THREE.DirectionalLight(0xffffff, 1.0);
+    front.position.set(0, 0, 5);
+    scene.add(front);
 
     /* ── Load GLB ── */
     let mixer = null;
@@ -2480,7 +2486,7 @@ END_TYPE</pre>
         model.position.sub(center.multiplyScalar(scale));
         scene.add(model);
 
-        camera.position.set(0, 0.2, 3.2);
+        camera.position.set(0, 0.3, 2.6);
         camera.lookAt(0, 0, 0);
 
         if (gltf.animations && gltf.animations.length > 0) {
