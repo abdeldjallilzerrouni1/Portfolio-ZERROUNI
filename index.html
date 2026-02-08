@@ -495,6 +495,44 @@
     .code-panel pre::-webkit-scrollbar-track { background: rgba(255,255,255,0.02); }
     .code-panel pre::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 3px; }
 
+    /* IMAGE GRIDS */
+    .modal-img-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    .modal-img-grid.single { grid-template-columns: 1fr; }
+    .modal-img-container {
+      border-radius: 12px; overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+    .modal-img-container img { width: 100%; display: block; }
+    .modal-img-caption {
+      padding: 0.6rem 1rem;
+      background: rgba(255,255,255,0.02);
+      color: #707070; font-size: 0.8rem; font-style: italic;
+      text-align: center;
+    }
+    .modal-result-box {
+      background: rgba(59,130,246,0.06);
+      border: 1px solid rgba(59,130,246,0.15);
+      border-radius: 12px; padding: 1.5rem;
+      margin: 1rem 0;
+    }
+    .modal-result-box .result-row {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 0.4rem 0;
+      color: #b0b0b0; font-size: 0.95rem;
+    }
+    .modal-result-box .result-row span:last-child {
+      font-weight: 700; color: #fff;
+    }
+    .modal-result-box .result-row.highlight span:last-child {
+      color: #60a5fa; font-size: 1.1rem;
+    }
+    @media (max-width: 768px) {
+      .modal-img-grid { grid-template-columns: 1fr; }
+    }
+
     /* CHRONO & VIDEO */
     .chrono-container {
       border-radius: 12px; overflow: hidden;
@@ -832,15 +870,16 @@
 
       <div class="projets-grid" id="projetsGrid">
 
-        <!-- Projet placeholder 1 -->
-        <div class="projet-card" data-type="meca">
-          <div class="projet-image"><i class="fas fa-cogs"></i></div>
+        <!-- ====== PROJET MECA : RIDOIR HYDRAULIQUE ====== -->
+        <div class="projet-card clickable" data-type="meca" onclick="openModal('modalRidoir')">
+          <div class="projet-image"><img src="ridoir_3d_initial.png" alt="Ridoir hydraulique" style="width:100%;height:100%;object-fit:cover;"></div>
           <div class="projet-body">
-            <div class="projet-title">Projet à venir</div>
-            <p class="projet-desc">Détails du projet à ajouter prochainement.</p>
+            <div class="projet-title">Ridoir hydraulique — Re-conception mécano-soudée</div>
+            <p class="projet-desc">Re-conception et optimisation d'un ridoir mécano-soudé : simplification, simulation éléments finis et allègement de 32%.</p>
             <div class="projet-tags">
               <span class="projet-tag">SolidWorks</span>
-              <span class="projet-tag">Génie Mécanique</span>
+              <span class="projet-tag">Simulation FEA</span>
+              <span class="projet-tag">Conception</span>
             </div>
           </div>
         </div>
@@ -1305,6 +1344,125 @@ END_TYPE</pre>
           </video>
         </div>
         <p>Le bon fonctionnement du système a été vérifié expérimentalement en remplaçant le brûleur par un feutre et en utilisant une feuille blanche pour tracer la trajectoire. Le tracé obtenu confirme que le déplacement réel correspond à la trajectoire théorique programmée et valide le cycle automatisé.</p>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ==================== MODAL RIDOIR ==================== -->
+  <div class="projet-modal" id="modalRidoir">
+    <div class="modal-overlay" onclick="closeModal()"></div>
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeModal()"><i class="fas fa-times"></i></button>
+
+      <div class="modal-header">
+        <h2>Ridoir hydraulique — Re-conception et optimisation mécano-soudée</h2>
+        <div class="modal-tags">
+          <span class="projet-tag">SolidWorks</span>
+          <span class="projet-tag">Simulation FEA</span>
+          <span class="projet-tag">Conception mécano-soudée</span>
+          <span class="projet-tag">Optimisation</span>
+        </div>
+      </div>
+
+      <!-- OBJECTIF -->
+      <div class="modal-section">
+        <h3><i class="fas fa-bullseye"></i> Objectif du projet</h3>
+        <p>L'objectif du projet était de reconcevoir une pièce de ridoir initialement complexe à fabriquer afin de proposer une solution mécano-soudée plus simple, plus légère et adaptée à la fabrication industrielle, tout en garantissant sa résistance mécanique par simulation.</p>
+      </div>
+
+      <!-- ANALYSE INITIALE -->
+      <div class="modal-section">
+        <h3><i class="fas fa-search"></i> Analyse et modélisation initiale</h3>
+        <p>Le travail a commencé par l'analyse complète d'un plan technique afin de comprendre la géométrie, les fonctions mécaniques et les contraintes de la pièce. Une modélisation 3D complète a ensuite été réalisée sous SolidWorks.</p>
+        <div class="modal-img-grid" style="margin-top:1.25rem;">
+          <div class="modal-img-container">
+            <img src="ridoir_3d_initial.png" alt="Modèle 3D de la pièce initiale">
+            <div class="modal-img-caption">Modèle 3D de la pièce initiale</div>
+          </div>
+          <div class="modal-img-container">
+            <img src="ridoir_plan.png" alt="Plan technique avec coupes et vues">
+            <div class="modal-img-caption">Plan technique — coupes et vues</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- NOUVELLE CONCEPTION -->
+      <div class="modal-section">
+        <h3><i class="fas fa-pencil-ruler"></i> Nouvelle conception mécano-soudée</h3>
+        <p>La pièce a ensuite été repensée dans une logique de fabrication mécano-soudée. La conception a été simplifiée en décomposant la pièce en plusieurs éléments simples à usiner puis à assembler par soudage. Une nouvelle architecture a été proposée afin de supprimer certaines formes complexes d'usinage.</p>
+        <div class="modal-img-grid single" style="margin-top:1.25rem;">
+          <div class="modal-img-container">
+            <img src="ridoir_new_design.png" alt="Nouvelle conception mécano-soudée">
+            <div class="modal-img-caption">Vue 3D de la nouvelle conception mécano-soudée</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SOUDURES -->
+      <div class="modal-section">
+        <h3><i class="fas fa-fire"></i> Définition des zones de soudure</h3>
+        <p>L'assemblage soudé a ensuite été défini en précisant les zones de cordons de soudure afin d'assurer la rigidité et la continuité mécanique de la pièce.</p>
+        <div class="modal-img-grid single" style="margin-top:1.25rem;">
+          <div class="modal-img-container">
+            <img src="ridoir_soudures.png" alt="Zones de soudure">
+            <div class="modal-img-caption">Position des cordons de soudure (zones rouges)</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SIMULATION -->
+      <div class="modal-section">
+        <h3><i class="fas fa-chart-area"></i> Validation par simulation éléments finis</h3>
+        <p>Une validation mécanique a été réalisée par simulation éléments finis afin de vérifier la tenue de la pièce sous charge. Cette analyse a permis d'identifier les zones critiques, principalement autour des trous de fixation.</p>
+        <div class="modal-img-grid single" style="margin-top:1.25rem;">
+          <div class="modal-img-container">
+            <img src="ridoir_simulation.png" alt="Simulation Von Mises">
+            <div class="modal-img-caption">Simulation contraintes Von Mises — zone critique visible</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- OPTIMISATION -->
+      <div class="modal-section">
+        <h3><i class="fas fa-weight-hanging"></i> Optimisation de la masse</h3>
+        <p>La pièce a ensuite été optimisée afin de réduire sa masse tout en conservant ses performances mécaniques. Plusieurs modifications géométriques ont permis d'obtenir un allègement significatif.</p>
+        <div class="modal-img-grid" style="margin-top:1.25rem;">
+          <div class="modal-img-container">
+            <img src="ridoir_masse_avant.png" alt="Masse pièce initiale">
+            <div class="modal-img-caption">Pièce initiale — 722,71 g</div>
+          </div>
+          <div class="modal-img-container">
+            <img src="ridoir_masse_apres.png" alt="Masse pièce optimisée">
+            <div class="modal-img-caption">Pièce optimisée — 491,02 g</div>
+          </div>
+        </div>
+        <div class="modal-result-box">
+          <div class="result-row">
+            <span>Masse initiale</span>
+            <span>~723 g</span>
+          </div>
+          <div class="result-row">
+            <span>Masse optimisée</span>
+            <span>~491 g</span>
+          </div>
+          <div class="result-row highlight">
+            <span>Gain de masse</span>
+            <span>~232 g (−32%)</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- RÉSULTAT FINAL -->
+      <div class="modal-section">
+        <h3><i class="fas fa-check-circle"></i> Résultat final</h3>
+        <p>Le projet a permis de concevoir une pièce mécano-soudée optimisée, plus légère et adaptée à la fabrication industrielle, tout en conservant une tenue mécanique validée par simulation.</p>
+        <div class="modal-img-grid single" style="margin-top:1.25rem;">
+          <div class="modal-img-container">
+            <img src="ridoir_final.png" alt="Pièce finale optimisée">
+            <div class="modal-img-caption">Vue 3D de la pièce finale optimisée</div>
+          </div>
+        </div>
       </div>
 
     </div>
