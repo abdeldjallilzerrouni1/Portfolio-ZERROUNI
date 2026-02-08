@@ -898,15 +898,16 @@
           </div>
         </div>
 
-        <!-- Projet placeholder 3 -->
-        <div class="projet-card" data-type="meca">
-          <div class="projet-image"><i class="fas fa-cogs"></i></div>
+        <!-- ====== PROJET MECA : MONTAGE D'USINAGE ====== -->
+        <div class="projet-card clickable" data-type="meca" onclick="openModal('modalUsinage')">
+          <div class="projet-image"><img src="usinage_theme.png" alt="Montage d'usinage" style="width:100%;height:100%;object-fit:contain;background:#f5f5f5;padding:0.5rem;"></div>
           <div class="projet-body">
-            <div class="projet-title">Projet à venir</div>
-            <p class="projet-desc">Détails du projet à ajouter prochainement.</p>
+            <div class="projet-title">Montage d'usinage — Perçage de pièces cylindriques</div>
+            <p class="projet-desc">Conception d'un montage d'usinage isostatique pour le perçage de pièces cylindriques sur perceuse à colonne.</p>
             <div class="projet-tags">
               <span class="projet-tag">SolidWorks</span>
-              <span class="projet-tag">Génie Mécanique</span>
+              <span class="projet-tag">Isostatisme</span>
+              <span class="projet-tag">Conception</span>
             </div>
           </div>
         </div>
@@ -1490,6 +1491,140 @@ END_TYPE</pre>
             <div class="modal-img-caption">Vue 3D de la pièce finale optimisée</div>
           </div>
         </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ==================== MODAL MONTAGE D'USINAGE ==================== -->
+  <div class="projet-modal" id="modalUsinage">
+    <div class="modal-overlay" onclick="closeModal()"></div>
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeModal()"><i class="fas fa-times"></i></button>
+
+      <div class="modal-header">
+        <h2>Montage d'usinage — Conception pour perçage de pièces cylindriques</h2>
+        <div class="modal-tags">
+          <span class="projet-tag">SolidWorks</span>
+          <span class="projet-tag">Isostatisme</span>
+          <span class="projet-tag">Mise en position</span>
+          <span class="projet-tag">Conception</span>
+        </div>
+      </div>
+
+      <!-- ÉNONCÉ -->
+      <div class="modal-section">
+        <h3><i class="fas fa-file-pdf"></i> Énoncé du projet</h3>
+        <div style="border-radius:12px;overflow:hidden;border:1px solid rgba(255,255,255,0.06);margin-bottom:0.5rem;">
+          <iframe src="usinage_sujet.pdf" style="width:100%;height:600px;border:none;background:#1a1a24;"></iframe>
+        </div>
+        <p style="margin-top:0.75rem;font-size:0.85rem;color:#707070;">
+          <a href="usinage_sujet.pdf" target="_blank" style="color:#60a5fa;"><i class="fas fa-download" style="margin-right:0.4rem;"></i>Télécharger le sujet (PDF)</a>
+        </p>
+      </div>
+
+      <!-- OBJECTIF -->
+      <div class="modal-section">
+        <h3><i class="fas fa-bullseye"></i> Objectif du projet</h3>
+        <p>L'objectif du projet était de concevoir un montage d'usinage permettant de positionner et maintenir une pièce cylindrique pendant une opération de perçage, en respectant les principes d'isostatisme, de simplicité de fabrication et de coût réduit. Le montage devait être ergonomique, rigide et adapté à une utilisation sur perceuse à colonne.</p>
+      </div>
+
+      <!-- ANALYSE PIÈCE -->
+      <div class="modal-section">
+        <h3><i class="fas fa-search"></i> Analyse de la pièce</h3>
+        <p>Le travail a commencé par l'analyse du dessin de définition de la pièce afin d'identifier les surfaces fonctionnelles nécessaires à la mise en position. La pièce devait être positionnée en prenant appui sur le cylindre principal, sur une surface plane et sur les surfaces latérales de la rainure afin d'obtenir une liaison encastrement isostatique.</p>
+        <div class="modal-img-grid single" style="margin-top:1.25rem;">
+          <div class="modal-img-container">
+            <img src="usinage_piece.png" alt="Pièce cylindrique à percer">
+            <div class="modal-img-caption">Pièce cylindrique à percer — trou à réaliser (pointillés)</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MISE EN POSITION -->
+      <div class="modal-section">
+        <h3><i class="fas fa-arrows-alt"></i> Mise en position — Rainure chanfreinée</h3>
+        <p>La mise en position a été réalisée à l'aide d'un système de rainure permettant de positionner la pièce sur sa partie cylindrique principale. Des chanfreins ont été ajoutés afin d'améliorer le contact et éviter l'endommagement de la pièce tout en permettant un contrôle rapide des pièces hors tolérance.</p>
+        <div class="modal-img-grid" style="margin-top:1.25rem;">
+          <div class="modal-img-container">
+            <img src="usinage_rainure.png" alt="Rainure chanfreinée">
+            <div class="modal-img-caption">Rainure chanfreinée</div>
+          </div>
+          <div class="modal-img-container">
+            <img src="usinage_rainure_detail.png" alt="Vue rainure avec pièce">
+            <div class="modal-img-caption">Vue détaillée — pièce positionnée dans la rainure</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- BLOCAGE ROTATION -->
+      <div class="modal-section">
+        <h3><i class="fas fa-lock"></i> Blocage de rotation</h3>
+        <p>Un système de blocage de rotation réglable par vis moletée a été ajouté afin de garantir l'orientation correcte de la pièce pendant le perçage.</p>
+        <div class="modal-img-grid single" style="margin-top:1.25rem;">
+          <div class="modal-img-container">
+            <img src="usinage_blocage.png" alt="Blocage rotation vis moletée">
+            <div class="modal-img-caption">Blocage de rotation par vis moletée</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SAUTERELLE -->
+      <div class="modal-section">
+        <h3><i class="fas fa-compress-arrows-alt"></i> Maintien en position — Sauterelle</h3>
+        <p>Le maintien en position a été assuré par une sauterelle horizontale permettant un serrage rapide, fiable et ergonomique. Ce système permet un bridage efficace tout en facilitant la mise en place et le retrait rapide des pièces.</p>
+        <div class="modal-img-grid single" style="margin-top:1.25rem;">
+          <div class="modal-img-container">
+            <img src="usinage_sauterelle.png" alt="Sauterelle de serrage">
+            <div class="modal-img-caption">Sauterelle horizontale de serrage</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ÉLÉMENTS COMPLÉMENTAIRES -->
+      <div class="modal-section">
+        <h3><i class="fas fa-puzzle-piece"></i> Éléments complémentaires</h3>
+        <p>Des éléments complémentaires ont ensuite été intégrés afin d'assurer le bon fonctionnement du montage :</p>
+        <ul>
+          <li>Espace de dégagement pour le passage du foret</li>
+          <li>Canon de perçage pour guider le foret</li>
+          <li>Support de canon</li>
+          <li>Poignée pour améliorer l'ergonomie</li>
+        </ul>
+        <div class="modal-img-grid" style="margin-top:1.25rem;">
+          <div class="modal-img-container">
+            <img src="usinage_degagement.png" alt="Dégagement foret">
+            <div class="modal-img-caption">Espace de dégagement pour le foret</div>
+          </div>
+          <div class="modal-img-container">
+            <img src="usinage_canon.png" alt="Support canon de perçage">
+            <div class="modal-img-caption">Support de canon de perçage</div>
+          </div>
+        </div>
+        <div class="modal-img-grid single" style="margin-top:1rem;">
+          <div class="modal-img-container">
+            <img src="usinage_complet.png" alt="Montage complet avec poignée">
+            <div class="modal-img-caption">Montage complet avec sauterelle et poignée</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MISE EN PLAN -->
+      <div class="modal-section">
+        <h3><i class="fas fa-drafting-compass"></i> Mise en plan finale</h3>
+        <p>Le projet s'est terminé par la réalisation de la mise en plan complète du montage d'usinage.</p>
+        <div class="modal-img-grid single" style="margin-top:1.25rem;">
+          <div class="modal-img-container">
+            <img src="usinage_plan.png" alt="Mise en plan montage d'usinage" style="width:100%;">
+            <div class="modal-img-caption">Mise en plan finale du montage d'usinage</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RÉSULTAT FINAL -->
+      <div class="modal-section">
+        <h3><i class="fas fa-check-circle"></i> Résultat final</h3>
+        <p>Le montage conçu permet un positionnement isostatique précis, un serrage rapide et une bonne ergonomie d'utilisation. La solution retenue combine efficacité mécanique, simplicité de fabrication et réduction des coûts.</p>
       </div>
 
     </div>
