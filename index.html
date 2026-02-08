@@ -7,14 +7,6 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-  <script type="importmap">
-  {
-    "imports": {
-      "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
-      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
-    }
-  }
-  </script>
   <style>
     /* ============================================
        RESET & BASE
@@ -95,27 +87,57 @@
       background: radial-gradient(circle at 70% 40%, rgba(59,130,246,0.08) 0%, transparent 60%);
       z-index: 1;
     }
-    #engine-bg {
+
+    /* ── Animated Gears Background ── */
+    .hero-gears {
       position: absolute; inset: 0;
-      z-index: 0;
       overflow: hidden;
       pointer-events: none;
+      z-index: 0;
     }
-    #engine-bg canvas {
-      width: 100%; height: 100%;
-      display: block;
-    }
-    .engine-hint {
+    .gear {
       position: absolute;
-      bottom: 2rem; right: 2rem;
-      color: rgba(59,130,246,0.35);
-      font-size: 0.75rem;
-      font-weight: 500;
-      letter-spacing: 0.5px;
-      z-index: 3;
-      pointer-events: none;
-      transition: opacity 2s ease;
+      opacity: 0.06;
+      stroke: #3b82f6;
+      fill: none;
+      stroke-width: 1.5;
     }
+    .gear--1 {
+      width: 320px; height: 320px;
+      top: 8%; right: -4%;
+      animation: spin 45s linear infinite;
+    }
+    .gear--2 {
+      width: 220px; height: 220px;
+      top: 52%; right: 12%;
+      animation: spin-reverse 35s linear infinite;
+      opacity: 0.045;
+    }
+    .gear--3 {
+      width: 180px; height: 180px;
+      bottom: 10%; left: -3%;
+      animation: spin 55s linear infinite;
+      opacity: 0.04;
+    }
+    .gear--4 {
+      width: 130px; height: 130px;
+      top: 18%; left: 8%;
+      animation: spin-reverse 40s linear infinite;
+      opacity: 0.05;
+    }
+    .gear--5 {
+      width: 260px; height: 260px;
+      bottom: -6%; right: 35%;
+      animation: spin 60s linear infinite;
+      opacity: 0.035;
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    @keyframes spin-reverse {
+      to { transform: rotate(-360deg); }
+    }
+
     .hero-content {
       max-width: 1100px; width: 100%; margin: 0 auto;
       display: flex; align-items: center; gap: 4rem;
@@ -658,8 +680,9 @@
       .modal-header h2 { font-size: 1.3rem; }
       .projet-modal { padding: 0.5rem; }
       .code-panel pre { font-size: 0.7rem; padding: 1rem; }
-      #engine-bg { display: none; }
-      .engine-hint { display: none; }
+      .gear--1 { width: 200px; height: 200px; }
+      .gear--2 { width: 140px; height: 140px; }
+      .gear--5 { display: none; }
     }
   </style>
 </head>
@@ -685,8 +708,14 @@
 
   <!-- ==================== HERO ==================== -->
   <section class="hero" id="hero">
-    <div id="engine-bg"></div>
-    <div class="engine-hint" id="engineHint"><i class="fas fa-hand-pointer"></i> Cliquez pour interagir</div>
+    <div class="hero-gears">
+      <!-- Gear SVGs — 16-tooth involute profile -->
+      <svg class="gear gear--1" viewBox="0 0 100 100"><path d="M50 5 L53 5 L55 15 A35 35 0 0 1 62 17 L69 9 L72 11 L67 20 A35 35 0 0 1 73 27 L83 25 L85 28 L75 33 A35 35 0 0 1 78 41 L88 42 L88 45 L78 46 A35 35 0 0 1 76 54 L85 59 L83 62 L74 58 A35 35 0 0 1 68 66 L73 75 L70 77 L63 70 A35 35 0 0 1 56 73 L56 83 L53 84 L51 74 A35 35 0 0 1 43 73 L41 83 L38 82 L39 72 A35 35 0 0 1 31 68 L23 75 L21 72 L28 65 A35 35 0 0 1 24 57 L14 59 L13 56 L23 52 A35 35 0 0 1 22 44 L12 42 L12 39 L22 39 A35 35 0 0 1 25 31 L16 23 L18 20 L27 27 A35 35 0 0 1 34 21 L31 11 L34 10 L38 19 A35 35 0 0 1 46 17 L47 7 Z" /><circle cx="50" cy="50" r="12" /><circle cx="50" cy="50" r="28" stroke-dasharray="4 4" /></svg>
+      <svg class="gear gear--2" viewBox="0 0 100 100"><path d="M50 5 L53 5 L55 15 A35 35 0 0 1 62 17 L69 9 L72 11 L67 20 A35 35 0 0 1 73 27 L83 25 L85 28 L75 33 A35 35 0 0 1 78 41 L88 42 L88 45 L78 46 A35 35 0 0 1 76 54 L85 59 L83 62 L74 58 A35 35 0 0 1 68 66 L73 75 L70 77 L63 70 A35 35 0 0 1 56 73 L56 83 L53 84 L51 74 A35 35 0 0 1 43 73 L41 83 L38 82 L39 72 A35 35 0 0 1 31 68 L23 75 L21 72 L28 65 A35 35 0 0 1 24 57 L14 59 L13 56 L23 52 A35 35 0 0 1 22 44 L12 42 L12 39 L22 39 A35 35 0 0 1 25 31 L16 23 L18 20 L27 27 A35 35 0 0 1 34 21 L31 11 L34 10 L38 19 A35 35 0 0 1 46 17 L47 7 Z" /><circle cx="50" cy="50" r="12" /><circle cx="50" cy="50" r="28" stroke-dasharray="4 4" /></svg>
+      <svg class="gear gear--3" viewBox="0 0 100 100"><path d="M50 8 L53 8 L54 16 A32 32 0 0 1 62 19 L68 12 L70 14 L65 22 A32 32 0 0 1 70 28 L78 27 L79 30 L71 33 A32 32 0 0 1 73 40 L82 41 L82 44 L73 44 A32 32 0 0 1 72 52 L80 56 L78 59 L70 55 A32 32 0 0 1 65 62 L69 70 L67 72 L61 65 A32 32 0 0 1 54 68 L54 77 L51 77 L50 69 A32 32 0 0 1 43 68 L41 76 L38 76 L39 67 A32 32 0 0 1 33 63 L26 69 L24 67 L30 60 A32 32 0 0 1 27 53 L18 55 L17 52 L26 49 A32 32 0 0 1 26 41 L17 39 L17 36 L27 37 A32 32 0 0 1 30 29 L23 22 L25 20 L33 26 A32 32 0 0 1 40 21 L38 13 L41 12 L44 20 A32 32 0 0 1 49 19 L49 10 Z" /><circle cx="50" cy="50" r="10" /><circle cx="50" cy="50" r="24" stroke-dasharray="3 5" /></svg>
+      <svg class="gear gear--4" viewBox="0 0 100 100"><path d="M50 5 L53 5 L55 15 A35 35 0 0 1 62 17 L69 9 L72 11 L67 20 A35 35 0 0 1 73 27 L83 25 L85 28 L75 33 A35 35 0 0 1 78 41 L88 42 L88 45 L78 46 A35 35 0 0 1 76 54 L85 59 L83 62 L74 58 A35 35 0 0 1 68 66 L73 75 L70 77 L63 70 A35 35 0 0 1 56 73 L56 83 L53 84 L51 74 A35 35 0 0 1 43 73 L41 83 L38 82 L39 72 A35 35 0 0 1 31 68 L23 75 L21 72 L28 65 A35 35 0 0 1 24 57 L14 59 L13 56 L23 52 A35 35 0 0 1 22 44 L12 42 L12 39 L22 39 A35 35 0 0 1 25 31 L16 23 L18 20 L27 27 A35 35 0 0 1 34 21 L31 11 L34 10 L38 19 A35 35 0 0 1 46 17 L47 7 Z" /><circle cx="50" cy="50" r="12" /></svg>
+      <svg class="gear gear--5" viewBox="0 0 100 100"><path d="M50 8 L53 8 L54 16 A32 32 0 0 1 62 19 L68 12 L70 14 L65 22 A32 32 0 0 1 70 28 L78 27 L79 30 L71 33 A32 32 0 0 1 73 40 L82 41 L82 44 L73 44 A32 32 0 0 1 72 52 L80 56 L78 59 L70 55 A32 32 0 0 1 65 62 L69 70 L67 72 L61 65 A32 32 0 0 1 54 68 L54 77 L51 77 L50 69 A32 32 0 0 1 43 68 L41 76 L38 76 L39 67 A32 32 0 0 1 33 63 L26 69 L24 67 L30 60 A32 32 0 0 1 27 53 L18 55 L17 52 L26 49 A32 32 0 0 1 26 41 L17 39 L17 36 L27 37 A32 32 0 0 1 30 29 L23 22 L25 20 L33 26 A32 32 0 0 1 40 21 L38 13 L41 12 L44 20 A32 32 0 0 1 49 19 L49 10 Z" /><circle cx="50" cy="50" r="10" /><circle cx="50" cy="50" r="24" stroke-dasharray="3 5" /></svg>
+    </div>
     <div class="hero-content">
       <div class="hero-text">
         <div class="hero-badge"><i class="fas fa-cogs"></i>&nbsp; Ouvert aux opportunités de stage</div>
@@ -2286,332 +2315,6 @@ END_TYPE</pre>
     });
   </script>
 
-  <!-- ==================== 3D ENGINE ANIMATION ==================== -->
-  <script type="module">
-  import * as THREE from 'three';
-  import { STLLoader } from 'three/addons/loaders/STLLoader.js';
-
-  (function(){
-    /* ═══════════════════════════════════════════════
-       CONFIGURATION
-    ═══════════════════════════════════════════════ */
-    const CFG = {
-      color:      0x3b82f6,
-      meshAlpha:  0.05,
-      edgeAlpha:  0.14,
-      edgeDeg:    20,
-      rpm:        10,
-      crankRatio: 0.30,
-      explDist:   3.5,
-      explLerp:   0.03,
-      orbitSpeed: 0.0006,
-      phases:     [0, Math.PI, Math.PI, 0],
-    };
-
-    /* ═══════════════════════════════════════════════
-       SCENE SETUP
-    ═══════════════════════════════════════════════ */
-    const box = document.getElementById('engine-bg');
-    if (!box || box.clientWidth === 0) return;
-
-    const W = () => box.clientWidth;
-    const H = () => box.clientHeight;
-
-    const scene    = new THREE.Scene();
-    const camera   = new THREE.PerspectiveCamera(35, W()/H(), 0.1, 500);
-    const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    renderer.setSize(W(), H());
-    renderer.setClearColor(0x000000, 0);
-    box.appendChild(renderer.domElement);
-
-    /* Lights */
-    scene.add(new THREE.AmbientLight(0xffffff, 0.5));
-    const sun = new THREE.DirectionalLight(0xffffff, 0.7);
-    sun.position.set(8, 12, 10);
-    scene.add(sun);
-
-    /* ═══════════════════════════════════════════════
-       MATERIALS
-    ═══════════════════════════════════════════════ */
-    const mkSolid = () => new THREE.MeshPhongMaterial({
-      color: CFG.color, transparent: true, opacity: CFG.meshAlpha,
-      shininess: 60, side: THREE.DoubleSide, depthWrite: false,
-    });
-    const mkEdge = () => new THREE.LineBasicMaterial({
-      color: CFG.color, transparent: true, opacity: CFG.edgeAlpha,
-    });
-
-    /* ═══════════════════════════════════════════════
-       HELPERS
-    ═══════════════════════════════════════════════ */
-    function mkPart(geo) {
-      const g = new THREE.Group();
-      g.add(new THREE.Mesh(geo, mkSolid()));
-      g.add(new THREE.LineSegments(
-        new THREE.EdgesGeometry(geo, CFG.edgeDeg), mkEdge()
-      ));
-      return g;
-    }
-
-    function gSize(geo) {
-      const v = new THREE.Vector3();
-      geo.boundingBox.getSize(v);
-      return v;
-    }
-
-    /* ═══════════════════════════════════════════════
-       LOAD STL FILES
-    ═══════════════════════════════════════════════ */
-    const loader = new STLLoader();
-    const FILES = {
-      piston: 'engine_piston.stl',
-      ring:   'engine_ring.stl',
-      crank:  'engine_crankshaft.stl',
-      rod:    'engine_rod.stl',
-      cap:    'engine_cap.stl',
-      pin:    'engine_pin.stl',
-    };
-    const G = {};
-    let nLoad = 0;
-    const nTotal = Object.keys(FILES).length;
-
-    for (const [k, f] of Object.entries(FILES)) {
-      loader.load(f, geo => {
-        geo.computeBoundingBox();
-        geo.center();
-        G[k] = geo;
-        if (++nLoad === nTotal) buildEngine();
-      }, undefined, err => console.warn('STL load error:', f, err));
-    }
-
-    /* ═══════════════════════════════════════════════
-       ENGINE STATE
-    ═══════════════════════════════════════════════ */
-    const root = new THREE.Group();
-    scene.add(root);
-
-    let theta     = 0;
-    let isExploded = false;
-    let tExp      = 0;
-
-    const cyls = [];
-    let crankPart = null;
-    let CRANK_R = 0;
-    let ROD_L   = 0;
-
-    /* ═══════════════════════════════════════════════
-       BUILD ENGINE ASSEMBLY
-    ═══════════════════════════════════════════════ */
-    function buildEngine() {
-      /*
-       * SolidWorks STL orientations (no rotation needed):
-       * Piston:     85 x 95 x 85   → Y = bore axis ✓
-       * Ring:       85 x 4.3 x 85  → flat disc, thin Y ✓
-       * Crankshaft: 144 x 160 x 589 → Z = crank axis ✓
-       * Rod:        94 x 224 x 38  → Y = length ✓
-       * Cap:        94 x 60 x 38   → wide in X ✓
-       * Pin:        34 x 34 x 82   → Z = pin axis ✓
-       */
-
-      /* Scale to fit ~6 units (based on crankshaft Z = 589mm) */
-      const cSz = gSize(G.crank);
-      const S = 6.0 / cSz.z;
-      for (const g of Object.values(G)) {
-        g.scale(S, S, S);
-        g.computeBoundingBox();
-      }
-
-      /* Compute engine parameters from real geometry */
-      const rSz = gSize(G.rod);
-      const pSz = gSize(G.piston);
-      const cSz2 = gSize(G.crank);
-      const capSz = gSize(G.cap);
-
-      ROD_L   = rSz.y * 0.90;                   // rod length ~90% of Y extent
-      CRANK_R = (cSz2.y / 2) * 0.55;            // crank radius ~55% of half Y extent
-      const crankLen = cSz2.z;                   // crankshaft length along Z
-      const cylSpacing = crankLen / 5;           // 4 cylinders evenly spread
-      const pH = pSz.y;                          // piston height
-
-      /* Crankshaft — wrapped in a pivot group for Z-axis rotation */
-      const crankPivot = new THREE.Group();
-      crankPart = mkPart(G.crank);
-      crankPivot.add(crankPart);
-      root.add(crankPivot);
-
-      /* 4 Cylinders */
-      for (let i = 0; i < 4; i++) {
-        const z = (i - 1.5) * cylSpacing;
-        const phase = CFG.phases[i];
-
-        /* Piston assembly (piston + 3 rings + pin) */
-        const pAssy = new THREE.Group();
-        pAssy.add(mkPart(G.piston.clone()));
-
-        for (let r = 0; r < 3; r++) {
-          const ring = mkPart(G.ring.clone());
-          ring.position.y = (r - 1) * pH * 0.10;
-          pAssy.add(ring);
-        }
-
-        const pin = mkPart(G.pin.clone());
-        pin.position.y = -pH * 0.30;
-        pAssy.add(pin);
-
-        pAssy.position.set(0, CRANK_R + ROD_L, z);
-        root.add(pAssy);
-
-        /* Connecting rod */
-        const rod = mkPart(G.rod.clone());
-        rod.position.set(0, ROD_L * 0.5, z);
-        root.add(rod);
-
-        /* Connecting rod cap */
-        const cap = mkPart(G.cap.clone());
-        cap.position.set(0, 0, z);
-        root.add(cap);
-
-        /* Explode directions (spread radially outward) */
-        const a = (i / 4) * Math.PI * 2 + Math.PI * 0.25;
-        cyls.push({
-          pAssy, rod, cap, phase, z,
-          eP: new THREE.Vector3(Math.cos(a) * 0.6, 2.0, Math.sin(a) * 0.4),
-          eR: new THREE.Vector3(Math.cos(a + 0.7) * 0.8, 0.5, Math.sin(a + 0.7) * 0.5),
-          eC: new THREE.Vector3(Math.cos(a + 1.4) * 0.6, -1.5, Math.sin(a + 1.4) * 0.4),
-        });
-      }
-
-      /* Position camera — slightly elevated, looking at center */
-      const bb = new THREE.Box3().setFromObject(root);
-      const ctr = bb.getCenter(new THREE.Vector3());
-      const sz = bb.getSize(new THREE.Vector3());
-      const maxS = Math.max(sz.x, sz.y, sz.z);
-
-      camera.position.set(
-        ctr.x + maxS * 0.6,
-        ctr.y + maxS * 0.4,
-        ctr.z + maxS * 1.4
-      );
-      camera.lookAt(ctr);
-
-      /* Initial tilt for visual interest */
-      root.rotation.set(-0.2, 0.4, 0);
-
-      /* Start loop */
-      loop();
-    }
-
-    /* ═══════════════════════════════════════════════
-       ANIMATION LOOP
-    ═══════════════════════════════════════════════ */
-    function smoothstep(t) {
-      return t * t * (3 - 2 * t);
-    }
-
-    function loop() {
-      requestAnimationFrame(loop);
-      if (!engineVisible) return;
-
-      const omega = (CFG.rpm / 60) * Math.PI * 2 / 60;
-      theta += omega;
-
-      /* Explode lerp */
-      if (isExploded && tExp < 1) tExp = Math.min(1, tExp + CFG.explLerp);
-      if (!isExploded && tExp > 0) tExp = Math.max(0, tExp - CFG.explLerp);
-      const e = smoothstep(tExp);
-      const motion = 1 - e;
-
-      /* Crankshaft — rotates around Z axis (its long axis) */
-      if (crankPart) {
-        crankPart.parent.rotation.z = theta * motion;
-        crankPart.parent.position.y = e * -CFG.explDist * 0.7;
-        crankPart.parent.position.x = e * -CFG.explDist * 0.3;
-      }
-
-      /* Cylinders */
-      for (const c of cyls) {
-        const angle = theta * motion + c.phase;
-        const sA = Math.sin(angle);
-        const cA = Math.cos(angle);
-        const R = CRANK_R;
-        const L = ROD_L;
-
-        /* Crank-slider kinematics */
-        const pY = R * cA + Math.sqrt(Math.max(0, L * L - R * R * sA * sA));
-        const rodAngle = Math.asin(Math.min(1, Math.max(-1, (R * sA) / L)));
-        const crankPinY = R * cA;
-        const rodCY = (pY + crankPinY) * 0.5;
-
-        const D = CFG.explDist;
-
-        /* Piston assembly */
-        c.pAssy.position.set(
-          c.eP.x * D * e,
-          pY + c.eP.y * D * e,
-          c.z + c.eP.z * D * e
-        );
-
-        /* Connecting rod */
-        c.rod.position.set(
-          R * sA * motion * 0.5 + c.eR.x * D * e,
-          rodCY + c.eR.y * D * e,
-          c.z + c.eR.z * D * e
-        );
-        c.rod.rotation.z = -rodAngle * motion;
-
-        /* Cap (follows crank pin) */
-        c.cap.position.set(
-          R * sA * motion + c.eC.x * D * e,
-          crankPinY + c.eC.y * D * e,
-          c.z + c.eC.z * D * e
-        );
-        c.cap.rotation.z = -rodAngle * 0.3 * motion;
-      }
-
-      /* Slow auto-orbit */
-      root.rotation.y += CFG.orbitSpeed;
-
-      renderer.render(scene, camera);
-    }
-
-    /* ═══════════════════════════════════════════════
-       INTERACTION
-    ═══════════════════════════════════════════════ */
-    document.querySelector('.hero').addEventListener('click', ev => {
-      if (ev.target.closest('a, button, .hero-badge')) return;
-      isExploded = !isExploded;
-    });
-
-    /* ═══════════════════════════════════════════════
-       RESIZE
-    ═══════════════════════════════════════════════ */
-    window.addEventListener('resize', () => {
-      if (!box || box.clientWidth === 0) return;
-      camera.aspect = W() / H();
-      camera.updateProjectionMatrix();
-      renderer.setSize(W(), H());
-    });
-
-    /* ═══════════════════════════════════════════════
-       FADE HINT AFTER 6s
-    ═══════════════════════════════════════════════ */
-    setTimeout(() => {
-      const hint = document.getElementById('engineHint');
-      if (hint) hint.style.opacity = '0';
-    }, 6000);
-
-    /* ═══════════════════════════════════════════════
-       PAUSE WHEN NOT VISIBLE (performance)
-    ═══════════════════════════════════════════════ */
-    let engineVisible = true;
-    const observer = new IntersectionObserver(entries => {
-      engineVisible = entries[0].isIntersecting;
-    }, { threshold: 0.1 });
-    observer.observe(box);
-
-  })();
-  </script>
 
 </body>
 </html>
