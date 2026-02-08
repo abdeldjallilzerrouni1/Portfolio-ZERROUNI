@@ -375,6 +375,144 @@
       padding: 0.2rem 0.6rem; border-radius: 4px;
       font-size: 0.75rem; font-weight: 600;
     }
+    .projet-card.clickable { cursor: pointer; }
+    .projet-card.clickable .projet-body::after {
+      content: 'Voir le projet →';
+      display: block; margin-top: 1rem;
+      color: #3b82f6; font-size: 0.85rem; font-weight: 600;
+    }
+
+    /* ============================================
+       MODAL PROJET
+    ============================================ */
+    .projet-modal {
+      display: none; position: fixed; inset: 0; z-index: 2000;
+      align-items: flex-start; justify-content: center;
+      padding: 2rem; overflow-y: auto;
+    }
+    .projet-modal.active { display: flex; }
+    .modal-overlay {
+      position: fixed; inset: 0;
+      background: rgba(0, 0, 0, 0.85);
+      z-index: 1;
+    }
+    .modal-content {
+      position: relative; z-index: 2;
+      background: #111118;
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 20px;
+      max-width: 960px; width: 100%;
+      padding: 3rem;
+      margin: 2rem 0;
+    }
+    .modal-close {
+      position: absolute; top: 1.5rem; right: 1.5rem;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      color: #a0a0a0; font-size: 1.2rem;
+      width: 40px; height: 40px;
+      border-radius: 10px; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.3s;
+    }
+    .modal-close:hover { background: rgba(239,68,68,0.15); color: #f87171; border-color: rgba(239,68,68,0.3); }
+    .modal-header { margin-bottom: 2.5rem; }
+    .modal-header h2 {
+      font-size: 1.8rem; font-weight: 800; color: #fff;
+      margin-bottom: 1rem; line-height: 1.3;
+    }
+    .modal-tags { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+    .modal-tags .projet-tag { font-size: 0.8rem; padding: 0.3rem 0.8rem; }
+    .modal-section {
+      margin-bottom: 2.5rem;
+      padding-bottom: 2.5rem;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .modal-section:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+    .modal-section h3 {
+      font-size: 1.15rem; font-weight: 700; color: #fff;
+      margin-bottom: 1rem;
+      display: flex; align-items: center; gap: 0.6rem;
+    }
+    .modal-section h3 i { color: #3b82f6; font-size: 1rem; }
+    .modal-section p, .modal-section li {
+      color: #b0b0b0; font-size: 0.95rem; line-height: 1.8;
+    }
+    .modal-section ul {
+      list-style: none; padding: 0;
+    }
+    .modal-section ul li {
+      padding: 0.3rem 0; padding-left: 1.5rem;
+      position: relative;
+    }
+    .modal-section ul li::before {
+      content: '▸'; position: absolute; left: 0;
+      color: #3b82f6; font-weight: 700;
+    }
+
+    /* CODE TABS */
+    .code-tabs {
+      display: flex; gap: 0; margin-bottom: 0;
+      border-bottom: 2px solid rgba(255,255,255,0.08);
+      overflow-x: auto;
+    }
+    .code-tab {
+      padding: 0.7rem 1.3rem;
+      background: none; border: none;
+      color: #707070; font-size: 0.85rem; font-weight: 600;
+      cursor: pointer; transition: all 0.3s;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -2px; white-space: nowrap;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .code-tab:hover { color: #a0a0a0; }
+    .code-tab.active {
+      color: #60a5fa;
+      border-bottom-color: #3b82f6;
+      background: rgba(59,130,246,0.05);
+    }
+    .code-panel {
+      display: none;
+      background: #0a0a12;
+      border: 1px solid rgba(255,255,255,0.06);
+      border-top: none;
+      border-radius: 0 0 12px 12px;
+      overflow: hidden;
+    }
+    .code-panel.active { display: block; }
+    .code-panel pre {
+      padding: 1.5rem;
+      overflow-x: auto;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      line-height: 1.7;
+      color: #c8d6e5;
+      margin: 0;
+      max-height: 500px;
+      overflow-y: auto;
+    }
+    .code-panel pre::-webkit-scrollbar { width: 6px; height: 6px; }
+    .code-panel pre::-webkit-scrollbar-track { background: rgba(255,255,255,0.02); }
+    .code-panel pre::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 3px; }
+
+    /* CHRONO & VIDEO */
+    .chrono-container {
+      border-radius: 12px; overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.06);
+      margin-bottom: 1.5rem;
+    }
+    .chrono-container img {
+      width: 100%; display: block;
+    }
+    .video-container {
+      border-radius: 12px; overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.06);
+      margin-bottom: 1.5rem;
+    }
+    .video-container video {
+      width: 100%; display: block;
+      background: #000;
+    }
 
     /* ============================================
        CONTACT
@@ -436,6 +574,10 @@
       .timeline-item { width: 100%; left: 0 !important; text-align: left !important; padding-left: 3rem !important; padding-right: 0 !important; }
       .timeline-dot { left: 13px !important; right: auto !important; }
       .section-title { font-size: 1.6rem; }
+      .modal-content { padding: 1.5rem; margin: 1rem 0; }
+      .modal-header h2 { font-size: 1.3rem; }
+      .projet-modal { padding: 0.5rem; }
+      .code-panel pre { font-size: 0.7rem; padding: 1rem; }
     }
   </style>
 </head>
@@ -685,6 +827,7 @@
       <div class="projets-filters">
         <button class="skill-cat-btn active" data-filter="all">Tous les projets</button>
         <button class="skill-cat-btn" data-filter="meca">Génie Mécanique</button>
+        <button class="skill-cat-btn" data-filter="auto">Automatisme</button>
       </div>
 
       <div class="projets-grid" id="projetsGrid">
@@ -741,9 +884,420 @@
           </div>
         </div>
 
+        <!-- ====== PROJET AUTOMATISME : POTEYAGE ====== -->
+        <div class="projet-card clickable" data-type="auto" onclick="openModal('modalPoteyage')">
+          <div class="projet-image"><i class="fas fa-industry"></i></div>
+          <div class="projet-body">
+            <div class="projet-title">Machine de poteyage sur portique cartésien</div>
+            <p class="projet-desc">Programmation du cycle automatisé d'une machine de poteyage pour le dépôt de carbone sur demi-moules en verre, avec balayage en zigzag via portique cartésien.</p>
+            <div class="projet-tags">
+              <span class="projet-tag">B&amp;R Automation Studio</span>
+              <span class="projet-tag">Structured Text</span>
+              <span class="projet-tag">GRAFCET</span>
+              <span class="projet-tag">Automatisme</span>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
   </section>
+
+  <!-- ==================== MODAL POTEYAGE ==================== -->
+  <div class="projet-modal" id="modalPoteyage">
+    <div class="modal-overlay" onclick="closeModal()"></div>
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeModal()"><i class="fas fa-times"></i></button>
+
+      <div class="modal-header">
+        <h2>Machine de poteyage sur portique cartésien</h2>
+        <div class="modal-tags">
+          <span class="projet-tag">B&amp;R Automation Studio</span>
+          <span class="projet-tag">Structured Text</span>
+          <span class="projet-tag">GRAFCET</span>
+          <span class="projet-tag">Automatisme</span>
+        </div>
+      </div>
+
+      <!-- DESCRIPTION -->
+      <div class="modal-section">
+        <h3><i class="fas fa-info-circle"></i> Description du projet</h3>
+        <p>
+          Ce projet consistait à développer et programmer le cycle automatisé d'une machine de poteyage utilisée pour déposer une couche de carbone sur des demi-moules en verre afin de faciliter le démoulage. Le système repose sur un portique cartésien motorisé par des moteurs pas-à-pas permettant de déplacer les moules au-dessus d'un brûleur fixe selon une stratégie de balayage définie.
+        </p>
+        <p style="margin-top: 1rem;">
+          Le travail a consisté à définir les paramètres fonctionnels du cycle, concevoir le GRAFCET de commande, programmer le cycle en Structured Text puis valider le fonctionnement en simulation et sur installation réelle.
+        </p>
+      </div>
+
+      <!-- FONCTION -->
+      <div class="modal-section">
+        <h3><i class="fas fa-cog"></i> Fonction du programme développé</h3>
+        <p style="margin-bottom: 0.75rem;">Le programme automatise entièrement le cycle de poteyage :</p>
+        <ul>
+          <li>Initialisation et homing des axes X et Y</li>
+          <li>Positionnement au point de départ (deltaX, deltaY)</li>
+          <li>Balayage en zigzag de la zone de traitement</li>
+          <li>Synchronisation des déplacements X et Y avec alternance montée/descente</li>
+          <li>Gestion de la flamme (allumage au début, extinction en fin de cycle)</li>
+          <li>Retour automatique en position initiale</li>
+        </ul>
+        <p style="margin-top: 0.75rem;">Le code gère les boucles de balayage permettant d'alterner les déplacements verticaux pendant l'avancement horizontal afin d'assurer une couverture complète et homogène de la surface.</p>
+      </div>
+
+      <!-- CODE -->
+      <div class="modal-section">
+        <h3><i class="fas fa-code"></i> Code source (Structured Text)</h3>
+        <div class="code-tabs">
+          <button class="code-tab active" onclick="switchCodeTab(this, 'poteyage-main')">Programme (Main.st)</button>
+          <button class="code-tab" onclick="switchCodeTab(this, 'poteyage-var')">Variables locales</button>
+          <button class="code-tab" onclick="switchCodeTab(this, 'poteyage-gvar')">Variables globales</button>
+          <button class="code-tab" onclick="switchCodeTab(this, 'poteyage-typ')">Types globaux</button>
+        </div>
+
+        <div class="code-panel active" id="poteyage-main">
+          <pre>PROGRAM _INIT
+    // Initialisation des variables sans valeur par defaut
+    aNom := 10.0;  // Acceleration nominale [mm/s^2]
+    vNom := 20.0;  // Vitesse nominale [mm/s]
+
+    // Initialisation des parametres du cycle de poteyage
+    a := 250.0;     // Longueur du moule [mm]
+    b := 120.0;     // Largeur du moule [mm]
+    pas := 30.0;    // Pas de balayage [mm]
+    deltaX := 10.0; // Decalage initial axe X [mm]
+    deltaY := 10.0; // Decalage initial axe Y [mm]
+
+    // Initialisation des positions et compteur
+    posX := 0.0;
+    posY := 0.0;
+    i := 0;
+
+    // Initialisation variables detection front montant
+    ihm_start_prev := FALSE;
+
+    // Initialisation flamme
+    Flamme := FALSE;
+END_PROGRAM
+
+PROGRAM _CYCLIC
+    // ============================================
+    // LEGENDE DES COMMANDES ET INFORMATIONS :
+    // COMMANDES (Cmd_X, Cmd_Y) :
+    //   BpOn = Allumer/activer l'axe (mise sous tension)
+    //   BpHome = Demander homing (recherche de l'origine)
+    //   MoveAbsolute.Acc = Definir l'acceleration du mouvement
+    //   MoveAbsolute.Vit = Definir la vitesse du mouvement
+    //   MoveAbsolute.Pos = Definir la position destination
+    //   MoveAbsolute.BpMove = Demarrer le mouvement
+    // INFORMATIONS (Info_X, Info_Y) :
+    //   PowerOn = L'axe est alimente/sous tension
+    //   IsHomed = L'axe a termine le homing
+    //   Standstill = L'axe est arrete (arrive a destination)
+    // ============================================
+
+    // Logique normale du grafcet
+    CASE etat OF
+        0: // ETAT 0 : Attente bouton ON
+            IF ihm_on THEN
+                etat := 1;
+                Cmd_X.BpOn := TRUE;
+                Cmd_Y.BpOn := TRUE;
+            END_IF
+
+        1: // ETAT 1 : Attente alimentation des axes
+            IF Info_X.PowerOn AND Info_Y.PowerOn THEN
+                etat := 2;
+            END_IF
+
+        2: // ETAT 2 : Attente bouton HOME
+            IF ihm_home THEN
+                ihm_home := FALSE;
+                Cmd_X.BpHome := TRUE;
+                Cmd_Y.BpHome := TRUE;
+                etat := 3;
+            END_IF
+
+        3: // ETAT 3 : Attente fin du homing
+            IF Info_X.Standstill AND Info_Y.Standstill
+               AND Info_X.IsHomed AND Info_Y.IsHomed THEN
+                posX := 0.0;
+                posY := 0.0;
+                etat := 4;
+            END_IF
+
+        4: // ETAT 4 : Attente bouton START
+            Cmd_X.MoveAbsolute.BpMove := FALSE;
+            Cmd_Y.MoveAbsolute.BpMove := FALSE;
+
+            IF NOT ihm_on THEN
+                etat := 5;
+                Cmd_X.BpOn := FALSE;
+                Cmd_Y.BpOn := FALSE;
+            ELSIF ihm_start AND NOT ihm_start_prev THEN
+                IF posX = 0.0 AND posY = 0.0 THEN
+                    // Lancer le cycle de poteyage
+                    Flamme := TRUE;
+                    posX := deltaX;
+                    posY := deltaY;
+                    Cmd_X.MoveAbsolute.Acc := aNom;
+                    Cmd_X.MoveAbsolute.Vit := vNom;
+                    Cmd_X.MoveAbsolute.Pos := posX;
+                    Cmd_X.MoveAbsolute.BpMove := TRUE;
+                    Cmd_Y.MoveAbsolute.Acc := aNom;
+                    Cmd_Y.MoveAbsolute.Vit := vNom;
+                    Cmd_Y.MoveAbsolute.Pos := posY;
+                    Cmd_Y.MoveAbsolute.BpMove := TRUE;
+                    etat := 10;
+                ELSE
+                    // Retour a l'origine
+                    Flamme := FALSE;
+                    posX := 0.0;
+                    posY := 0.0;
+                    Cmd_X.MoveAbsolute.Pos := posX;
+                    Cmd_X.MoveAbsolute.BpMove := TRUE;
+                    Cmd_Y.MoveAbsolute.Pos := posY;
+                    Cmd_Y.MoveAbsolute.BpMove := TRUE;
+                    etat := 4;
+                END_IF
+            END_IF
+            ihm_start_prev := ihm_start;
+
+        5: // ETAT 5 : Arret/Redemarrage des axes
+            IF NOT Info_X.PowerOn AND NOT Info_Y.PowerOn THEN
+                IF ihm_on THEN
+                    etat := 1;
+                    Cmd_X.BpOn := TRUE;
+                    Cmd_Y.BpOn := TRUE;
+                END_IF
+            ELSIF Info_X.PowerOn AND Info_Y.PowerOn THEN
+                etat := 4;
+            END_IF
+
+        10: // ETAT 10 : Arrivee position de depart (10,10)
+            IF Info_X.Standstill AND Info_Y.Standstill THEN
+                Cmd_X.MoveAbsolute.BpMove := FALSE;
+                Cmd_Y.MoveAbsolute.BpMove := FALSE;
+                posY := deltaY + a;  // 10 + 250 = 260mm
+                Cmd_Y.MoveAbsolute.Pos := posY;
+                Cmd_Y.MoveAbsolute.BpMove := TRUE;
+                etat := 11;
+            END_IF
+
+        11: // ETAT 11 : Y monte vers 260mm
+            IF Info_Y.Standstill THEN
+                Cmd_Y.MoveAbsolute.BpMove := FALSE;
+                IF posX &gt;= (deltaX + 3.0 * b) THEN
+                    // Fin balayage : Y descend a 10mm
+                    posY := deltaY;
+                    Cmd_Y.MoveAbsolute.Pos := posY;
+                    Cmd_Y.MoveAbsolute.BpMove := TRUE;
+                    etat := 13;
+                ELSE
+                    // X avance de +30mm
+                    posX := posX + pas;
+                    Cmd_X.MoveAbsolute.Pos := posX;
+                    Cmd_X.MoveAbsolute.BpMove := TRUE;
+                    etat := 12;
+                END_IF
+            END_IF
+
+        12: // ETAT 12 : X se deplace vers la droite
+            IF Info_X.Standstill THEN
+                Cmd_X.MoveAbsolute.BpMove := FALSE;
+                IF posX &gt;= (deltaX + 3.0 * b) THEN
+                    IF posY &gt;= (deltaY + a - 1.0) THEN
+                        posY := deltaY;
+                        Cmd_Y.MoveAbsolute.Pos := posY;
+                        Cmd_Y.MoveAbsolute.BpMove := TRUE;
+                        etat := 13;
+                    ELSE
+                        etat := 14;
+                    END_IF
+                ELSE
+                    IF posY &gt;= (deltaY + a - 1.0) THEN
+                        posY := deltaY;
+                        Cmd_Y.MoveAbsolute.Pos := posY;
+                        Cmd_Y.MoveAbsolute.BpMove := TRUE;
+                        etat := 13;
+                    ELSE
+                        posY := deltaY + a;
+                        Cmd_Y.MoveAbsolute.Pos := posY;
+                        Cmd_Y.MoveAbsolute.BpMove := TRUE;
+                        etat := 11;
+                    END_IF
+                END_IF
+            END_IF
+
+        13: // ETAT 13 : Y descend vers 10mm
+            IF Info_Y.Standstill THEN
+                Cmd_Y.MoveAbsolute.BpMove := FALSE;
+                IF posX &gt;= (deltaX + 3.0 * b) THEN
+                    etat := 14;
+                ELSE
+                    posX := posX + pas;
+                    Cmd_X.MoveAbsolute.Pos := posX;
+                    Cmd_X.MoveAbsolute.BpMove := TRUE;
+                    etat := 12;
+                END_IF
+            END_IF
+
+        14: // ETAT 14 : Fin du balayage
+            Cmd_X.MoveAbsolute.BpMove := FALSE;
+            Cmd_Y.MoveAbsolute.BpMove := FALSE;
+            etat := 4;
+    END_CASE;
+
+END_PROGRAM</pre>
+        </div>
+
+        <div class="code-panel" id="poteyage-var">
+          <pre>(* ============================================ *)
+(* PARAMETRES DE MOUVEMENT                     *)
+(* ============================================ *)
+VAR
+    aNom : REAL;           (* Acceleration nominale en mm/s² *)
+    vNom : REAL;           (* Vitesse nominale en mm/s *)
+    dest : REAL;           (* Destination sur x [mm] *)
+
+    (* BOUTONS DE L'INTERFACE (ENTREES) *)
+    ihm_on : BOOL;         (* Bouton ON : demarrage machine *)
+    ihm_start : BOOL;      (* Bouton START : depart du cycle *)
+    ihm_home : BOOL;       (* Bouton HOME : prise d'origine *)
+
+    (* ETAT DU GRAPHCET *)
+    etat : USINT;          (* Numero de l'etat actuel *)
+
+    (* DETECTION FRONT MONTANT *)
+    ihm_start_prev : BOOL; (* Memoire etat precedent START *)
+
+    (* GESTION FLAMME *)
+    Flamme : BOOL;         (* TRUE = allumee, FALSE = eteinte *)
+
+    (* PARAMETRES DU CYCLE *)
+    a : REAL;              (* Longueur du moule [mm] *)
+    b : REAL;              (* Largeur du moule [mm] *)
+    pas : REAL;            (* Pas de balayage [mm] *)
+    deltaX : REAL;         (* Decalage initial axe X [mm] *)
+    deltaY : REAL;         (* Decalage initial axe Y [mm] *)
+
+    (* VARIABLES DE POSITION *)
+    posX : REAL;           (* Position courante axe X [mm] *)
+    posY : REAL;           (* Position courante axe Y [mm] *)
+    i : USINT;             (* Compteur de cycles *)
+END_VAR</pre>
+        </div>
+
+        <div class="code-panel" id="poteyage-gvar">
+          <pre>(* ============================================ *)
+(* Variables globales du projet charlyRobot_sdc *)
+(* ============================================ *)
+VAR
+    gAxis04 : ACP10AXIS_typ := (0);
+    gAxis04_HW : SdcHwCfg_typ := (0);
+    gAxis04_DrvIf : SdcDrvIf16_typ := (0);
+    gAxis04_EncIf1 : SdcEncIf16_typ := (0);
+    gAxis04_DiDoIf : SdcDiDoIf_typ := (0);
+    gAxis04_MotorStep0 : INT := 0;
+
+    gAxis05 : ACP10AXIS_typ := (0);
+    gAxis05_HW : SdcHwCfg_typ := (0);
+    gAxis05_DrvIf : SdcDrvIf16_typ := (0);
+    gAxis05_EncIf1 : SdcEncIf16_typ := (0);
+    gAxis05_DiDoIf : SdcDiDoIf_typ := (0);
+    gAxis05_MotorStep0 : INT := 0;
+
+    gAxis06 : ACP10AXIS_typ := (0);
+    gAxis06_HW : SdcHwCfg_typ := (0);
+    gAxis06_DrvIf : SdcDrvIf16_typ := (0);
+    gAxis06_EncIf1 : SdcEncIf16_typ := (0);
+    gAxis06_DiDoIf : SdcDiDoIf_typ := (0);
+    gAxis06_MotorStep0 : INT := 0;
+
+    (* Structures de commande et d'information des axes *)
+    Cmd_X : RbTrAxeCmd_typ;
+    Cmd_Y : RbTrAxeCmd_typ;
+    Cmd_Z : RbTrAxeCmd_typ;
+    Info_X : RbTrAxeInfo_typ;
+    Info_Y : RbTrAxeInfo_typ;
+    Info_Z : RbTrAxeInfo_typ;
+END_VAR</pre>
+        </div>
+
+        <div class="code-panel" id="poteyage-typ">
+          <pre>(* ============================================ *)
+(* Types globaux du projet charlyRobot_sdc     *)
+(* ============================================ *)
+TYPE
+    dessin_state_enum :
+        (
+        dessin_DORMANT,          (* Attente init axes et BpOn *)
+        dessin_POWER_ON,         (* Demarrage des axes *)
+        dessin_POWER_OFF,        (* Arret des axes *)
+        dessin_HOME,             (* Prises d'origines *)
+        dessin_MOVEUP_FROM_H,
+        dessin_MOVEUP_FROM_H1,
+        dessin_USER_ACTION,      (* Attente choix action *)
+        dessin_LOAD,             (* Chargement fichier dessin *)
+        dessin_ENTER_MODE_ABS,   (* Mode pilotage absolu *)
+        dessin_EXIT_MODE_ABS,    (* Sortie mode absolu *)
+        dessin_USER_START,       (* Attente depart trace *)
+        dessin_MOVEABS,          (* Deplacement vers premier point *)
+        dessin_MOVEDOWN,         (* Descente outil *)
+        dessin_MOVESPLINE,       (* Trace ligne *)
+        dessin_MOVESPLINE1,      (* Trace ligne *)
+        dessin_MOVEUP,           (* Remontee outil *)
+        dessin_EXIT_MODE_CYCLIC,
+        dessin_EXIT_MODE_CYCLIC1,
+        dessin_EXIT_MODE_ABS_TO_UA,
+        dessin_MOVEREF,
+        dessin_MOVEREF1,
+        dessin_MOVEREF2,
+        dessin_ERROR,
+        dessin_RESETTING
+        );
+
+    DefSpline_state_enum :
+        (
+        defSpl_DORMANT,
+        defSpl_ENABLING,
+        defSpl_EXECUTING,
+        defSpl_DONE,
+        defSpl_ERROR,
+        defSpl_RESETTING
+        );
+END_TYPE</pre>
+        </div>
+      </div>
+
+      <!-- CHRONOGRAMME -->
+      <div class="modal-section">
+        <h3><i class="fas fa-chart-line"></i> Analyse des chronogrammes</h3>
+        <div class="chrono-container">
+          <img src="poteyage_chrono.png" alt="Chronogrammes du cycle de poteyage">
+        </div>
+        <p>Les chronogrammes montrent un fonctionnement cohérent du cycle :</p>
+        <ul>
+          <li><strong>Vitesse X</strong> — cycles accélération / vitesse constante / décélération correspondant aux déplacements horizontaux</li>
+          <li><strong>Vitesse Y</strong> — alternance montée / arrêt / descente correspondant au balayage vertical en zigzag</li>
+        </ul>
+        <p style="margin-top: 0.75rem;">Les courbes confirment que la trajectoire respecte le pas de balayage et la stratégie programmée.</p>
+      </div>
+
+      <!-- VIDEO -->
+      <div class="modal-section">
+        <h3><i class="fas fa-video"></i> Validation expérimentale</h3>
+        <div class="video-container">
+          <video controls preload="metadata">
+            <source src="poteyage_video.mp4" type="video/mp4">
+            Votre navigateur ne supporte pas la lecture vidéo.
+          </video>
+        </div>
+        <p>Le bon fonctionnement du système a été vérifié expérimentalement en remplaçant le brûleur par un feutre et en utilisant une feuille blanche pour tracer la trajectoire. Le tracé obtenu confirme que le déplacement réel correspond à la trajectoire théorique programmée et valide le cycle automatisé.</p>
+      </div>
+
+    </div>
+  </div>
 
   <!-- ==================== CONTACT ==================== -->
   <section class="contact" id="contact">
@@ -814,6 +1368,34 @@
         });
       });
     });
+
+    // Modal open/close
+    function openModal(id) {
+      const modal = document.getElementById(id);
+      if (modal) {
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      }
+    }
+    function closeModal() {
+      document.querySelectorAll('.projet-modal.active').forEach(m => {
+        m.classList.remove('active');
+      });
+      document.body.style.overflow = '';
+    }
+    // Close modal on Escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeModal();
+    });
+
+    // Code tab switching
+    function switchCodeTab(btn, panelId) {
+      const section = btn.closest('.modal-section');
+      section.querySelectorAll('.code-tab').forEach(t => t.classList.remove('active'));
+      section.querySelectorAll('.code-panel').forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById(panelId).classList.add('active');
+    }
 
     // Active nav link on scroll
     const sections = document.querySelectorAll('section[id]');
