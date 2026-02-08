@@ -359,6 +359,18 @@
       border-color: rgba(59,130,246,0.3);
       transform: translateY(-3px);
     }
+    .projet-card { position: relative; }
+    .projet-badge {
+      position: absolute; top: 12px; left: 12px; z-index: 2;
+      width: 36px; height: 36px;
+      background: rgba(10, 10, 15, 0.85);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      color: #60a5fa; font-size: 0.7rem; font-weight: 700;
+      letter-spacing: 0.5px;
+      backdrop-filter: blur(8px);
+    }
     .projet-image {
       width: 100%; height: 200px;
       background: linear-gradient(135deg, rgba(59,130,246,0.1), rgba(139,92,246,0.05));
@@ -872,6 +884,7 @@
 
         <!-- ====== PROJET MECA : RIDOIR HYDRAULIQUE ====== -->
         <div class="projet-card clickable" data-type="meca" onclick="openModal('modalRidoir')">
+          <span class="projet-badge">L3</span>
           <div class="projet-image"><img src="ridoir_theme.png" alt="Ridoir hydraulique" style="width:100%;height:100%;object-fit:contain;background:#f5f5f5;padding:0.5rem;"></div>
           <div class="projet-body">
             <div class="projet-title">Ridoir hydraulique — Re-conception mécano-soudée</div>
@@ -886,6 +899,7 @@
 
         <!-- ====== PROJET MECA : MULTIPLICATEUR DE PRESSION ====== -->
         <div class="projet-card clickable" data-type="meca" onclick="openModal('modalMulti')">
+          <span class="projet-badge">L3</span>
           <div class="projet-image"><img src="multi_plan_ensemble.png" alt="Multiplicateur de pression" style="width:100%;height:100%;object-fit:contain;background:#f5f5f5;padding:0.5rem;"></div>
           <div class="projet-body">
             <div class="projet-title">Multiplicateur de pression hydraulique</div>
@@ -900,6 +914,7 @@
 
         <!-- ====== PROJET MECA : MONTAGE D'USINAGE ====== -->
         <div class="projet-card clickable" data-type="meca" onclick="openModal('modalUsinage')">
+          <span class="projet-badge">L3</span>
           <div class="projet-image"><img src="usinage_theme.png" alt="Montage d'usinage" style="width:100%;height:100%;object-fit:contain;background:#f5f5f5;padding:0.5rem;"></div>
           <div class="projet-body">
             <div class="projet-title">Montage d'usinage — Perçage de pièces cylindriques</div>
@@ -914,6 +929,7 @@
 
         <!-- Projet placeholder 4 -->
         <div class="projet-card" data-type="meca">
+          <span class="projet-badge">L3</span>
           <div class="projet-image"><i class="fas fa-cogs"></i></div>
           <div class="projet-body">
             <div class="projet-title">Projet à venir</div>
@@ -927,6 +943,7 @@
 
         <!-- ====== PROJET AUTOMATISME : POTEYAGE ====== -->
         <div class="projet-card clickable" data-type="auto" onclick="openModal('modalPoteyage')">
+          <span class="projet-badge">L3</span>
           <div class="projet-image"><img src="poteyage_thumb.png" alt="Machine de poteyage" style="width:100%;height:100%;object-fit:cover;"></div>
           <div class="projet-body">
             <div class="projet-title">Machine de poteyage sur portique cartésien</div>
