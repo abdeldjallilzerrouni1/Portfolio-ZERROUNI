@@ -927,16 +927,17 @@
           </div>
         </div>
 
-        <!-- Projet placeholder 4 -->
-        <div class="projet-card" data-type="meca">
+        <!-- ====== PROJET MECA : PROGRAMMATION CNC ====== -->
+        <div class="projet-card clickable" data-type="meca" onclick="openModal('modalCNC')">
           <span class="projet-badge">L3</span>
-          <div class="projet-image"><i class="fas fa-cogs"></i></div>
+          <div class="projet-image"><img src="cnc_3d_iso.png" alt="Programmation CNC Heidenhain" style="width:100%;height:100%;object-fit:cover;"></div>
           <div class="projet-body">
-            <div class="projet-title">Projet à venir</div>
-            <p class="projet-desc">Détails du projet à ajouter prochainement.</p>
+            <div class="projet-title">Programmation CNC — Heidenhain iTNC 530</div>
+            <p class="projet-desc">Développement d'un programme d'usinage complet pour une pièce 150×100 mm : contournage, poches, rainures et perçage.</p>
             <div class="projet-tags">
               <span class="projet-tag">SolidWorks</span>
-              <span class="projet-tag">Génie Mécanique</span>
+              <span class="projet-tag">Heidenhain</span>
+              <span class="projet-tag">CNC</span>
             </div>
           </div>
         </div>
@@ -1508,6 +1509,304 @@ END_TYPE</pre>
             <div class="modal-img-caption">Vue 3D de la pièce finale optimisée</div>
           </div>
         </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ==================== MODAL CNC ==================== -->
+  <div class="projet-modal" id="modalCNC">
+    <div class="modal-overlay" onclick="closeModal()"></div>
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeModal()"><i class="fas fa-times"></i></button>
+
+      <div class="modal-header">
+        <h2>Programmation CNC — Usinage complet sur Heidenhain iTNC 530</h2>
+        <div class="modal-tags">
+          <span class="projet-tag">SolidWorks</span>
+          <span class="projet-tag">Heidenhain iTNC 530</span>
+          <span class="projet-tag">Klartext</span>
+          <span class="projet-tag">CNC</span>
+          <span class="projet-tag">CAD/CAM</span>
+        </div>
+      </div>
+
+      <!-- OBJECTIF -->
+      <div class="modal-section">
+        <h3><i class="fas fa-bullseye"></i> Objectif du projet</h3>
+        <p>Ce projet de programmation CNC a consisté à développer un programme d'usinage complet pour une pièce de 150×100 mm en utilisant le système Heidenhain iTNC 530. Après la modélisation 2D/3D sous SolidWorks, quatre outils ont été sélectionnés pour réaliser des opérations de fraisage (contour, poches, rainures) et de perçage. Les paramètres technologiques (vitesse de coupe, avance, profondeur de passe) ont été optimisés pour chaque outil, et le programme généré a été simulé avec succès.</p>
+      </div>
+
+      <!-- MODÉLISATION 3D -->
+      <div class="modal-section">
+        <h3><i class="fas fa-cube"></i> Modélisation 3D sous SolidWorks</h3>
+        <p>La première étape a consisté à modéliser la pièce complète en 3D sous SolidWorks afin de définir précisément toutes les géométries à usiner : le contour extérieur avec ses rayons et congés, les poches circulaires et rectangulaires, les rainures inclinées et croisées, ainsi que les perçages.</p>
+        <div class="modal-img-grid" style="margin-top:1.25rem;">
+          <div class="modal-img-container">
+            <img src="cnc_3d_iso.png" alt="Modèle 3D vue isométrique">
+            <div class="modal-img-caption">Vue isométrique de la pièce</div>
+          </div>
+          <div class="modal-img-container">
+            <img src="cnc_3d_top.png" alt="Modèle 3D vue de dessus">
+            <div class="modal-img-caption">Vue de dessus</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MISE EN PLAN -->
+      <div class="modal-section">
+        <h3><i class="fas fa-drafting-compass"></i> Mise en plan cotée</h3>
+        <p>Une mise en plan complète a ensuite été réalisée avec toutes les cotations nécessaires à la programmation CNC : dimensions globales (150×100 mm), positions des centres de poches, diamètres des perçages, profondeurs d'usinage et la section B-B montrant le profil en coupe.</p>
+        <div class="modal-img-grid single" style="margin-top:1.25rem;">
+          <div class="modal-img-container">
+            <img src="cnc_plan.png" alt="Mise en plan cotée" style="width:100%;">
+            <div class="modal-img-caption">Mise en plan complète — Section B-B et vue de dessus cotée</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SÉLECTION DES OUTILS -->
+      <div class="modal-section">
+        <h3><i class="fas fa-tools"></i> Sélection des outils</h3>
+        <p>Quatre outils ont été sélectionnés avec leurs paramètres technologiques optimisés :</p>
+        <ul>
+          <li><strong>Outil 8</strong> — Fraise de contournage (S2000 tr/min, F200 mm/min) — contour extérieur</li>
+          <li><strong>Outil 5</strong> — Fraise pour poches et rainures (S2000 tr/min, F300 mm/min) — poches circulaires, rectangulaires, rainures</li>
+          <li><strong>Outil 4</strong> — Foret principal (S1300 tr/min, F300 mm/min) — perçage motif polaire 4 trous</li>
+          <li><strong>Outil 41</strong> — Foret petit diamètre (S1300 tr/min, F300 mm/min) — perçage unitaire</li>
+        </ul>
+      </div>
+
+      <!-- PROGRAMME CNC -->
+      <div class="modal-section">
+        <h3><i class="fas fa-code"></i> Programme CNC (Heidenhain Klartext — 62 lignes)</h3>
+        <p style="margin-bottom:0.75rem;">Le programme complet couvre les opérations suivantes : contournage extérieur, poche circulaire (CYCL 252), poche rectangulaire (CYCL 251), rainure inclinée (CYCL 253), perçage en motif polaire (CYCL 200 + CYCL 220), perçage unitaire, rainures croisées et poche circulaire centrale.</p>
+        <div class="code-tabs">
+          <button class="code-tab active" onclick="switchCodeTab(this, 'cnc-full')">Programme complet</button>
+        </div>
+        <div class="code-panel active" id="cnc-full">
+          <pre>0 BEGIN PGM project MM
+1 BLK FORM 0.1 Z X+0 Y+0 Z-20
+2 BLK FORM 0.2 X+150 Y+100 Z+0
+
+; ===== CONTOURNAGE EXTERIEUR (Outil 8) =====
+3 TOOL CALL 8 Z S2000 F200
+4 L Z+100 RO FMAX M3
+5 L X+5 Y-20 RL
+6 L Z-5
+7 L X+5 Y+95
+8 RND R8
+9 L X+135 Y+95
+10 CR X+145 Y+80 R+20 DR-
+11 L X+145 Y+24
+12 CT X+136 Y+9
+13 L X+128.5 Y+5
+14 L X+35.5
+15 L Y+15
+16 CC X+26.5 Y+25
+17 C X+17.5 Y+15 DR+
+18 L Y+5
+19 L X+11
+20 L X+5 Y+11
+21 L X-20
+22 L Z+50 FMAX
+23 ;
+
+; ===== POCHES ET RAINURES (Outil 5) =====
+24 TOOL CALL 5 Z S2000 F300
+25 L Z+50 RO FMAX M3
+26 ;
+27 L X+125 Y+30
+28 CYCL DEF 252 CIRCULAR POCKET
+    Q215=0   ; MACHINING OPERATION
+    Q223=+20 ; CIRCLE DIAMETER
+    Q368=+0  ; ALLOWANCE FOR SIDE
+    Q207=AUTO ; FEED RATE FOR MILLING
+    Q351=1   ; CLIMB OR UP-CUT
+    Q201=-3  ; DEPTH
+    Q202=+5  ; PLUNGING DEPTH
+    Q369=+0  ; ALLOWANCE FOR FLOOR
+    Q206=AUTO ; FEED RATE FOR PLUNGING
+    Q338=0   ; INFEED FOR FINISHING
+    Q200=+5  ; SET-UP CLEARANCE
+    Q203=+0  ; SURFACE COORDINATE
+    Q204=+50 ; 2ND SET-UP CLEARANCE
+    Q370=0.8 ; TOOL PATH OVERLAP
+    Q366=+1  ; PLUNGE
+    Q385=AUTO ; FINISHING FEED RATE
+29 CYCL CALL
+30 ;
+
+31 CYCL DEF 251 RECTANGULAR POCKET
+    Q215=0   ; MACHINING OPERATION
+    Q218=+30 ; FIRST SIDE LENGTH
+    Q367=+0  ; ANGLE OF ROTATION
+    Q207=AUTO ; FEED RATE FOR MILLING
+    Q351=1   ; CLIMB OR UP-CUT
+    Q201=-5  ; DEPTH
+    Q202=+5  ; PLUNGING DEPTH
+    Q369=+0  ; ALLOWANCE FOR FLOOR
+    Q206=AUTO ; FEED RATE FOR PLUNGING
+    Q338=0   ; INFEED FOR FINISHING
+    Q200=+5  ; SET-UP CLEARANCE
+    Q203=+0  ; SURFACE COORDINATE
+    Q204=+50 ; 2ND SET-UP CLEARANCE
+    Q370=0.8 ; TOOL PATH OVERLAP
+    Q366=+1  ; PLUNGE
+    Q385=AUTO ; FINISHING FEED RATE
+32 CYCL CALL
+33 ;
+
+34 L X+125 Y+71
+35 CYCL DEF 253 SLOT MILLING
+    Q215=0   ; MACHINING OPERATION
+    Q218=+32 ; SLOT LENGTH
+    Q219=+12 ; SLOT WIDTH
+    Q368=+0  ; ALLOWANCE FOR SIDE
+    Q374=+120 ; ANGLE OF ROTATION
+    Q367=+0  ; SLOT POSITION
+    Q207=AUTO ; FEED RATE FOR MILLING
+    Q351=1   ; CLIMB OR UP-CUT
+    Q201=-6  ; DEPTH
+    Q202=+5  ; PLUNGING DEPTH
+    Q369=+0  ; ALLOWANCE FOR FLOOR
+    Q206=AUTO ; FEED RATE FOR PLUNGING
+    Q338=0   ; INFEED FOR FINISHING
+    Q200=+5  ; SET-UP CLEARANCE
+    Q203=+0  ; SURFACE COORDINATE
+    Q204=+50 ; 2ND SET-UP CLEARANCE
+    Q366=+1  ; PLUNGE
+    Q385=AUTO ; FINISHING FEED RATE
+36 CYCL CALL POS X+75 Y+50 Z+0
+37 ;
+
+; ===== PERCAGE MOTIF POLAIRE (Outil 4) =====
+38 TOOL CALL 4 Z S1300 F300
+39 CYCL DEF 200 DRILLING
+    Q200=+5  ; SET-UP CLEARANCE
+    Q201=-20 ; DEPTH
+    Q206=AUTO ; FEED RATE FOR PLUNGING
+    Q202=+5  ; PLUNGING DEPTH
+    Q210=0   ; DWELL TIME AT TOP
+    Q203=+0  ; SURFACE COORDINATE
+    Q204=+50 ; 2ND SET-UP CLEARANCE
+    Q211=0   ; DWELL TIME AT DEPTH
+40 CYCL DEF 220 POLAR PATTERN
+    Q216=+75 ; CENTER IN 1ST AXIS
+    Q217=+50 ; CENTER IN 2ND AXIS
+    Q244=+60 ; PITCH CIRCLE DIAMETER
+    Q245=+45 ; STARTING ANGLE
+    Q246=+360 ; STOPPING ANGLE
+    Q247=+90 ; STEPPING ANGLE
+    Q241=+4  ; NR OF REPETITIONS
+41 CYCL CALL
+42 ;
+
+; ===== PERCAGE UNITAIRE (Outil 41) =====
+43 TOOL DEF 41
+44 TOOL CALL 41 Z S1300 F300
+45 L X+12 Y+40
+46 CYCL DEF 200 DRILLING
+    Q200=+5  ; SET-UP CLEARANCE
+    Q201=-10 ; DEPTH
+    Q206=AUTO ; FEED RATE FOR PLUNGING
+    Q202=+5  ; PLUNGING DEPTH
+    Q210=0   ; DWELL TIME AT TOP
+    Q203=+0  ; SURFACE COORDINATE
+    Q204=+50 ; 2ND SET-UP CLEARANCE
+    Q211=0   ; DWELL TIME AT DEPTH
+47 CYCL CALL
+48 ;
+49 ;
+50 ;
+
+; ===== RAINURES CROISEES + POCHE CENTRALE (Outil 5) =====
+51 TOOL CALL 5 Z S2000 F300
+52 CYCL DEF 253 SLOT MILLING
+    Q215=0   ; MACHINING OPERATION
+    Q218=+70 ; SLOT LENGTH
+    Q219=+20 ; SLOT WIDTH
+    Q368=+0  ; ALLOWANCE FOR SIDE
+    Q374=+90 ; ANGLE OF ROTATION
+    Q367=+0  ; SLOT POSITION
+    Q207=AUTO ; FEED RATE FOR MILLING
+    Q351=1   ; CLIMB OR UP-CUT
+    Q201=-5  ; DEPTH
+    Q202=+5  ; PLUNGING DEPTH
+    Q369=+0  ; ALLOWANCE FOR FLOOR
+    Q206=AUTO ; FEED RATE FOR PLUNGING
+    Q338=0   ; INFEED FOR FINISHING
+    Q200=+5  ; SET-UP CLEARANCE
+    Q203=+0  ; SURFACE COORDINATE
+    Q204=+50 ; 2ND SET-UP CLEARANCE
+    Q366=+1  ; PLUNGE
+    Q385=AUTO ; FINISHING FEED RATE
+53 CYCL CALL POS X+75 Y+50 Z+0
+54 ;
+
+55 CYCL DEF 253 SLOT MILLING
+    Q215=0   ; MACHINING OPERATION
+    Q218=+70 ; SLOT LENGTH
+    Q219=+20 ; SLOT WIDTH
+    Q368=+0  ; ALLOWANCE FOR SIDE
+    Q374=+0  ; ANGLE OF ROTATION
+    Q367=+0  ; SLOT POSITION
+    Q207=AUTO ; FEED RATE FOR MILLING
+    Q351=1   ; CLIMB OR UP-CUT
+    Q201=-5  ; DEPTH
+    Q202=+5  ; PLUNGING DEPTH
+    Q369=+0  ; ALLOWANCE FOR FLOOR
+    Q206=AUTO ; FEED RATE FOR PLUNGING
+    Q338=0   ; INFEED FOR FINISHING
+    Q200=+5  ; SET-UP CLEARANCE
+    Q203=+0  ; SURFACE COORDINATE
+    Q204=+50 ; 2ND SET-UP CLEARANCE
+    Q366=+1  ; PLUNGE
+    Q385=AUTO ; FINISHING FEED RATE
+56 CYCL CALL POS X+75 Y+50 Z+0
+57 ;
+
+58 L X+75 Y+50 Z+0
+59 CYCL DEF 252 CIRCULAR POCKET
+    Q215=0   ; MACHINING OPERATION
+    Q223=+20 ; CIRCLE DIAMETER
+    Q368=+0  ; ALLOWANCE FOR SIDE
+    Q207=AUTO ; FEED RATE FOR MILLING
+    Q351=1   ; CLIMB OR UP-CUT
+    Q201=-8  ; DEPTH
+    Q202=+5  ; PLUNGING DEPTH
+    Q369=+0  ; ALLOWANCE FOR FLOOR
+    Q206=AUTO ; FEED RATE FOR PLUNGING
+    Q338=0   ; INFEED FOR FINISHING
+    Q200=+5  ; SET-UP CLEARANCE
+    Q203=+0  ; SURFACE COORDINATE
+    Q204=+50 ; 2ND SET-UP CLEARANCE
+    Q370=0.8 ; TOOL PATH OVERLAP
+    Q366=+1  ; PLUNGE
+    Q385=AUTO ; FINISHING FEED RATE
+60 CYCL CALL
+61 ;
+
+62 END PGM project MM</pre>
+        </div>
+      </div>
+
+      <!-- SIMULATION -->
+      <div class="modal-section">
+        <h3><i class="fas fa-play-circle"></i> Résultat de simulation</h3>
+        <p>Le programme a été simulé avec succès dans l'environnement Heidenhain iTNC 530. La simulation confirme que toutes les opérations d'usinage sont correctement exécutées : le contour extérieur, les poches, les rainures croisées et les perçages correspondent aux géométries définies dans le modèle 3D.</p>
+        <div class="modal-img-grid single" style="margin-top:1.25rem;">
+          <div class="modal-img-container">
+            <img src="cnc_simulation.png" alt="Résultat simulation CNC">
+            <div class="modal-img-caption">Résultat de simulation — pièce usinée virtuellement</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RÉSULTAT -->
+      <div class="modal-section">
+        <h3><i class="fas fa-check-circle"></i> Résultat final</h3>
+        <p>Ce projet a permis de maîtriser l'ensemble de la chaîne numérique CAD/CAM/CNC : de la modélisation 3D sous SolidWorks à la programmation en langage Heidenhain Klartext, en passant par la sélection et l'optimisation des paramètres d'usinage. Le programme de 62 lignes couvre des opérations variées (contournage, poches circulaires et rectangulaires, rainures, perçage en motif polaire) et démontre l'intérêt des outils numériques modernes pour garantir précision et efficacité en usinage.</p>
       </div>
 
     </div>
