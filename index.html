@@ -878,6 +878,35 @@
     }
 
     /* ============================================
+       BACK TO TOP BUTTON
+    ============================================ */
+    #backToTop {
+      position: fixed; bottom: 2rem; right: 2rem;
+      width: 46px; height: 46px;
+      border-radius: 50%; border: none; cursor: pointer;
+      background: #3b82f6; color: #fff;
+      font-size: 1.1rem;
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; visibility: hidden;
+      transform: translateY(10px);
+      transition: all 0.3s ease;
+      z-index: 999;
+      box-shadow: 0 4px 15px rgba(59,130,246,0.35);
+    }
+    #backToTop.visible {
+      opacity: 1; visibility: visible;
+      transform: translateY(0);
+    }
+    #backToTop:hover {
+      background: #2563eb;
+      transform: translateY(-3px);
+      box-shadow: 0 6px 20px rgba(59,130,246,0.45);
+    }
+    body.light-mode #backToTop {
+      box-shadow: 0 4px 15px rgba(59,130,246,0.25);
+    }
+
+    /* ============================================
        RESPONSIVE
     ============================================ */
     @media (max-width: 768px) {
@@ -2546,8 +2575,24 @@ END_TYPE</pre>
     <p>&copy; 2026 — Abdeldjallil Seif E. Zerrouni · Portfolio Génie Mécanique</p>
   </footer>
 
+  <!-- Back to top button -->
+  <button id="backToTop" aria-label="Retour en haut"><i class="fas fa-chevron-up"></i></button>
+
   <!-- ==================== JAVASCRIPT ==================== -->
   <script>
+    // Back to top button
+    const backToTop = document.getElementById('backToTop');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 400) {
+        backToTop.classList.add('visible');
+      } else {
+        backToTop.classList.remove('visible');
+      }
+    });
+    backToTop.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
     // Theme toggle (dark = default)
     const themeToggle = document.getElementById('themeToggle');
     const savedTheme = localStorage.getItem('theme');
