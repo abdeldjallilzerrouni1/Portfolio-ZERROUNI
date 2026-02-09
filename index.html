@@ -665,6 +665,219 @@
     }
 
     /* ============================================
+       THEME TOGGLE BUTTON
+    ============================================ */
+    .theme-toggle {
+      background: none; border: none; cursor: pointer;
+      font-size: 1.2rem; color: #a0a0a0;
+      width: 40px; height: 40px;
+      display: flex; align-items: center; justify-content: center;
+      border-radius: 8px; transition: all 0.3s;
+    }
+    .theme-toggle:hover { color: #fff; background: rgba(255,255,255,0.08); }
+    .theme-toggle .fa-sun { display: none; }
+    .theme-toggle .fa-moon { display: inline; }
+    body.light-mode .theme-toggle .fa-sun { display: inline; }
+    body.light-mode .theme-toggle .fa-moon { display: none; }
+    body.light-mode .theme-toggle { color: #555; }
+    body.light-mode .theme-toggle:hover { color: #222; background: rgba(0,0,0,0.06); }
+
+    /* ============================================
+       LIGHT MODE OVERRIDES
+    ============================================ */
+    body.light-mode {
+      background: #f5f7fa;
+      color: #333;
+    }
+    body.light-mode a { color: #2563eb; }
+    body.light-mode a:hover { color: #1d4ed8; }
+
+    /* Nav */
+    body.light-mode nav {
+      background: rgba(255, 255, 255, 0.9);
+      border-bottom: 1px solid rgba(0,0,0,0.08);
+    }
+    body.light-mode .nav-logo { color: #111; }
+    body.light-mode .nav-links a { color: #666; }
+    body.light-mode .nav-links a:hover { color: #111; }
+    body.light-mode .nav-toggle { color: #333; }
+    body.light-mode .nav-links.active {
+      background: rgba(255,255,255,0.97);
+      border-bottom: 1px solid rgba(0,0,0,0.08);
+    }
+
+    /* Hero */
+    body.light-mode .hero {
+      background: linear-gradient(135deg, #f5f7fa 0%, #e8edf5 50%, #f5f7fa 100%);
+    }
+    body.light-mode .hero::before {
+      background: radial-gradient(circle at 70% 40%, rgba(59,130,246,0.06) 0%, transparent 60%);
+    }
+    body.light-mode .hero-name { color: #111; }
+    body.light-mode .hero-title { color: #666; }
+    body.light-mode .hero-desc { color: #777; }
+    body.light-mode .hero-badge {
+      background: rgba(59,130,246,0.08); color: #2563eb;
+      border-color: rgba(59,130,246,0.15);
+    }
+    body.light-mode .btn-outline {
+      color: #444; border-color: rgba(0,0,0,0.15);
+    }
+    body.light-mode .btn-outline:hover { color: #2563eb; border-color: #2563eb; }
+    body.light-mode .hero-photo {
+      border-color: rgba(59,130,246,0.25);
+      box-shadow: 0 20px 60px rgba(59,130,246,0.1);
+    }
+
+    /* Sections */
+    body.light-mode .profil { background: #fff; }
+    body.light-mode .formation { background: #f5f7fa; }
+    body.light-mode .competences { background: #fff; }
+    body.light-mode .langues { background: #f5f7fa; }
+    body.light-mode .timeline-section { background: #fff; }
+    body.light-mode .projets { background: #f5f7fa; }
+    body.light-mode .contact { background: #fff; }
+    body.light-mode footer {
+      background: #f5f7fa; color: #999;
+      border-top: 1px solid rgba(0,0,0,0.06);
+    }
+    body.light-mode .section-title { color: #111; }
+    body.light-mode .section-subtitle { color: #999; }
+
+    /* Profil */
+    body.light-mode .profil-content {
+      background: linear-gradient(135deg, rgba(59,130,246,0.04), rgba(139,92,246,0.02));
+      border-color: rgba(0,0,0,0.08); color: #555;
+    }
+
+    /* Cards (formation, skill, langue, contact, projet, timeline) */
+    body.light-mode .formation-card,
+    body.light-mode .skill-card,
+    body.light-mode .langue-card,
+    body.light-mode .contact-card,
+    body.light-mode .projet-card,
+    body.light-mode .timeline-card {
+      background: #fff;
+      border-color: rgba(0,0,0,0.08);
+      box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+    }
+    body.light-mode .formation-card:hover,
+    body.light-mode .skill-card:hover,
+    body.light-mode .langue-card:hover,
+    body.light-mode .contact-card:hover,
+    body.light-mode .projet-card:hover,
+    body.light-mode .timeline-card:hover {
+      border-color: rgba(59,130,246,0.3);
+      box-shadow: 0 4px 20px rgba(59,130,246,0.08);
+    }
+
+    /* Formation */
+    body.light-mode .formation-school { color: #111; }
+    body.light-mode .formation-location { color: #999; }
+    body.light-mode .formation-date { background: rgba(59,130,246,0.08); }
+    body.light-mode .coursework-tag {
+      background: rgba(0,0,0,0.04); border-color: rgba(0,0,0,0.08); color: #666;
+    }
+    body.light-mode .semester-circle {
+      background: rgba(0,0,0,0.03); border-color: rgba(0,0,0,0.12); color: #888;
+    }
+    body.light-mode .semester-circle:hover {
+      background: rgba(59,130,246,0.06); border-color: rgba(59,130,246,0.4); color: #2563eb;
+    }
+    body.light-mode .semester-circle.active {
+      background: rgba(59,130,246,0.12); border-color: #3b82f6; color: #2563eb;
+    }
+    body.light-mode .semester-content {
+      background: rgba(0,0,0,0.02); border-color: rgba(0,0,0,0.06);
+    }
+
+    /* Skills */
+    body.light-mode .skill-cat-btn {
+      background: rgba(0,0,0,0.03); border-color: rgba(0,0,0,0.08); color: #777;
+    }
+    body.light-mode .skill-cat-btn.active,
+    body.light-mode .skill-cat-btn:hover {
+      background: rgba(59,130,246,0.08); border-color: rgba(59,130,246,0.25); color: #2563eb;
+    }
+    body.light-mode .skill-name { color: #222; }
+    body.light-mode .skill-level { color: #2563eb; }
+    body.light-mode .skill-bar-container,
+    body.light-mode .langue-bar-container {
+      background: rgba(0,0,0,0.06);
+    }
+
+    /* Langues */
+    body.light-mode .langue-name { color: #222; }
+    body.light-mode .langue-level { color: #2563eb; }
+
+    /* Timeline */
+    body.light-mode .timeline::before { background: rgba(59,130,246,0.15); }
+    body.light-mode .timeline-dot { border-color: #fff; }
+    body.light-mode .timeline-card-title { color: #111; }
+    body.light-mode .timeline-card-text { color: #777; }
+    body.light-mode .timeline-card-image { opacity: 0.85; }
+
+    /* Projets */
+    body.light-mode .projet-badge {
+      background: rgba(255,255,255,0.9); border-color: rgba(0,0,0,0.1);
+      color: #2563eb;
+    }
+    body.light-mode .projet-image {
+      background: linear-gradient(135deg, rgba(59,130,246,0.06), rgba(139,92,246,0.03));
+    }
+    body.light-mode .projet-title { color: #111; }
+    body.light-mode .projet-desc { color: #777; }
+    body.light-mode .projet-tag {
+      background: rgba(59,130,246,0.06); color: #2563eb;
+    }
+
+    /* Modal */
+    body.light-mode .modal-overlay { background: rgba(0,0,0,0.5); }
+    body.light-mode .modal-content {
+      background: #fff; border-color: rgba(0,0,0,0.1);
+    }
+    body.light-mode .modal-close {
+      background: rgba(0,0,0,0.04); border-color: rgba(0,0,0,0.08); color: #888;
+    }
+    body.light-mode .modal-close:hover {
+      background: rgba(239,68,68,0.08); color: #dc2626; border-color: rgba(239,68,68,0.2);
+    }
+    body.light-mode .modal-header h2 { color: #111; }
+    body.light-mode .modal-section { border-bottom-color: rgba(0,0,0,0.06); }
+    body.light-mode .modal-section h3 { color: #222; }
+    body.light-mode .modal-section p,
+    body.light-mode .modal-section li { color: #555; }
+    body.light-mode .modal-img-container { border-color: rgba(0,0,0,0.08); }
+    body.light-mode .modal-img-caption { background: rgba(0,0,0,0.02); color: #999; }
+    body.light-mode .modal-result-box {
+      background: rgba(59,130,246,0.04); border-color: rgba(59,130,246,0.1);
+    }
+    body.light-mode .modal-result-box .result-row { color: #666; }
+    body.light-mode .modal-result-box .result-row span:last-child { color: #222; }
+
+    /* Code panels */
+    body.light-mode .code-tab { color: #888; }
+    body.light-mode .code-tab:hover { color: #555; }
+    body.light-mode .code-tab.active {
+      color: #2563eb; background: rgba(59,130,246,0.04);
+    }
+    body.light-mode .code-tabs { border-bottom-color: rgba(0,0,0,0.08); }
+    body.light-mode .code-panel {
+      background: #f8f9fb; border-color: rgba(0,0,0,0.08);
+    }
+    body.light-mode .code-panel pre { color: #334155; }
+
+    /* Contact */
+    body.light-mode .contact-label { color: #222; }
+    body.light-mode .contact-value { color: #777; }
+
+    /* Chrono & video */
+    body.light-mode .chrono-container,
+    body.light-mode .video-container {
+      border-color: rgba(0,0,0,0.08);
+    }
+
+    /* ============================================
        RESPONSIVE
     ============================================ */
     @media (max-width: 768px) {
@@ -708,9 +921,15 @@
         <li><a href="#projets">Projets</a></li>
         <li><a href="#contact">Contact</a></li>
       </ul>
-      <button class="nav-toggle" id="navToggle" aria-label="Menu">
-        <i class="fas fa-bars"></i>
-      </button>
+      <div style="display:flex;align-items:center;gap:0.5rem;">
+        <button class="theme-toggle" id="themeToggle" aria-label="Changer le thème">
+          <i class="fas fa-sun"></i>
+          <i class="fas fa-moon"></i>
+        </button>
+        <button class="nav-toggle" id="navToggle" aria-label="Menu">
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
     </div>
   </nav>
 
@@ -2329,6 +2548,16 @@ END_TYPE</pre>
 
   <!-- ==================== JAVASCRIPT ==================== -->
   <script>
+    // Theme toggle (dark = default)
+    const themeToggle = document.getElementById('themeToggle');
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'light') document.body.classList.add('light-mode');
+    themeToggle.addEventListener('click', () => {
+      document.body.classList.toggle('light-mode');
+      const isLight = document.body.classList.contains('light-mode');
+      localStorage.setItem('theme', isLight ? 'light' : 'dark');
+    });
+
     // Mobile nav toggle
     const navToggle = document.getElementById('navToggle');
     const navLinks = document.getElementById('navLinks');
