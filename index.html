@@ -108,28 +108,6 @@
       display: block;
     }
 
-    /* ── Timeline Flags ── */
-    .timeline-card { position: relative; }
-    .timeline-flag {
-      position: absolute;
-      top: -22px;
-      right: 20px;
-      font-size: 2.8rem;
-      z-index: 5;
-      animation: flagPop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) both,
-                 flagFloat 3s ease-in-out infinite 0.6s;
-      filter: drop-shadow(0 4px 12px rgba(0,0,0,0.4));
-      cursor: default;
-      line-height: 1;
-    }
-    @keyframes flagPop {
-      0% { transform: scale(0) rotate(-20deg); opacity: 0; }
-      100% { transform: scale(1) rotate(0deg); opacity: 1; }
-    }
-    @keyframes flagFloat {
-      0%, 100% { transform: translateY(0) rotate(0deg); }
-      50% { transform: translateY(-6px) rotate(3deg); }
-    }
 
     .hero-content {
       max-width: 1100px; width: 100%; margin: 0 auto;
@@ -674,7 +652,6 @@
       .projet-modal { padding: 0.5rem; }
       .code-panel pre { font-size: 0.7rem; padding: 1rem; }
       #engine-canvas.loaded { opacity: 0.10; }
-      .timeline-flag { font-size: 2rem; top: -16px; right: 12px; }
     }
   </style>
 </head>
@@ -885,7 +862,6 @@
         <div class="timeline-item">
           <div class="timeline-dot"></div>
           <div class="timeline-card">
-            <span class="timeline-flag" title="Pologne">&#127477;&#127473;</span>
             <img src="ville1.png" alt="Kielce, Pologne" class="timeline-card-image">
             <div class="timeline-card-body">
               <div class="timeline-year">2023 — 2025</div>
@@ -901,7 +877,6 @@
         <div class="timeline-item">
           <div class="timeline-dot"></div>
           <div class="timeline-card">
-            <span class="timeline-flag" title="France">&#127467;&#127479;</span>
             <img src="ville2.png" alt="Poitiers, France" class="timeline-card-image">
             <div class="timeline-card-body">
               <div class="timeline-year">2025 — Présent</div>
@@ -988,6 +963,18 @@
               <span class="projet-tag">SolidWorks</span>
               <span class="projet-tag">Heidenhain</span>
               <span class="projet-tag">CNC</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- ====== PROJET MECA : À VENIR ====== -->
+        <div class="projet-card" data-type="meca">
+          <div class="projet-image" style="display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,0.03);"><i class="fas fa-cogs" style="font-size:3rem;color:rgba(255,255,255,0.12);"></i></div>
+          <div class="projet-body">
+            <div class="projet-title">Projet à venir</div>
+            <p class="projet-desc">Un nouveau projet de génie mécanique sera ajouté prochainement.</p>
+            <div class="projet-tags">
+              <span class="projet-tag">Génie Mécanique</span>
             </div>
           </div>
         </div>
