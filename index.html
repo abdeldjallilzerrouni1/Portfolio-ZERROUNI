@@ -108,26 +108,27 @@
       display: block;
     }
 
-    /* ── Astronaut 3D (Parcours) ── */
-    .timeline-section .section-container { position: relative; overflow: visible; }
-    .timeline-section .timeline { overflow: visible; }
-    #astronaut-3d {
+    /* ── Timeline Flags ── */
+    .timeline-card { position: relative; }
+    .timeline-flag {
       position: absolute;
-      left: 2%;
-      bottom: -20px;
-      width: 300px;
-      height: 420px;
-      pointer-events: none;
-      z-index: 10;
-      opacity: 0;
-      transition: opacity 1s ease;
-      filter: drop-shadow(0 4px 30px rgba(59,130,246,0.45))
-             drop-shadow(0 0 60px rgba(59,130,246,0.2));
+      top: -22px;
+      right: 20px;
+      font-size: 2.8rem;
+      z-index: 5;
+      animation: flagPop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) both,
+                 flagFloat 3s ease-in-out infinite 0.6s;
+      filter: drop-shadow(0 4px 12px rgba(0,0,0,0.4));
+      cursor: default;
+      line-height: 1;
     }
-    #astronaut-3d.loaded { opacity: 1; }
-    #astronaut-3d canvas {
-      width: 100%; height: 100%;
-      display: block;
+    @keyframes flagPop {
+      0% { transform: scale(0) rotate(-20deg); opacity: 0; }
+      100% { transform: scale(1) rotate(0deg); opacity: 1; }
+    }
+    @keyframes flagFloat {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-6px) rotate(3deg); }
     }
 
     .hero-content {
@@ -673,7 +674,7 @@
       .projet-modal { padding: 0.5rem; }
       .code-panel pre { font-size: 0.7rem; padding: 1rem; }
       #engine-canvas.loaded { opacity: 0.10; }
-      #astronaut-3d { display: none !important; }
+      .timeline-flag { font-size: 2rem; top: -16px; right: 12px; }
     }
   </style>
 </head>
@@ -884,6 +885,7 @@
         <div class="timeline-item">
           <div class="timeline-dot"></div>
           <div class="timeline-card">
+            <span class="timeline-flag" title="Pologne">&#127477;&#127473;</span>
             <img src="ville1.png" alt="Kielce, Pologne" class="timeline-card-image">
             <div class="timeline-card-body">
               <div class="timeline-year">2023 — 2025</div>
@@ -899,6 +901,7 @@
         <div class="timeline-item">
           <div class="timeline-dot"></div>
           <div class="timeline-card">
+            <span class="timeline-flag" title="France">&#127467;&#127479;</span>
             <img src="ville2.png" alt="Poitiers, France" class="timeline-card-image">
             <div class="timeline-card-body">
               <div class="timeline-year">2025 — Présent</div>
@@ -911,8 +914,6 @@
         </div>
 
       </div>
-      <!-- Astronaut 3D - positioned at bottom-left of parcours -->
-      <div id="astronaut-3d"></div>
     </div>
   </section>
 
@@ -2416,134 +2417,6 @@ END_TYPE</pre>
   })();
   </script>
 
-  <!-- ==================== 3D ASTRONAUT (Parcours) ==================== -->
-  <script type="module">
-  import * as THREE from 'three';
-  import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
-
-  (function () {
-    const container = document.getElementById('astronaut-3d');
-    if (!container) { console.warn('Astronaut: container not found'); return; }
-    if (window.innerWidth < 769) { console.log('Astronaut: skipped on mobile'); return; }
-
-    console.log('Astronaut: container size', container.clientWidth, 'x', container.clientHeight);
-
-    /* Force dimensions if container has 0 size */
-    const W = container.clientWidth || 280;
-    const H = container.clientHeight || 400;
-
-    /* ── Renderer ── */
-    const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    renderer.setSize(W, H);
-    renderer.setClearColor(0x000000, 0);
-    renderer.outputColorSpace = THREE.SRGBColorSpace;
-    renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    renderer.toneMappingExposure = 1.8;
-    container.appendChild(renderer.domElement);
-
-    /* ── Scene & Camera ── */
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(55, W / H, 0.01, 100);
-
-    /* ── Strong Lights for pop-out effect ── */
-    scene.add(new THREE.AmbientLight(0xffffff, 1.8));
-    const dir1 = new THREE.DirectionalLight(0xffffff, 2.5);
-    dir1.position.set(3, 5, 5);
-    scene.add(dir1);
-    const dir2 = new THREE.DirectionalLight(0x3b82f6, 1.0);
-    dir2.position.set(-3, 2, -2);
-    scene.add(dir2);
-    /* Rim light from behind for edge glow */
-    const rim = new THREE.DirectionalLight(0x60a5fa, 1.2);
-    rim.position.set(0, 2, -5);
-    scene.add(rim);
-    /* Front fill light */
-    const front = new THREE.DirectionalLight(0xffffff, 1.0);
-    front.position.set(0, 0, 5);
-    scene.add(front);
-
-    /* ── Load GLB ── */
-    let mixer = null;
-    const ANIM_SPEED = 0.8;
-    const clock = new THREE.Clock();
-
-    console.log('Astronaut: starting GLB load...');
-    const loader = new GLTFLoader();
-    loader.load('astronaut.glb',
-      /* onLoad */
-      (gltf) => {
-        console.log('Astronaut: GLB loaded successfully');
-        const model = gltf.scene;
-
-        const box = new THREE.Box3().setFromObject(model);
-        const center = box.getCenter(new THREE.Vector3());
-        const size = box.getSize(new THREE.Vector3());
-        const maxDim = Math.max(size.x, size.y, size.z);
-        const scale = 3.0 / maxDim;
-
-        model.scale.setScalar(scale);
-        model.position.sub(center.multiplyScalar(scale));
-        scene.add(model);
-
-        camera.position.set(0, 0.3, 2.6);
-        camera.lookAt(0, 0, 0);
-
-        if (gltf.animations && gltf.animations.length > 0) {
-          mixer = new THREE.AnimationMixer(model);
-          gltf.animations.forEach(clip => {
-            const action = mixer.clipAction(clip);
-            action.timeScale = ANIM_SPEED;
-            action.play();
-          });
-          console.log('Astronaut: playing', gltf.animations.length, 'animations');
-        }
-
-        container.classList.add('loaded');
-        animate(model);
-      },
-      /* onProgress */
-      (xhr) => {
-        if (xhr.total) {
-          const pct = Math.round(xhr.loaded / xhr.total * 100);
-          console.log('Astronaut: loading ' + pct + '%');
-        }
-      },
-      /* onError */
-      (err) => {
-        console.error('Astronaut: GLB LOAD ERROR', err);
-      }
-    );
-
-    /* ── Animation Loop ── */
-    let isVisible = true;
-
-    function animate(model) {
-      requestAnimationFrame(() => animate(model));
-      if (!isVisible) return;
-      const delta = clock.getDelta();
-      if (mixer) mixer.update(delta);
-      model.rotation.y = Math.sin(Date.now() * 0.0003) * 0.15;
-      renderer.render(scene, camera);
-    }
-
-    /* ── Resize ── */
-    window.addEventListener('resize', () => {
-      const w = container.clientWidth || 280;
-      const h = container.clientHeight || 400;
-      camera.aspect = w / h;
-      camera.updateProjectionMatrix();
-      renderer.setSize(w, h);
-    });
-
-    /* ── Pause when not visible ── */
-    const obs = new IntersectionObserver(entries => {
-      isVisible = entries[0].isIntersecting;
-    }, { threshold: 0.05 });
-    obs.observe(container);
-
-  })();
-  </script>
 
 </body>
 </html>
