@@ -7,6 +7,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <script defer src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
   <script type="importmap">
   { "imports": {
       "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
@@ -107,6 +109,7 @@
       width: 100%; height: 100%;
       display: block;
     }
+
 
     .hero-content {
       max-width: 1100px; width: 100%; margin: 0 auto;
@@ -223,6 +226,45 @@
     .coursework-empty {
       color: #505050; font-style: italic; font-size: 0.85rem;
       margin-top: 1rem;
+    }
+    /* ── Semester Circles ── */
+    .semester-circles {
+      display: flex; gap: 1rem; margin-top: 1rem; justify-content: flex-start;
+    }
+    .semester-circle {
+      width: 48px; height: 48px; border-radius: 50%;
+      background: rgba(255,255,255,0.05);
+      border: 2px solid rgba(255,255,255,0.12);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.85rem; font-weight: 700; color: #909090;
+      cursor: pointer; transition: all 0.3s ease;
+      user-select: none;
+    }
+    .semester-circle:hover {
+      border-color: rgba(59,130,246,0.5);
+      color: #60a5fa;
+      background: rgba(59,130,246,0.08);
+    }
+    .semester-circle.active {
+      border-color: #3b82f6;
+      color: #fff;
+      background: rgba(59,130,246,0.2);
+      box-shadow: 0 0 12px rgba(59,130,246,0.3);
+    }
+    .semester-content {
+      display: none; margin-top: 1rem;
+      padding: 1rem; border-radius: 12px;
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.06);
+      animation: semFadeIn 0.3s ease;
+    }
+    .semester-content.active { display: block; }
+    @keyframes semFadeIn {
+      0% { opacity: 0; transform: translateY(-8px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+    .semester-content-empty {
+      color: #505050; font-style: italic; font-size: 0.85rem;
     }
 
     /* ============================================
@@ -625,6 +667,248 @@
     }
 
     /* ============================================
+       THEME TOGGLE BUTTON
+    ============================================ */
+    .theme-toggle {
+      background: none; border: none; cursor: pointer;
+      font-size: 1.2rem; color: #a0a0a0;
+      width: 40px; height: 40px;
+      display: flex; align-items: center; justify-content: center;
+      border-radius: 8px; transition: all 0.3s;
+    }
+    .theme-toggle:hover { color: #fff; background: rgba(255,255,255,0.08); }
+    .theme-toggle .fa-sun { display: none; }
+    .theme-toggle .fa-moon { display: inline; }
+    body.light-mode .theme-toggle .fa-sun { display: inline; }
+    body.light-mode .theme-toggle .fa-moon { display: none; }
+    body.light-mode .theme-toggle { color: #555; }
+    body.light-mode .theme-toggle:hover { color: #222; background: rgba(0,0,0,0.06); }
+
+    /* ============================================
+       LIGHT MODE OVERRIDES
+    ============================================ */
+    body.light-mode {
+      background: #f5f7fa;
+      color: #333;
+    }
+    body.light-mode a { color: #2563eb; }
+    body.light-mode a:hover { color: #1d4ed8; }
+
+    /* Nav */
+    body.light-mode nav {
+      background: rgba(255, 255, 255, 0.9);
+      border-bottom: 1px solid rgba(0,0,0,0.08);
+    }
+    body.light-mode .nav-logo { color: #111; }
+    body.light-mode .nav-links a { color: #666; }
+    body.light-mode .nav-links a:hover { color: #111; }
+    body.light-mode .nav-toggle { color: #333; }
+    body.light-mode .nav-links.active {
+      background: rgba(255,255,255,0.97);
+      border-bottom: 1px solid rgba(0,0,0,0.08);
+    }
+
+    /* Hero */
+    body.light-mode .hero {
+      background: linear-gradient(135deg, #f5f7fa 0%, #e8edf5 50%, #f5f7fa 100%);
+    }
+    body.light-mode .hero::before {
+      background: radial-gradient(circle at 70% 40%, rgba(59,130,246,0.06) 0%, transparent 60%);
+    }
+    body.light-mode .hero-name { color: #111; }
+    body.light-mode .hero-title { color: #666; }
+    body.light-mode .hero-desc { color: #777; }
+    body.light-mode .hero-badge {
+      background: rgba(59,130,246,0.08); color: #2563eb;
+      border-color: rgba(59,130,246,0.15);
+    }
+    body.light-mode .btn-outline {
+      color: #444; border-color: rgba(0,0,0,0.15);
+    }
+    body.light-mode .btn-outline:hover { color: #2563eb; border-color: #2563eb; }
+    body.light-mode .hero-photo {
+      border-color: rgba(59,130,246,0.25);
+      box-shadow: 0 20px 60px rgba(59,130,246,0.1);
+    }
+
+    /* Sections */
+    body.light-mode .profil { background: #fff; }
+    body.light-mode .formation { background: #f5f7fa; }
+    body.light-mode .competences { background: #fff; }
+    body.light-mode .langues { background: #f5f7fa; }
+    body.light-mode .timeline-section { background: #fff; }
+    body.light-mode .projets { background: #f5f7fa; }
+    body.light-mode .contact { background: #fff; }
+    body.light-mode footer {
+      background: #f5f7fa; color: #999;
+      border-top: 1px solid rgba(0,0,0,0.06);
+    }
+    body.light-mode .section-title { color: #111; }
+    body.light-mode .section-subtitle { color: #999; }
+
+    /* Profil */
+    body.light-mode .profil-content {
+      background: linear-gradient(135deg, rgba(59,130,246,0.04), rgba(139,92,246,0.02));
+      border-color: rgba(0,0,0,0.08); color: #555;
+    }
+
+    /* Cards (formation, skill, langue, contact, projet, timeline) */
+    body.light-mode .formation-card,
+    body.light-mode .skill-card,
+    body.light-mode .langue-card,
+    body.light-mode .contact-card,
+    body.light-mode .projet-card,
+    body.light-mode .timeline-card {
+      background: #fff;
+      border-color: rgba(0,0,0,0.08);
+      box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+    }
+    body.light-mode .formation-card:hover,
+    body.light-mode .skill-card:hover,
+    body.light-mode .langue-card:hover,
+    body.light-mode .contact-card:hover,
+    body.light-mode .projet-card:hover,
+    body.light-mode .timeline-card:hover {
+      border-color: rgba(59,130,246,0.3);
+      box-shadow: 0 4px 20px rgba(59,130,246,0.08);
+    }
+
+    /* Formation */
+    body.light-mode .formation-school { color: #111; }
+    body.light-mode .formation-location { color: #999; }
+    body.light-mode .formation-date { background: rgba(59,130,246,0.08); }
+    body.light-mode .coursework-tag {
+      background: rgba(0,0,0,0.04); border-color: rgba(0,0,0,0.08); color: #666;
+    }
+    body.light-mode .semester-circle {
+      background: rgba(0,0,0,0.03); border-color: rgba(0,0,0,0.12); color: #888;
+    }
+    body.light-mode .semester-circle:hover {
+      background: rgba(59,130,246,0.06); border-color: rgba(59,130,246,0.4); color: #2563eb;
+    }
+    body.light-mode .semester-circle.active {
+      background: rgba(59,130,246,0.12); border-color: #3b82f6; color: #2563eb;
+    }
+    body.light-mode .semester-content {
+      background: rgba(0,0,0,0.02); border-color: rgba(0,0,0,0.06);
+    }
+
+    /* Skills */
+    body.light-mode .skill-cat-btn {
+      background: rgba(0,0,0,0.03); border-color: rgba(0,0,0,0.08); color: #777;
+    }
+    body.light-mode .skill-cat-btn.active,
+    body.light-mode .skill-cat-btn:hover {
+      background: rgba(59,130,246,0.08); border-color: rgba(59,130,246,0.25); color: #2563eb;
+    }
+    body.light-mode .skill-name { color: #222; }
+    body.light-mode .skill-level { color: #2563eb; }
+    body.light-mode .skill-bar-container,
+    body.light-mode .langue-bar-container {
+      background: rgba(0,0,0,0.06);
+    }
+
+    /* Langues */
+    body.light-mode .langue-name { color: #222; }
+    body.light-mode .langue-level { color: #2563eb; }
+
+    /* Timeline */
+    body.light-mode .timeline::before { background: rgba(59,130,246,0.15); }
+    body.light-mode .timeline-dot { border-color: #fff; }
+    body.light-mode .timeline-card-title { color: #111; }
+    body.light-mode .timeline-card-text { color: #777; }
+    body.light-mode .timeline-card-image { opacity: 0.85; }
+
+    /* Projets */
+    body.light-mode .projet-badge {
+      background: rgba(255,255,255,0.9); border-color: rgba(0,0,0,0.1);
+      color: #2563eb;
+    }
+    body.light-mode .projet-image {
+      background: linear-gradient(135deg, rgba(59,130,246,0.06), rgba(139,92,246,0.03));
+    }
+    body.light-mode .projet-title { color: #111; }
+    body.light-mode .projet-desc { color: #777; }
+    body.light-mode .projet-tag {
+      background: rgba(59,130,246,0.06); color: #2563eb;
+    }
+
+    /* Modal */
+    body.light-mode .modal-overlay { background: rgba(0,0,0,0.5); }
+    body.light-mode .modal-content {
+      background: #fff; border-color: rgba(0,0,0,0.1);
+    }
+    body.light-mode .modal-close {
+      background: rgba(0,0,0,0.04); border-color: rgba(0,0,0,0.08); color: #888;
+    }
+    body.light-mode .modal-close:hover {
+      background: rgba(239,68,68,0.08); color: #dc2626; border-color: rgba(239,68,68,0.2);
+    }
+    body.light-mode .modal-header h2 { color: #111; }
+    body.light-mode .modal-section { border-bottom-color: rgba(0,0,0,0.06); }
+    body.light-mode .modal-section h3 { color: #222; }
+    body.light-mode .modal-section p,
+    body.light-mode .modal-section li { color: #555; }
+    body.light-mode .modal-img-container { border-color: rgba(0,0,0,0.08); }
+    body.light-mode .modal-img-caption { background: rgba(0,0,0,0.02); color: #999; }
+    body.light-mode .modal-result-box {
+      background: rgba(59,130,246,0.04); border-color: rgba(59,130,246,0.1);
+    }
+    body.light-mode .modal-result-box .result-row { color: #666; }
+    body.light-mode .modal-result-box .result-row span:last-child { color: #222; }
+
+    /* Code panels */
+    body.light-mode .code-tab { color: #888; }
+    body.light-mode .code-tab:hover { color: #555; }
+    body.light-mode .code-tab.active {
+      color: #2563eb; background: rgba(59,130,246,0.04);
+    }
+    body.light-mode .code-tabs { border-bottom-color: rgba(0,0,0,0.08); }
+    body.light-mode .code-panel {
+      background: #f8f9fb; border-color: rgba(0,0,0,0.08);
+    }
+    body.light-mode .code-panel pre { color: #334155; }
+
+    /* Contact */
+    body.light-mode .contact-label { color: #222; }
+    body.light-mode .contact-value { color: #777; }
+
+    /* Chrono & video */
+    body.light-mode .chrono-container,
+    body.light-mode .video-container {
+      border-color: rgba(0,0,0,0.08);
+    }
+
+    /* ============================================
+       BACK TO TOP BUTTON
+    ============================================ */
+    #backToTop {
+      position: fixed; bottom: 2rem; right: 2rem;
+      width: 46px; height: 46px;
+      border-radius: 50%; border: none; cursor: pointer;
+      background: #3b82f6; color: #fff;
+      font-size: 1.1rem;
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; visibility: hidden;
+      transform: translateY(10px);
+      transition: all 0.3s ease;
+      z-index: 999;
+      box-shadow: 0 4px 15px rgba(59,130,246,0.35);
+    }
+    #backToTop.visible {
+      opacity: 1; visibility: visible;
+      transform: translateY(0);
+    }
+    #backToTop:hover {
+      background: #2563eb;
+      transform: translateY(-3px);
+      box-shadow: 0 6px 20px rgba(59,130,246,0.45);
+    }
+    body.light-mode #backToTop {
+      box-shadow: 0 4px 15px rgba(59,130,246,0.25);
+    }
+
+    /* ============================================
        RESPONSIVE
     ============================================ */
     @media (max-width: 768px) {
@@ -668,9 +952,15 @@
         <li><a href="#projets">Projets</a></li>
         <li><a href="#contact">Contact</a></li>
       </ul>
-      <button class="nav-toggle" id="navToggle" aria-label="Menu">
-        <i class="fas fa-bars"></i>
-      </button>
+      <div style="display:flex;align-items:center;gap:0.5rem;">
+        <button class="theme-toggle" id="themeToggle" aria-label="Changer le thème">
+          <i class="fas fa-sun"></i>
+          <i class="fas fa-moon"></i>
+        </button>
+        <button class="nav-toggle" id="navToggle" aria-label="Menu">
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
     </div>
   </nav>
 
@@ -679,11 +969,11 @@
     <div id="engine-canvas"></div>
     <div class="hero-content">
       <div class="hero-text">
-        <div class="hero-badge"><i class="fas fa-cogs"></i>&nbsp; Ouvert aux opportunités de stage</div>
+        <div class="hero-badge"><i class="fas fa-cogs"></i>&nbsp; Ouvert aux opportunités d'alternance</div>
         <h1 class="hero-name">Abdeldjallil<br><span>Seif E. Zerrouni</span></h1>
         <p class="hero-title">Étudiant en Génie Mécanique · L3 Université de Poitiers</p>
         <p class="hero-desc">
-          Passionné par la conception mécanique et l'automatisme, je mets mes compétences en SolidWorks et B&R Automation Studio au service de projets concrets. À la recherche d'un stage à partir d'avril 2026.
+          Passionné par l'ingénierie mécanique, je cherche une alternance à partir de septembre 2026 pour confronter mes acquis universitaires au monde industriel. Ce portfolio regroupe un aperçu de mes projets d'ingénierie réalisés au fil de mon parcours.
         </p>
         <div class="hero-buttons">
           <a href="#projets" class="btn btn-primary"><i class="fas fa-briefcase"></i> Mes Projets</a>
@@ -699,11 +989,11 @@
   <!-- ==================== PROFIL ==================== -->
   <section class="profil" id="profil">
     <div class="section-container">
-      <div class="section-line"></div>
-      <h2 class="section-title">À <span>Propos</span></h2>
-      <p class="section-subtitle">Mon parcours et mes ambitions</p>
-      <div class="profil-content">
-        Étudiant motivé en troisième année de Licence Génie Mécanique à l'Université de Poitiers, je bénéficie d'un parcours international ayant débuté en Pologne, à Kielce University of Technology, où j'ai suivi deux années de formation en anglais. Cette expérience m'a doté d'un niveau C1 en anglais (IELTS), me permettant d'évoluer aisément dans un contexte bilingue. Ma maîtrise approfondie de SolidWorks s'est construite au fil de nombreux projets de bureau d'études, allant de la conception de pièces mécanosoudées aux simulations de résistance des matériaux. J'ai également développé une solide compétence en automatisme avec B&R Automation Studio, incluant la programmation GRAFCET et le langage ST. Désireux de confronter mes acquis au monde professionnel, je suis activement à la recherche d'un stage en ingénierie mécanique à partir d'avril 2026.
+      <div class="section-line" data-aos="fade-up"></div>
+      <h2 class="section-title" data-aos="fade-up" data-aos-delay="50">À <span>Propos</span></h2>
+      <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">Mon parcours et mes ambitions</p>
+      <div class="profil-content" data-aos="fade-up" data-aos-delay="150">
+        Étudiant en troisième année de Licence Génie Mécanique à l'Université de Poitiers, je bénéficie d'un parcours international ayant débuté en Pologne, à Kielce University of Technology, où j'ai suivi deux années de formation en anglais. Cette expérience m'a permis d'acquérir une aisance en anglais, aussi bien à l'oral qu'à l'écrit, notamment en anglais technique, et de m'adapter pleinement à un environnement bilingue. J'y ai également acquis des bases solides en SolidWorks ainsi qu'une première expérience en programmation CNC. À Poitiers, ma maîtrise de SolidWorks s'est approfondie au fil de nombreux projets de bureau d'études, allant de la conception de pièces mécanosoudées aux simulations de résistance des matériaux. J'ai également développé une solide compétence en automatisme — analyse de cahier des charges, rédaction de GRAFCET — avec la programmation en Structured Text sur B&R Automation Studio. Désireux de confronter mes acquis au monde professionnel, je suis activement à la recherche d'une alternance en ingénierie mécanique à partir de septembre 2026.
       </div>
     </div>
   </section>
@@ -711,13 +1001,13 @@
   <!-- ==================== FORMATION ==================== -->
   <section class="formation" id="formation">
     <div class="section-container">
-      <div class="section-line"></div>
-      <h2 class="section-title"><span>Formation</span></h2>
-      <p class="section-subtitle">Mon cursus académique</p>
+      <div class="section-line" data-aos="fade-up"></div>
+      <h2 class="section-title" data-aos="fade-up" data-aos-delay="50"><span>Formation</span></h2>
+      <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">Mon cursus académique</p>
       <div class="formation-grid">
 
         <!-- Poitiers -->
-        <div class="formation-card">
+        <div class="formation-card" data-aos="fade-up" data-aos-delay="150">
           <div class="formation-header">
             <div>
               <div class="formation-school">Université de Poitiers</div>
@@ -726,15 +1016,32 @@
             </div>
             <span class="formation-date">2025 — Présent</span>
           </div>
-          <div class="coursework-title"><i class="fas fa-book"></i> Matières principales</div>
-          <div class="coursework-tags" id="coursework-poitiers">
-            <!-- À remplir plus tard -->
+          <div class="semester-circles" data-group="poitiers">
+            <div class="semester-circle" data-semester="s5">S5</div>
+            <div class="semester-circle" data-semester="s6">S6</div>
           </div>
-          <p class="coursework-empty" id="coursework-poitiers-empty">Contenu à venir...</p>
+          <div class="semester-content" id="sem-poitiers-s5">
+            <div class="coursework-tags">
+              <span class="coursework-tag">Mathématique et Génie Informatique</span>
+              <span class="coursework-tag">Mécanique et Démarche de Conception</span>
+              <span class="coursework-tag">Contrôle Commande et Conception Mécanique</span>
+              <span class="coursework-tag">Mécanique des Milieux Continus Solides</span>
+              <span class="coursework-tag">UE5 Anglais et Professionnalisation (S5)</span>
+            </div>
+          </div>
+          <div class="semester-content" id="sem-poitiers-s6">
+            <div class="coursework-tags">
+              <span class="coursework-tag">Mathématique et Méthodes Numériques</span>
+              <span class="coursework-tag">Modélisation, Mécanismes et Génie Mécanique</span>
+              <span class="coursework-tag">Mécanique des Fluides et Technologie</span>
+              <span class="coursework-tag">Techniques d'Industrialisation</span>
+              <span class="coursework-tag">UE5 Anglais et Professionnalisation (S6)</span>
+            </div>
+          </div>
         </div>
 
         <!-- Kielce -->
-        <div class="formation-card">
+        <div class="formation-card" data-aos="fade-up" data-aos-delay="200">
           <div class="formation-header">
             <div>
               <div class="formation-school">Kielce University of Technology</div>
@@ -743,11 +1050,75 @@
             </div>
             <span class="formation-date">2023 — 2025</span>
           </div>
-          <div class="coursework-title"><i class="fas fa-book"></i> Matières principales</div>
-          <div class="coursework-tags" id="coursework-kielce">
-            <!-- À remplir plus tard -->
+          <div class="semester-circles" data-group="kielce">
+            <div class="semester-circle" data-semester="s1">S1</div>
+            <div class="semester-circle" data-semester="s2">S2</div>
+            <div class="semester-circle" data-semester="s3">S3</div>
+            <div class="semester-circle" data-semester="s4">S4</div>
           </div>
-          <p class="coursework-empty" id="coursework-kielce-empty">Contenu à venir...</p>
+          <div class="semester-content" id="sem-kielce-s1">
+            <div class="coursework-tags">
+              <span class="coursework-tag">Calcul</span>
+              <span class="coursework-tag">Génie Électrique</span>
+              <span class="coursework-tag">Ergonomie et Santé et Sécurité au Travail</span>
+              <span class="coursework-tag">Fondamentaux de la Standardisation et de l'Innovation</span>
+              <span class="coursework-tag">HES1</span>
+              <span class="coursework-tag">Les Technologies de l'Information</span>
+              <span class="coursework-tag">Algèbre Linéaire</span>
+              <span class="coursework-tag">Chimie Technique</span>
+              <span class="coursework-tag">Dessin Technique</span>
+              <span class="coursework-tag">Physique Technique</span>
+              <span class="coursework-tag">Théorie des Machines</span>
+            </div>
+          </div>
+          <div class="semester-content" id="sem-kielce-s2">
+            <div class="coursework-tags">
+              <span class="coursework-tag">Génie Automobile</span>
+              <span class="coursework-tag">Mécanique de l'Ingénieur I</span>
+              <span class="coursework-tag">Dessin Technique</span>
+              <span class="coursework-tag">Langue Étrangère (Polonais)</span>
+              <span class="coursework-tag">Fondamentaux du Moulage / de la Fonderie</span>
+              <span class="coursework-tag">Fondamentaux de l'Électronique</span>
+              <span class="coursework-tag">Fondamentaux du Façonnage des Métaux</span>
+              <span class="coursework-tag">Fondamentaux du Prototypage Rapide</span>
+              <span class="coursework-tag">Fondamentaux du Soudage</span>
+              <span class="coursework-tag">Mathématiques</span>
+              <span class="coursework-tag">Science des Métaux I</span>
+              <span class="coursework-tag">Microtechnologie et Nanotechnologie</span>
+              <span class="coursework-tag">Les Plastiques et les Composés</span>
+            </div>
+          </div>
+          <div class="semester-content" id="sem-kielce-s3">
+            <div class="coursework-tags">
+              <span class="coursework-tag">Dessin Technique Assisté par Ordinateur</span>
+              <span class="coursework-tag">Mécanique de l'Ingénieur II</span>
+              <span class="coursework-tag">Langue Étrangère (Polonais)</span>
+              <span class="coursework-tag">Fondamentaux du Moulage / de la Fonderie (Lab)</span>
+              <span class="coursework-tag">Fondamentaux de la Science Informatique</span>
+              <span class="coursework-tag">Fondamentaux du Façonnage des Métaux (Lab)</span>
+              <span class="coursework-tag">Fondamentaux du Soudage (Lab)</span>
+              <span class="coursework-tag">Protection de la Propriété Intellectuelle</span>
+              <span class="coursework-tag">Technologie Laser</span>
+              <span class="coursework-tag">Science des Métaux II</span>
+              <span class="coursework-tag">Métrologie I</span>
+              <span class="coursework-tag">Résistance des Matériaux</span>
+              <span class="coursework-tag">Éducation Physique</span>
+            </div>
+          </div>
+          <div class="semester-content" id="sem-kielce-s4">
+            <div class="coursework-tags">
+              <span class="coursework-tag">Mécanique des Fluides</span>
+              <span class="coursework-tag">Langue Étrangère (Polonais)</span>
+              <span class="coursework-tag">Fondamentaux de la Programmation CNC</span>
+              <span class="coursework-tag">Fondamentaux de la Technique de Réglage</span>
+              <span class="coursework-tag">Fondamentaux de la Conception des Machines</span>
+              <span class="coursework-tag">Fondamentaux de l'Usinage</span>
+              <span class="coursework-tag">Génie de Fabrication</span>
+              <span class="coursework-tag">Métrologie II</span>
+              <span class="coursework-tag">Théorie de la Machinerie et des Mécanismes</span>
+              <span class="coursework-tag">Éducation Physique</span>
+            </div>
+          </div>
         </div>
 
       </div>
@@ -757,11 +1128,11 @@
   <!-- ==================== COMPÉTENCES ==================== -->
   <section class="competences" id="competences">
     <div class="section-container">
-      <div class="section-line"></div>
-      <h2 class="section-title">Compétences &amp; <span>Expertise</span></h2>
-      <p class="section-subtitle">Mes outils et savoir-faire</p>
+      <div class="section-line" data-aos="fade-up"></div>
+      <h2 class="section-title" data-aos="fade-up" data-aos-delay="50">Compétences &amp; <span>Expertise</span></h2>
+      <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">Mes outils et savoir-faire</p>
 
-      <div class="skills-categories">
+      <div class="skills-categories" data-aos="fade-up" data-aos-delay="150">
         <button class="skill-cat-btn active" data-cat="all">Toutes</button>
         <button class="skill-cat-btn" data-cat="meca">Génie Mécanique</button>
         <button class="skill-cat-btn" data-cat="auto">Automatisme</button>
@@ -770,35 +1141,35 @@
 
       <div class="skills-grid" id="skillsGrid">
 
-        <div class="skill-card" data-category="meca">
+        <div class="skill-card" data-category="meca" data-aos="fade-up" data-aos-delay="200">
           <div class="skill-icon"><i class="fas fa-drafting-compass"></i></div>
           <div class="skill-name">SolidWorks</div>
           <div class="skill-level">Avancé</div>
           <div class="skill-bar-container"><div class="skill-bar" style="width: 90%"></div></div>
         </div>
 
-        <div class="skill-card" data-category="meca">
+        <div class="skill-card" data-category="meca" data-aos="fade-up" data-aos-delay="250">
           <div class="skill-icon"><i class="fab fa-python"></i></div>
           <div class="skill-name">Python (NumPy)</div>
           <div class="skill-level">Intermédiaire</div>
           <div class="skill-bar-container"><div class="skill-bar" style="width: 50%"></div></div>
         </div>
 
-        <div class="skill-card" data-category="auto">
+        <div class="skill-card" data-category="auto" data-aos="fade-up" data-aos-delay="300">
           <div class="skill-icon"><i class="fas fa-microchip"></i></div>
           <div class="skill-name">B&R Automation Studio</div>
           <div class="skill-level">Intermédiaire</div>
           <div class="skill-bar-container"><div class="skill-bar" style="width: 65%"></div></div>
         </div>
 
-        <div class="skill-card" data-category="additional">
+        <div class="skill-card" data-category="additional" data-aos="fade-up" data-aos-delay="350">
           <div class="skill-icon"><i class="fas fa-file-alt"></i></div>
           <div class="skill-name">LaTeX</div>
           <div class="skill-level">Avancé</div>
           <div class="skill-bar-container"><div class="skill-bar" style="width: 90%"></div></div>
         </div>
 
-        <div class="skill-card" data-category="additional">
+        <div class="skill-card" data-category="additional" data-aos="fade-up" data-aos-delay="400">
           <div class="skill-icon"><i class="fas fa-file-excel"></i></div>
           <div class="skill-name">Microsoft Office</div>
           <div class="skill-level">Avancé</div>
@@ -812,12 +1183,12 @@
   <!-- ==================== LANGUES ==================== -->
   <section class="langues" id="langues">
     <div class="section-container">
-      <div class="section-line"></div>
-      <h2 class="section-title"><span>Langues</span></h2>
-      <p class="section-subtitle">Mes compétences linguistiques</p>
+      <div class="section-line" data-aos="fade-up"></div>
+      <h2 class="section-title" data-aos="fade-up" data-aos-delay="50"><span>Langues</span></h2>
+      <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">Mes compétences linguistiques</p>
       <div class="langues-grid">
 
-        <div class="langue-card">
+        <div class="langue-card" data-aos="fade-up" data-aos-delay="150">
           <div class="langue-flag">🇬🇧</div>
           <div class="langue-info">
             <div class="langue-name">Anglais</div>
@@ -826,7 +1197,7 @@
           </div>
         </div>
 
-        <div class="langue-card">
+        <div class="langue-card" data-aos="fade-up" data-aos-delay="200">
           <div class="langue-flag">🇫🇷</div>
           <div class="langue-info">
             <div class="langue-name">Français</div>
@@ -835,7 +1206,7 @@
           </div>
         </div>
 
-        <div class="langue-card">
+        <div class="langue-card" data-aos="fade-up" data-aos-delay="250">
           <div class="langue-flag">🇩🇿</div>
           <div class="langue-info">
             <div class="langue-name">Arabe</div>
@@ -851,14 +1222,14 @@
   <!-- ==================== TIMELINE / PARCOURS ==================== -->
   <section class="timeline-section" id="parcours">
     <div class="section-container">
-      <div class="section-line"></div>
-      <h2 class="section-title">Mon <span>Parcours</span></h2>
-      <p class="section-subtitle">Les étapes clés de ma formation</p>
+      <div class="section-line" data-aos="fade-up"></div>
+      <h2 class="section-title" data-aos="fade-up" data-aos-delay="50">Mon <span>Parcours</span></h2>
+      <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">Les étapes clés de ma formation</p>
 
       <div class="timeline">
 
         <!-- Kielce -->
-        <div class="timeline-item">
+        <div class="timeline-item" data-aos="fade-right" data-aos-delay="150">
           <div class="timeline-dot"></div>
           <div class="timeline-card">
             <img src="ville1.png" alt="Kielce, Pologne" class="timeline-card-image">
@@ -873,7 +1244,7 @@
         </div>
 
         <!-- Poitiers -->
-        <div class="timeline-item">
+        <div class="timeline-item" data-aos="fade-left" data-aos-delay="200">
           <div class="timeline-dot"></div>
           <div class="timeline-card">
             <img src="ville2.png" alt="Poitiers, France" class="timeline-card-image">
@@ -894,11 +1265,11 @@
   <!-- ==================== PROJETS ==================== -->
   <section class="projets" id="projets">
     <div class="section-container">
-      <div class="section-line"></div>
-      <h2 class="section-title">Galerie de <span>Projets</span></h2>
-      <p class="section-subtitle">Mes réalisations en bureau d'études</p>
+      <div class="section-line" data-aos="fade-up"></div>
+      <h2 class="section-title" data-aos="fade-up" data-aos-delay="50">Galerie de <span>Projets</span></h2>
+      <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">Mes réalisations en bureau d'études</p>
 
-      <div class="projets-filters">
+      <div class="projets-filters" data-aos="fade-up" data-aos-delay="150">
         <button class="skill-cat-btn active" data-filter="all">Tous les projets</button>
         <button class="skill-cat-btn" data-filter="meca">Génie Mécanique</button>
         <button class="skill-cat-btn" data-filter="auto">Automatisme</button>
@@ -907,7 +1278,7 @@
       <div class="projets-grid" id="projetsGrid">
 
         <!-- ====== PROJET MECA : RIDOIR HYDRAULIQUE ====== -->
-        <div class="projet-card clickable" data-type="meca" onclick="openModal('modalRidoir')">
+        <div class="projet-card clickable" data-type="meca" onclick="openModal('modalRidoir')" data-aos="fade-up" data-aos-delay="200">
           <span class="projet-badge">L3</span>
           <div class="projet-image"><img src="ridoir_theme.png" alt="Ridoir hydraulique" style="width:100%;height:100%;object-fit:contain;background:#f5f5f5;padding:0.5rem;"></div>
           <div class="projet-body">
@@ -922,7 +1293,7 @@
         </div>
 
         <!-- ====== PROJET MECA : MULTIPLICATEUR DE PRESSION ====== -->
-        <div class="projet-card clickable" data-type="meca" onclick="openModal('modalMulti')">
+        <div class="projet-card clickable" data-type="meca" onclick="openModal('modalMulti')" data-aos="fade-up" data-aos-delay="250">
           <span class="projet-badge">L3</span>
           <div class="projet-image"><img src="multi_plan_ensemble.png" alt="Multiplicateur de pression" style="width:100%;height:100%;object-fit:contain;background:#f5f5f5;padding:0.5rem;"></div>
           <div class="projet-body">
@@ -937,7 +1308,7 @@
         </div>
 
         <!-- ====== PROJET MECA : MONTAGE D'USINAGE ====== -->
-        <div class="projet-card clickable" data-type="meca" onclick="openModal('modalUsinage')">
+        <div class="projet-card clickable" data-type="meca" onclick="openModal('modalUsinage')" data-aos="fade-up" data-aos-delay="300">
           <span class="projet-badge">L3</span>
           <div class="projet-image"><img src="usinage_theme.png" alt="Montage d'usinage" style="width:100%;height:100%;object-fit:contain;background:#f5f5f5;padding:0.5rem;"></div>
           <div class="projet-body">
@@ -952,7 +1323,7 @@
         </div>
 
         <!-- ====== PROJET MECA : PROGRAMMATION CNC ====== -->
-        <div class="projet-card clickable" data-type="meca" onclick="openModal('modalCNC')">
+        <div class="projet-card clickable" data-type="meca" onclick="openModal('modalCNC')" data-aos="fade-up" data-aos-delay="350">
           <span class="projet-badge">L2</span>
           <div class="projet-image"><img src="cnc_3d_iso.png" alt="Programmation CNC Heidenhain" style="width:100%;height:100%;object-fit:cover;"></div>
           <div class="projet-body">
@@ -966,8 +1337,20 @@
           </div>
         </div>
 
+        <!-- ====== PROJET MECA : À VENIR ====== -->
+        <div class="projet-card" data-type="meca" data-aos="fade-up" data-aos-delay="400">
+          <div class="projet-image" style="display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,0.03);"><i class="fas fa-cogs" style="font-size:3rem;color:rgba(255,255,255,0.12);"></i></div>
+          <div class="projet-body">
+            <div class="projet-title">Projet à venir</div>
+            <p class="projet-desc">Un nouveau projet de génie mécanique sera ajouté prochainement.</p>
+            <div class="projet-tags">
+              <span class="projet-tag">Génie Mécanique</span>
+            </div>
+          </div>
+        </div>
+
         <!-- ====== PROJET AUTOMATISME : POTEYAGE ====== -->
-        <div class="projet-card clickable" data-type="auto" onclick="openModal('modalPoteyage')">
+        <div class="projet-card clickable" data-type="auto" onclick="openModal('modalPoteyage')" data-aos="fade-up" data-aos-delay="200">
           <span class="projet-badge">L3</span>
           <div class="projet-image"><img src="poteyage_thumb.png" alt="Machine de poteyage" style="width:100%;height:100%;object-fit:cover;"></div>
           <div class="projet-body">
@@ -2161,25 +2544,25 @@ END_TYPE</pre>
   <!-- ==================== CONTACT ==================== -->
   <section class="contact" id="contact">
     <div class="section-container">
-      <div class="section-line"></div>
-      <h2 class="section-title">Me <span>Contacter</span></h2>
-      <p class="section-subtitle">N'hésitez pas à me joindre</p>
+      <div class="section-line" data-aos="fade-up"></div>
+      <h2 class="section-title" data-aos="fade-up" data-aos-delay="50">Me <span>Contacter</span></h2>
+      <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">N'hésitez pas à me joindre</p>
 
       <div class="contact-grid">
 
-        <a href="mailto:abdeldjallilzerrouni1@gmail.com" class="contact-card">
+        <a href="mailto:abdeldjallilzerrouni1@gmail.com" class="contact-card" data-aos="fade-up" data-aos-delay="150">
           <div class="contact-icon"><i class="fas fa-envelope"></i></div>
           <div class="contact-label">Email</div>
           <div class="contact-value">abdeldjallilzerrouni1@gmail.com</div>
         </a>
 
-        <a href="tel:+33758752848" class="contact-card">
+        <a href="tel:+33758752848" class="contact-card" data-aos="fade-up" data-aos-delay="200">
           <div class="contact-icon"><i class="fas fa-phone"></i></div>
           <div class="contact-label">Téléphone</div>
           <div class="contact-value">+33 7 58 75 28 48</div>
         </a>
 
-        <a href="https://www.linkedin.com/in/abdeldjallil-seif-eddine-zerrouni-168975384" target="_blank" class="contact-card">
+        <a href="https://www.linkedin.com/in/abdeldjallil-seif-eddine-zerrouni-168975384" target="_blank" class="contact-card" data-aos="fade-up" data-aos-delay="250">
           <div class="contact-icon"><i class="fab fa-linkedin"></i></div>
           <div class="contact-label">LinkedIn</div>
           <div class="contact-value">Abdeldjallil Seif E. Zerrouni</div>
@@ -2194,8 +2577,47 @@ END_TYPE</pre>
     <p>&copy; 2026 — Abdeldjallil Seif E. Zerrouni · Portfolio Génie Mécanique</p>
   </footer>
 
+  <!-- Back to top button -->
+  <button id="backToTop" aria-label="Retour en haut"><i class="fas fa-chevron-up"></i></button>
+
   <!-- ==================== JAVASCRIPT ==================== -->
   <script>
+    // Initialisation AOS (Animate On Scroll)
+    document.addEventListener('DOMContentLoaded', function() {
+      if (typeof AOS !== 'undefined') {
+        AOS.init({
+          duration: 800,
+          easing: 'ease-out-cubic',
+          once: true,
+          offset: 60,
+          disable: 'mobile'
+        });
+      }
+    });
+
+    // Back to top button
+    const backToTop = document.getElementById('backToTop');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 400) {
+        backToTop.classList.add('visible');
+      } else {
+        backToTop.classList.remove('visible');
+      }
+    });
+    backToTop.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // Theme toggle (dark = default)
+    const themeToggle = document.getElementById('themeToggle');
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'light') document.body.classList.add('light-mode');
+    themeToggle.addEventListener('click', () => {
+      document.body.classList.toggle('light-mode');
+      const isLight = document.body.classList.contains('light-mode');
+      localStorage.setItem('theme', isLight ? 'light' : 'dark');
+    });
+
     // Mobile nav toggle
     const navToggle = document.getElementById('navToggle');
     const navLinks = document.getElementById('navLinks');
@@ -2255,6 +2677,28 @@ END_TYPE</pre>
       btn.classList.add('active');
       document.getElementById(panelId).classList.add('active');
     }
+
+    // Semester circle toggle
+    document.querySelectorAll('.semester-circle').forEach(circle => {
+      circle.addEventListener('click', () => {
+        const group = circle.parentElement.dataset.group;
+        const sem = circle.dataset.semester;
+        const contentId = 'sem-' + group + '-' + sem;
+        const isActive = circle.classList.contains('active');
+
+        // Deactivate all circles in this group
+        circle.parentElement.querySelectorAll('.semester-circle').forEach(c => c.classList.remove('active'));
+        // Hide all content panels in the same card
+        circle.closest('.formation-card').querySelectorAll('.semester-content').forEach(p => p.classList.remove('active'));
+
+        // If wasn't active, activate it
+        if (!isActive) {
+          circle.classList.add('active');
+          const panel = document.getElementById(contentId);
+          if (panel) panel.classList.add('active');
+        }
+      });
+    });
 
     // Active nav link on scroll
     const sections = document.querySelectorAll('section[id]');
@@ -2390,6 +2834,7 @@ END_TYPE</pre>
 
   })();
   </script>
+
 
 </body>
 </html>
