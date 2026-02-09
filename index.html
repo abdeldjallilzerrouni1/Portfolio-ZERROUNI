@@ -2727,7 +2727,7 @@ END_TYPE</pre>
 
   (function () {
     const container = document.getElementById('engine-canvas');
-    if (!container || window.innerWidth < 769) return; // skip on mobile
+    if (!container || window.innerWidth < 1024) return; // skip on mobile & tablets
 
     /* ── Renderer ── */
     const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
