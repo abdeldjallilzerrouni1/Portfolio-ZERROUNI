@@ -1340,14 +1340,17 @@
           </div>
         </div>
 
-        <!-- ====== PROJET MECA : À VENIR ====== -->
-        <div class="projet-card" data-type="meca" data-aos="fade-up" data-aos-delay="400">
-          <div class="projet-image" style="display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,0.03);"><i class="fas fa-cogs" style="font-size:3rem;color:rgba(255,255,255,0.12);"></i></div>
+        <!-- ====== PROJET MECA : RENVOI CONIQUE AÉRONAUTIQUE ====== -->
+        <div class="projet-card clickable" data-type="meca" onclick="openModal('modalRenvoi')" data-aos="fade-up" data-aos-delay="400">
+          <span class="projet-badge">L3</span>
+          <div class="projet-image"><img src="renvoi_theme.png" alt="Renvoi conique aéronautique" style="width:100%;height:100%;object-fit:contain;background:#f5f5f5;padding:0.5rem;"></div>
           <div class="projet-body">
-            <div class="projet-title">Projet à venir</div>
-            <p class="projet-desc">Un nouveau projet de génie mécanique sera ajouté prochainement.</p>
+            <div class="projet-title">Renvoi conique aéronautique — Conception et modélisation CAO</div>
+            <p class="projet-desc">Conception d'un renvoi conique aéronautique : dimensionnement des roulements, modélisation des engrenages et étude comparative de deux architectures de carter.</p>
             <div class="projet-tags">
-              <span class="projet-tag">Génie Mécanique</span>
+              <span class="projet-tag">SolidWorks</span>
+              <span class="projet-tag">Dimensionnement</span>
+              <span class="projet-tag">Conception</span>
             </div>
           </div>
         </div>
@@ -2539,6 +2542,160 @@ END_TYPE</pre>
       <div class="modal-section">
         <h3><i class="fas fa-check-circle"></i> Résultat final</h3>
         <p>Le projet a permis de concevoir des pièces de fonderie optimisées, adaptées à la fabrication industrielle, tout en garantissant leur tenue mécanique et leur rigidité par simulation numérique.</p>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ==================== MODAL RENVOI CONIQUE ==================== -->
+  <div class="projet-modal" id="modalRenvoi">
+    <div class="modal-overlay" onclick="closeModal()"></div>
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeModal()"><i class="fas fa-times"></i></button>
+
+      <div class="modal-header">
+        <h2>Renvoi conique aéronautique — Conception et modélisation CAO</h2>
+        <div class="modal-tags">
+          <span class="projet-tag">SolidWorks</span>
+          <span class="projet-tag">Dimensionnement</span>
+          <span class="projet-tag">Roulements SKF</span>
+          <span class="projet-tag">Engrenages coniques</span>
+          <span class="projet-tag">Conception carter</span>
+        </div>
+      </div>
+
+      <!-- ÉNONCÉ DU PROJET -->
+      <div class="modal-section">
+        <h3><i class="fas fa-file-pdf"></i> Énoncé du projet</h3>
+        <div style="border-radius:12px;overflow:hidden;border:1px solid rgba(255,255,255,0.06);margin-bottom:0.5rem;">
+          <iframe src="renvoi_sujet.pdf" style="width:100%;height:600px;border:none;background:#1a1a24;"></iframe>
+        </div>
+        <p style="margin-top:0.75rem;font-size:0.85rem;color:#707070;">
+          <a href="renvoi_sujet.pdf" target="_blank" style="color:#60a5fa;"><i class="fas fa-download" style="margin-right:0.4rem;"></i>Télécharger le sujet (PDF)</a>
+        </p>
+      </div>
+
+      <!-- MISE EN CONTEXTE -->
+      <div class="modal-section">
+        <h3><i class="fas fa-bullseye"></i> Mise en contexte du système</h3>
+        <p>Le projet porte sur la conception d'un renvoi conique aéronautique répondant à des contraintes de durée de vie, fiabilité, vitesse de rotation et masse. Le schéma cinématique global a permis d'identifier l'architecture du mécanisme ainsi que les zones de reprise d'efforts nécessaires au dimensionnement.</p>
+        <div class="modal-img-grid single" style="margin-top:1.25rem;">
+          <div class="modal-img-container">
+            <img src="renvoi_schema_cinematique.png" alt="Schéma cinématique global du renvoi conique">
+            <div class="modal-img-caption">Schéma cinématique global du renvoi conique</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- DIMENSIONNEMENT DES ROULEMENTS -->
+      <div class="modal-section">
+        <h3><i class="fas fa-cogs"></i> Étude et dimensionnement des roulements</h3>
+        <p>L'objectif initial était de déterminer les roulements aux points A et B en respectant les exigences du cahier des charges. Deux solutions techniques ont été comparées :</p>
+        <ul>
+          <li>Un montage avec roulement rigide à billes et roulement à rouleaux cylindriques</li>
+          <li>Un montage avec deux roulements à billes à contact oblique en X</li>
+        </ul>
+        <p style="margin-top:0.75rem;">Les calculs ont été menés en conditions majorantes puis en conditions de fonctionnement réelles (cycle de vol). Aucune solution issue de la documentation initiale ne satisfaisant simultanément les critères de charge, vitesse et durée de vie, une recherche dans le catalogue SKF a été réalisée afin d'obtenir un compromis entre performances et masse.</p>
+        <div class="modal-img-grid" style="margin-top:1.25rem;">
+          <div class="modal-img-container">
+            <img src="renvoi_implantation_roulements.png" alt="Schéma d'implantation des roulements A et B">
+            <div class="modal-img-caption">Schéma d'implantation des roulements A et B</div>
+          </div>
+          <div class="modal-img-container">
+            <img src="renvoi_montage_x.png" alt="Montage en X des roulements">
+            <div class="modal-img-caption">Montage en X des roulements</div>
+          </div>
+        </div>
+        <p style="margin-top:0.75rem;">Les roulements retenus permettent de répondre aux contraintes tout en réduisant significativement la masse de l'ensemble.</p>
+      </div>
+
+      <!-- MODÉLISATION ENGRENAGES ET ARBRES -->
+      <div class="modal-section">
+        <h3><i class="fas fa-drafting-compass"></i> Modélisation des engrenages et des arbres</h3>
+        <p>Les pignons coniques ont été modélisés sous SolidWorks à partir des données fonctionnelles (nombre de dents, module, matériau). Les arbres ont été conçus avec des épaulements assurant le maintien axial des composants et la transmission du couple sans glissement.</p>
+        <div class="modal-img-grid" style="margin-top:1.25rem;">
+          <div class="modal-img-container">
+            <img src="renvoi_pignon_entree.png" alt="Pignon d'entrée – 31 dents">
+            <div class="modal-img-caption">Pignon d'entrée — 31 dents</div>
+          </div>
+          <div class="modal-img-container">
+            <img src="renvoi_pignon_sortie.png" alt="Pignon de sortie – 40 dents">
+            <div class="modal-img-caption">Pignon de sortie — 40 dents</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ASSEMBLAGE CAO TRANSMISSION -->
+      <div class="modal-section">
+        <h3><i class="fas fa-cubes"></i> Assemblage CAO de la transmission</h3>
+        <p>L'ensemble arbres – roulements – engrenages a été assemblé en respectant les tolérances et conditions de montage afin de garantir le bon positionnement des composants et la durée de vie du système.</p>
+        <div class="modal-img-grid single" style="margin-top:1.25rem;">
+          <div class="modal-img-container">
+            <img src="renvoi_assemblage_transmission.png" alt="Assemblage complet de la transmission">
+            <div class="modal-img-caption">Assemblage complet de la transmission</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CARTER SYSTÈME 1 -->
+      <div class="modal-section">
+        <h3><i class="fas fa-box"></i> Conception du carter — Système 1 : plan de joint au milieu</h3>
+        <p>Un premier carter compact et simple à assembler a été conçu. Cependant, le positionnement du plan de joint dans la zone lubrifiée entraînait :</p>
+        <ul>
+          <li>Des risques de fuite d'huile</li>
+          <li>Un désalignement possible des roulements</li>
+          <li>Une diminution de la fiabilité</li>
+        </ul>
+        <div class="modal-img-grid" style="margin-top:1.25rem;">
+          <div class="modal-img-container">
+            <img src="renvoi_carter1_coupe.png" alt="Carter système 1 — vue en coupe">
+            <div class="modal-img-caption">Carter système 1 — vue en coupe</div>
+          </div>
+          <div class="modal-img-container">
+            <img src="renvoi_carter1_ext.png" alt="Carter système 1 — vue extérieure">
+            <div class="modal-img-caption">Carter système 1 — vue extérieure</div>
+          </div>
+        </div>
+        <div class="modal-img-grid single" style="margin-top:1rem;">
+          <div class="modal-img-container">
+            <img src="renvoi_carter1_interne.png" alt="Fonctionnement interne système 1">
+            <div class="modal-img-caption">Fonctionnement interne — système 1</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CARTER SYSTÈME 2 — RETENU -->
+      <div class="modal-section">
+        <h3><i class="fas fa-check-double"></i> Système retenu — Carter avec plan de joint déporté</h3>
+        <p>La géométrie du carter a été modifiée afin de déplacer le plan de joint hors du volume lubrifié. Cette solution a été choisie car elle :</p>
+        <ul>
+          <li>Améliore fortement l'étanchéité</li>
+          <li>Garantit un meilleur alignement des roulements</li>
+          <li>Augmente la fiabilité du système</li>
+        </ul>
+        <p style="margin-top:0.75rem;">Ce qui constitue un critère prioritaire dans le domaine aéronautique, malgré un assemblage plus complexe et un coût d'usinage plus élevé.</p>
+        <div class="modal-img-grid single" style="margin-top:1.25rem;">
+          <div class="modal-img-container">
+            <img src="renvoi_carter2_geometrie.png" alt="Modification géométrique du carter — plan de joint déporté">
+            <div class="modal-img-caption">Modification géométrique du carter — plan de joint déporté</div>
+          </div>
+        </div>
+        <div class="modal-img-grid" style="margin-top:1rem;">
+          <div class="modal-img-container">
+            <img src="renvoi_carter2_interne.png" alt="Fonctionnement interne système 2">
+            <div class="modal-img-caption">Fonctionnement interne — système 2</div>
+          </div>
+          <div class="modal-img-container">
+            <img src="renvoi_carter2_complet.png" alt="Assemblage complet du système 2">
+            <div class="modal-img-caption">Assemblage complet — système retenu</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RÉSULTAT FINAL -->
+      <div class="modal-section">
+        <h3><i class="fas fa-check-circle"></i> Résultat</h3>
+        <p>Ce projet a permis de développer un avant-projet complet de renvoi conique en appliquant une démarche de conception basée sur la comparaison de solutions, le dimensionnement réel de composants, l'intégration CAO et la gestion des compromis entre performance, masse, fiabilité et industrialisation.</p>
       </div>
 
     </div>
