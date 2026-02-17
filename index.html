@@ -883,8 +883,56 @@
     }
 
     /* ============================================
+       CERTIFICATIONS
+       ============================================ */
+    .certifications { background: #0d0d14; }
+    .certifications-grid {
+      display: flex; gap: 2rem; flex-wrap: wrap; justify-content: center;
+    }
+    .cert-card {
+      width: 180px; display: flex; flex-direction: column; align-items: center;
+      cursor: pointer; transition: all 0.3s;
+    }
+    .cert-card:hover { transform: translateY(-5px); }
+    .cert-circle {
+      width: 160px; height: 160px; border-radius: 50%;
+      overflow: hidden;
+      border: 3px solid rgba(59,130,246,0.3);
+      box-shadow: 0 8px 30px rgba(59,130,246,0.12);
+      transition: all 0.3s;
+      display: flex; align-items: center; justify-content: center;
+      background: #fff;
+    }
+    .cert-card:hover .cert-circle {
+      border-color: #3b82f6;
+      box-shadow: 0 12px 40px rgba(59,130,246,0.25);
+    }
+    .cert-circle img {
+      width: 100%; height: 100%; object-fit: cover;
+    }
+    .cert-label {
+      margin-top: 1rem; text-align: center;
+      font-weight: 700; font-size: 0.9rem; color: #fff;
+      line-height: 1.4;
+    }
+    .cert-date {
+      font-size: 0.8rem; color: #60a5fa; font-weight: 600;
+      margin-top: 0.3rem;
+    }
+    body.light-mode .certifications { background: #fff; }
+    body.light-mode .cert-circle {
+      border-color: rgba(59,130,246,0.2);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+    }
+    body.light-mode .cert-card:hover .cert-circle {
+      box-shadow: 0 8px 30px rgba(59,130,246,0.15);
+    }
+    body.light-mode .cert-label { color: #222; }
+    body.light-mode .cert-date { color: #2563eb; }
+
+    /* ============================================
        BACK TO TOP BUTTON
-    ============================================ */
+       ============================================ */
     #backToTop {
       position: fixed; bottom: 2rem; right: 2rem;
       width: 46px; height: 46px;
@@ -951,6 +999,7 @@
         <li><a href="#profil">Profil</a></li>
         <li><a href="#formation">Formation</a></li>
         <li><a href="#competences">Compétences</a></li>
+        <li><a href="#certifications">Certifications</a></li>
         <li><a href="#parcours">Parcours</a></li>
         <li><a href="#projets">Projets</a></li>
         <li><a href="#contact">Contact</a></li>
@@ -1216,6 +1265,27 @@
             <div class="langue-level">Langue maternelle</div>
             <div class="langue-bar-container"><div class="langue-bar" style="width: 100%"></div></div>
           </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== CERTIFICATIONS ==================== -->
+  <section class="certifications" id="certifications">
+    <div class="section-container">
+      <div class="section-line" data-aos="fade-up"></div>
+      <h2 class="section-title" data-aos="fade-up" data-aos-delay="50">Mes <span>Certifications</span></h2>
+      <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">Certifications professionnelles obtenues</p>
+
+      <div class="certifications-grid">
+
+        <div class="cert-card" onclick="openModal('modalCSWA')" data-aos="fade-up" data-aos-delay="150">
+          <div class="cert-circle">
+            <img src="cswa_logo.png" alt="CSWA - SolidWorks Design Associate">
+          </div>
+          <div class="cert-label">CSWA — SolidWorks<br>Design Associate</div>
+          <div class="cert-date">Février 2026</div>
         </div>
 
       </div>
@@ -2698,6 +2768,37 @@ END_TYPE</pre>
       <div class="modal-section">
         <h3><i class="fas fa-check-circle"></i> Résultat</h3>
         <p>Ce projet a permis de développer un avant-projet complet de renvoi conique en appliquant une démarche de conception basée sur la comparaison de solutions, le dimensionnement réel de composants, l'intégration CAO et la gestion des compromis entre performance, masse, fiabilité et industrialisation.</p>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ==================== MODAL CSWA ==================== -->
+  <div class="projet-modal" id="modalCSWA">
+    <div class="modal-overlay" onclick="closeModal()"></div>
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeModal()"><i class="fas fa-times"></i></button>
+
+      <div class="modal-header">
+        <h2>CSWA — Certified SolidWorks Associate (Design)</h2>
+        <div class="modal-tags">
+          <span class="projet-tag">Dassault Systèmes</span>
+          <span class="projet-tag">SolidWorks</span>
+          <span class="projet-tag">Conception</span>
+          <span class="projet-tag">Février 2026</span>
+        </div>
+      </div>
+
+      <div class="modal-section">
+        <h3><i class="fas fa-certificate"></i> Certificat officiel</h3>
+        <p>Certification professionnelle délivrée par Dassault Systèmes, attestant des compétences en conception mécanique assistée par ordinateur avec SolidWorks.</p>
+        <p style="margin-top:0.5rem;"><strong>Identifiant :</strong> C-37C9EJWGR5</p>
+        <div style="border-radius:12px;overflow:hidden;border:1px solid rgba(255,255,255,0.06);margin-top:1.25rem;">
+          <iframe src="cswa_certificate.pdf" style="width:100%;height:700px;border:none;background:#1a1a24;"></iframe>
+        </div>
+        <p style="margin-top:0.75rem;font-size:0.85rem;color:#707070;">
+          <a href="cswa_certificate.pdf" target="_blank" style="color:#60a5fa;"><i class="fas fa-download" style="margin-right:0.4rem;"></i>Télécharger le certificat (PDF)</a>
+        </p>
       </div>
 
     </div>
